@@ -1,0 +1,32 @@
+@import url(./theme.scss);
+
+@mixin themeify($themes) {
+
+    @each $theme-name,
+    $theme-map in $themes {
+        $theme-map: $theme-map !global;
+
+        [data-theme="#{$theme-name}"] {
+            @content;
+        }
+    }
+}
+
+// 声明一个根据key获取颜色的函数
+@function getThemeColor($key) {
+    @return map-get($theme-colors, $key);
+}
+
+// 获取背景颜色
+@mixin get_background_color($color) {
+    @include themeify($theme-colors) {
+        background-color: getThemeColor($color) !important;
+    }
+}
+
+// 获取文本颜色
+@mixin get_text_color($color) {
+    @include themeify($theme-colors) {
+        color: getThemeColor($color) !important;
+    }
+}
