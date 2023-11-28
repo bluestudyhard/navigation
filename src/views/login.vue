@@ -81,7 +81,7 @@ async function login() {
 
     ElMessage.success(`Login Success welcome ${token.value}`)
     // 登录成功后跳转到首页
-    router.push({ path: '/' })
+    router.replace({ path: '/' })
   }
   else { ElMessage.error('Login Failed') }
 
@@ -147,9 +147,11 @@ async function login() {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
   margin: 0 auto;
+  width: 100%;
+  height: 100vh;
 }
 
 .user-login {
@@ -163,7 +165,7 @@ async function login() {
   padding: 2rem;
   border-radius: 1rem;
   // box-shadow: 3px 2px 1rem 0px #dfe7ff;
-  box-shadow: 15px 15px 30px #dfe7fc,
+  box-shadow: 10px 10px 20px #dfe7fc,
     -15px -15px 30px #ededed8f, ;
 
   background: #fafbff;
