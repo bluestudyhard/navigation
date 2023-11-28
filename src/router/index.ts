@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import constantRoute from './constRoutes'
 
@@ -35,6 +35,11 @@ const routes: RouteRecordRaw[] = [
     name: 'home',
   },
   {
+    path: '/themes',
+    component: () => import('../views/themes/mode.vue'),
+    name: 'themes',
+  },
+  {
     path: '/404',
     component: () => import('../views/404.vue'),
     name: '404',
@@ -52,7 +57,11 @@ const routes: RouteRecordRaw[] = [
 
     ],
   },
-
+  {
+    path: '/playground',
+    component: () => import('../views/playground/playground.vue'),
+    name: '测试区',
+  },
 ]
 // 添加路由守卫
 /**
@@ -62,7 +71,7 @@ const routes: RouteRecordRaw[] = [
  */
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 
 })
@@ -71,22 +80,27 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const useUserStore = userStore()
   const token = useUserStore.token
+  console.log(token)
   // 判断是否登录
   if (!token) {
     // 未登录
     if (to.path !== '/login')
-      next('/login') // 没登录的话怎么都是指向login
-
-    else
-      next()
-  }
-  // 判断是否有权限
-  else {
-    // 如果不是管理员，所有和后台管理有关的都不开放
-    if (to.path.includes('/management') && !useUserStore.isAdmin)
-      next('/')
+      return next('/login') // 没登录的话怎么都是指向login
 
     next()
   }
+
+  // 已经登录，不允许进入登录页面直到退出登录
+  if (to.path === '/login')
+    return next('/')
+
+  console.log({ to, from, userStore: useUserStore.isAdmin })
+
+  // 判断是否有权限
+  // 如果不是管理员，所有和后台管理有关的都不开放
+  if (to.path.includes('/management') && !useUserStore.isAdmin)
+    return next('/')
+
+  next()
 })
 export default router

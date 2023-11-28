@@ -1,20 +1,50 @@
-$menu-bg-color:#ffffffd1;
+$menu-bg-color: #ffffffd1;
+$main-bg-color: #f6fafd;
+
+$website-item-boxshadow: 1px 3px 6px 2px #c7dff53d;
+// 主题1,主题1包含多个变量
+$theme-manage: (website-item-text-title:#586c78,
+    website-item-text-desc:#94a3b8,
+    website-item-boxshadow:1px 3px 6px 3px rgba(199, 223, 245, 0.213),
+    website-item-border-bg:#7499fecd);
+
+$themes-mode: (mode-website-item-text-title:#586c78,
+    mode-website-item-text-desc:#94a3b8,
+    mode-website-item-box-shadow:(-16px -16px 11px 0px #eff3f800, 10px 8px 4px 0px #7b828f, 0px 2px 2px 2px #D2DCEB),
+    mode-website-item-border-bg:#7499fecd);
 
 
-
-$themes: (light: (background_color: #fff, //背景色
+$themes: (light: (background_color: #f3f3ff, //背景色
         text-color: rgba(0, 0, 0, 0.65), // 主文本色
     ),
     dark: (background_color: #181c27, //背景
         text-color: rgb(246, 246, 246), // 主文本色
-    ));
+    ),
 
+);
+$themes-common:(blue:(aside-background-color: #f4f4f443, //侧边栏背景
+        text-title-color: #2b265f, // 主文本色
+        text-content-color:#2b265fc4, // 内容文本色
+        item-box-shadow:(3px 3px 4px 0px #5959590a, 0px 2px 2px 0px #d2dceb9a), // 卡片阴影
+        item-background-color:#f0efee58, // 卡片背景
+        main-background-color: linear-gradient(113deg, #f3f9f1 1.08%, #A3C7E7 95.44%),
+        main-background-image:url("/public/shade.png") no-repeat,
+    ),
+    green:(aside-background-color: #f4f4f443, //侧边栏背景
+        text-title-color: #2b265f, // 主文本色
+        text-content-color:#2b265fc4, // 内容文本色
+        item-box-shadow:(3px 3px 4px 0px #5959590a, 0px 2px 2px 0px #d2dceb9a), // 卡片阴影
+        item-background-color:#fbf8e11c, // 卡片背景
+        main-background-color:linear-gradient(90deg, rgba(122, 188, 126, 0.48) -13.71%, rgba(122, 188, 126, 0.31) -13.7%, rgba(89, 171, 121, 0.48) 107.09%),
+        main-background-image:url("/public/shader1.png") no-repeat,
+        container-background-color:#feffff0d,
+    ));
 
 @mixin themeify {
 
     @each $theme-name,
     $theme-map in $themes {
-
+        // theme-name 是主题的名字，them-map是各个主题设置好的变量
         $theme-map: $theme-map !global;
 
         //判断html的data-theme的属性值  #{}是sass的插值表达式
@@ -38,8 +68,26 @@ $themes: (light: (background_color: #fff, //背景色
 }
 
 //获取字体颜色
+// 解析后为 data-theme="xxx" {color:xxx} 在这里传入的color，是因为我们在前面已经将$text_color变成了全局变量，即已经注册了,然后我们只需要在用的时候，@include font_color("text_color"); 传入变量名即可
+// 所有的解析结果示例
+/*
+[data-theme="light"] & {
+  color: themed("text_color") !important;
+}
+
+[data-theme="dark"] & {
+  color: themed("text_color") !important;
+}
+*/
 @mixin font_color($color) {
     @include themeify {
         color: themed($color) !important;
+    }
+}
+
+// 获取box-shadow
+@mixin get_boxshadow($color) {
+    @include themeify($theme-colors) {
+        box-shadow: 0 2px 12px 0 themed($color) !important;
     }
 }

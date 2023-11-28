@@ -1,6 +1,7 @@
 import type { loginResponseData } from '@/types/user'
 import { loginReq } from '@/api/user'
 import type loginInfo from '@/types/user'
+import userStore from '@/stores/user'
 
 export const userSignUp = function (data: any) {
   // 检查是否完成pass的条件，如果为false，就不能提交，然后输入框会抖动
@@ -13,6 +14,7 @@ export const userLogin = async function (data: loginInfo) {
   console.log(result.data)
   if (result.data.code === 200) {
     localStorage.setItem('token', result.data.token as string)
+    userStore().getToken()
     return true
   }
   return false

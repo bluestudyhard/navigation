@@ -12,8 +12,10 @@
     }
 }
 
+
+
 // 声明一个根据key获取颜色的函数
-@function getThemeColor($key) {
+@function themed($key) {
     @return map-get($theme-colors, $key);
 }
 
@@ -28,5 +30,12 @@
 @mixin get_text_color($color) {
     @include themeify($theme-colors) {
         color: getThemeColor($color) !important;
+    }
+}
+
+// 获取box-shadow
+@mixin get_boxshadow($color) {
+    @include themeify($theme-colors) {
+        box-shadow: 0 2px 12px 0 getThemeColor($color) !important;
     }
 }

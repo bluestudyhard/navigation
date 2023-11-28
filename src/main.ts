@@ -16,6 +16,7 @@ const app = createApp(App)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
+// 持久化插件
 pinia.use(piniaPluginPersistedstate)
 for (const [key, component] of Object.entries(ElementPlusIconsVue))
   app.component(key, component)

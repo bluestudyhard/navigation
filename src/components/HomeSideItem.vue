@@ -1,41 +1,107 @@
 <script setup lang="ts">
-// import { onMounted, ref } from 'vue'
-import type { bookMarkType } from '@/types/webSite'
+import { ref } from 'vue'
+import requestIframe from '../utils/iframe'
+import type { websiteTempType } from '@/types/website'
 
 defineProps<{
-  tabSiteList: bookMarkType[]
+  tabSiteList: websiteTempType[]
 }>()
+
+const targetUrl = ref('')
+const isShow = ref(false)
+async function getIframe(url: string) {
+  isShow.value = true
+  targetUrl.value = await requestIframe(url)
+  console.log(targetUrl.value)
+}
 </script>
 
 <template>
+  <div v-if="isShow" class="website-preview">
+    <iframe :srcdoc="targetUrl" class="fixed right-50% top-0 w-150 h-150 z-100" />
+  </div>
   <div v-for="(item, index) in tabSiteList" :key="index" class="tab-site-card">
-    <div class="tab-site-card-icon">
-      <img :src="item.icon" alt="">
+    <div class=" flex  flex-items-center  w-100%">
+      <img :src="item.websiteIcon" alt="" class="w-5.1 h-5.1 ">
+      <button class="outline-none border-none" @click="getIframe(item.websiteUrl)">
+        <el-icon><ZoomIn /></el-icon>
+      </button>
     </div>
-    <a :href="item.url" target="_blank">
-      <div class="title">{{ item.title.slice(0, 10) }}</div>
-    </a>
+    <div class="flex w-full flex-items-center  p-0">
+      <a :href="item.websiteUrl" target="_blank" class=" text-left">
+        <p class="title font-size-3.2 m-b--1 font-size-2.75 font-650 "> {{
+          item.websiteName.slice(0, 6) }}</p>
+        <div class="border" />
+        <p class="title-content font-size-2.5">{{ item.websiteDescription }}</p>
+      </a>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .tab-site-card {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 1px 10px 0.5px rgba(201, 192, 246, 0.449);
-
-  margin: 0.5rem 0.5rem 0.3rem 0.3rem;
-  text-overflow: ellipsis;
-  flex-direction: column;
   padding: .5rem;
-  flex-basis: 12%;
+  width: 11rem;
+  // height: 3.5rem;
+  flex-direction: column;
+  align-items: center;
+  border-radius: .5rem;
+  max-width: 11rem;
+  margin: .8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  cursor: pointer;
+  transition: all .3s;
+  border-radius: .3rem;
+  background: #f0efee58;
+  // background-image: linear-gradient(to top, #acbeee 0%, #e7f0fd 100%);
+  // background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4 100%);
+  // background: linear-gradient(to right, rgb(137, 104, 255), rgb(175, 152, 255));
+  // background: #6fa4f9;
+
+  box-shadow: 3px 3px 4px 0px rgb(89 89 89 / 4%), 0px 2px 2px 0px #d2dceb9a;
+  // box-shadow: 0px 0px 1px 0px #f0efee37;
+  // backdrop-filter: blur(50px);
+
   img {
-    width: 2rem;
-    height: 2rem;
+    background: #f9f9f930;
+    // border: 1px solid #ffffff78;
+    padding: 0.1rem;
+    border-radius: .5rem;
+    // backdrop-filter: blur(10px);
   }
-  .title{
-    font-size: 10px;
+
+  .title {
+    color: #2b265f;
+    font-weight: 600;
+    // color: rgb(241, 241, 241);
+  }
+
+  .title-content {
+    color: #2b265fc4;
+    // color: rgba(241, 241, 241, 0.863);
+    font-weight: 400;
+  }
+
+  &:hover {
+    // height: 7rem;
+    transform: translateY(-10px);
+  }
+
+  &::before {
+    width: 100px;
+    height: 80px;
+    content: "";
+    background: linear-gradient(to right, rgb(129, 182, 247), rgb(234, 241, 242));
+    position: absolute;
+
+    border-radius: 50%;
+    right: -43%;
+    top: -85%;
+    // backdrop-filter: blur(10px);
   }
 }
 </style>
+@/types/website

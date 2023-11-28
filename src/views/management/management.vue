@@ -1,37 +1,48 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import userStore from '@/stores/user'
 import Menu from '@/layouts/menu.vue'
 import Main from '@/layouts/main.vue'
 
 const useStore = userStore()
-const { userAvator, username } = storeToRefs(useStore)
+const { userAvatar, username, userId } = storeToRefs(useStore)
 onMounted(() => {
   useStore.getUser()
 })
+const isCollapse = ref(false)
+function logout() {
+  useStore.logout()
+}
 </script>
 
 <template>
-  <div class="el-container">
+  <div class="el-container m-t-1">
     <el-container>
-      <el-aside class="aside" width="200px">
+      <el-aside class="h-full" width="auto">
         <div class="user-agent">
-          <span>
-            <el-avatar :size="80" :src="userAvator" />
+          <span class="flex flex-col">
+            <el-avatar :size="60" :src="userAvatar" />
+            {{ username }}
           </span>
         </div>
-        <Menu :menu-list="useStore.constanRoutes" />
+        <Menu :menu-list="useStore.constanRoutes" :collapse="isCollapse" />
       </el-aside>
       <el-container>
         <el-header class="header">
-          <h1>sea blue navigation</h1>
-          <div class="avator">
+          <!-- <h1>sea blue navigation</h1> -->
+          <el-button @click="() => (isCollapse = !isCollapse)">
+            <el-icon>
+              <Expand />
+            </el-icon>
+          </el-button>
+
+          <div class="avatar">
             <el-dropdown class="el-dropdown-link">
               <span>
-                <el-avatar :size="40" :src="userAvator" />
-                {{ username }}
+                <el-avatar :size="40" :src="userAvatar" />
+                {{ userId }}    {{ username }}
               </span>
               <span>
                 <el-icon class="el-icon--right">
@@ -42,6 +53,9 @@ onMounted(() => {
                 <el-dropdown-menu>
                   <el-dropdown-item>登录</el-dropdown-item>
                   <el-dropdown-item>个人中心</el-dropdown-item>
+                  <el-dropdown-item @click="logout">
+                    退出登录
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -52,7 +66,9 @@ onMounted(() => {
             <Main />
           </Transition>
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer class="h-1">
+          Footer
+        </el-footer>
       </el-container>
     </el-container>
   </div>
@@ -66,14 +82,13 @@ onMounted(() => {
 
 }
 
-.aside {
-  border: 1px solid #f8f8f87f;
-  height: 100vh;
-}
-
 .user-agent {
   text-align: center;
-  margin-bottom: 1rem;
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .el-container {
@@ -82,7 +97,7 @@ onMounted(() => {
     display: flex;
     background-color: #fcfcfc;
 
-    height: 10rem;
+    height: 3rem;
     border-bottom: 1px solid #767676ab;
 
     &>h1 {
@@ -92,7 +107,7 @@ onMounted(() => {
 
     }
 
-    .avator {
+    .avatar {
       position: absolute;
       right: 0;
       display: flex;
@@ -124,5 +139,6 @@ onMounted(() => {
   .el-tooltip__trigger {
     outline: none;
   }
+
 }
 </style>

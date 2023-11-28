@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const useAvatorStore = defineStore('avator', {
+export const useAvatarStore = defineStore('avatar', {
   state: () => {
     return {
-      userAvator: '/logo.png', // 头像
+      userAvatar: '/logo.png', // 头像
     }
   },
 })

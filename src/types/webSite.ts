@@ -1,4 +1,4 @@
-export interface webSiteInfo {
+export interface websiteInfo {
   data: dataType
 }
 interface dataType {
@@ -7,21 +7,58 @@ interface dataType {
   desc?: string
   icon: string
 }
+export interface bookmarkType {
 
-export interface bookMarkType {
   title: string
   url: string
   icon?: string
   checked?: boolean
 }
-
-export interface webSiteType {
-  name?: string
-  bookmarks: bookMarkType[]
+// 后台数据
+export interface websiteType {
+  bookmarkName: string
+  bookmarks: bookmarkTempType[]
 }
 
-// 网站新分类标题列表
-export interface webSiteTitleListType {
+// 首页展示
+export interface websiteTitleListType {
   title: string
-  website: bookMarkType[]
+  tag?: string
+  website: websiteTempType[]
+}
+export interface bookmarkTempType {
+  id?: number
+  bookmarkWebsiteTitle: string
+  bookmarkWebsiteUrl: string
+  bookmarkWebsiteIcon: string
+  userId?: number
+  checked?: boolean
+}
+export interface websiteTempType {
+  id?: number
+  websiteName: string
+  websiteUrl: string
+  websiteIcon?: string
+  websiteDescription?: string
+  userId: number
+  tagId: string
+  websiteWeight?: number
+
+}
+export interface bookmarkRequestType {
+  bookmarks: bookmarkTempType[]
+  bookmarkName: string
+}
+
+export interface websiteTitleType {
+  id?: number
+  titleName: string
+  userId: number
+}
+
+export interface websiteTagType {
+  id?: number
+  tagName: string
+  userId?: number
+  titleId: number
 }

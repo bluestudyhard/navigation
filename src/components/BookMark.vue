@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useDropZone } from '@vueuse/core'
 import { ref } from 'vue'
-import type { bookMarkType } from '@/types/webSite'
+import type { bookmarkType } from '@/types/website'
 
-const bookMarkList = ref<{ name: string; bookmarks: bookMarkType[] }[]>([])
+const bookmarkList = ref<{ name: string; bookmarks: bookmarkType[] }[]>([])
 function parseHtml(html: HTMLElement) {
   const main = html.querySelector('DL DT')
   const DT = Array.from(main!.querySelectorAll('DT'))
@@ -40,7 +40,7 @@ function onDrop(files: File[] | null) {
         console.log(div)
         // console.log(typeof div)
         const data = parseHtml(div)
-        bookMarkList.value = data as { name: string; bookmarks: bookMarkType[] }[]
+        bookmarkList.value = data as { name: string; bookmarks: bookmarkType[] }[]
       }
     }
   })
@@ -68,7 +68,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
           <div :value="isOverDropZone" />
         </div>
       </div>
-      <div v-for="(item, index) in bookMarkList" :key="index">
+      <div v-for="(item, index) in bookmarkList" :key="index">
         <h3>{{ item.name }}</h3>
         <div v-for="(bookmark, index) in item.bookmarks" :key="index">
           <img :src="bookmark.icon" alt="">
@@ -82,3 +82,4 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 </template>
 
 <style scoped></style>
+@/types/website

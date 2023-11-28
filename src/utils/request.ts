@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import userStore from '@/stores/user'
 
 const service: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5173/api',
+  baseURL: 'http://localhost:8080',
 })
 export const request = {
   get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {

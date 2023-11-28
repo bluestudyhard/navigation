@@ -8,6 +8,10 @@ defineProps({
     type: Array as () => menuType['menuRouter'],
     required: true,
   },
+  collapse: {
+    type: Boolean,
+    default: false,
+  },
 })
 const router = useRouter()
 function routerPush(path: string) {
@@ -18,18 +22,22 @@ function routerPush(path: string) {
 </script>
 
 <template>
-  <el-menu>
-    <div v-for="(item, index) in menuList" :key="item.path">
+  <el-menu class="el-menu" :collapse="collapse">
+    <template v-for="(item, index) in menuList" :key="item.path">
       <!-- 单级 -->
       <el-menu-item v-if="!item.children" :index="item.path + index" @click="routerPush(item.path)">
-        <el-icon><icon-menu /></el-icon>
-        {{ item.name }}
+        <el-icon>
+          <location />
+        </el-icon>
+        <span>{{ item.name }}</span>
       </el-menu-item>
       <!-- 1子 -->
       <el-sub-menu v-if="item.children && item.children.length === 1" :index="item.path + index">
         <template #title>
           <el-menu-item @click="routerPush(item.path)">
-            <el-icon><icon-menu /></el-icon>
+            <el-icon>
+              <location />
+            </el-icon>
             <span>{{ item.name }}</span>
           </el-menu-item>
         </template>
@@ -37,7 +45,9 @@ function routerPush(path: string) {
       <!-- 2+ -->
       <el-sub-menu v-if="item.children && item.children.length > 1" :index="item.path + index">
         <template #title>
-          <el-icon><icon-menu /></el-icon>
+          <el-icon>
+            <location />
+          </el-icon>
           <span>{{ item.name }}</span>
         </template>
         <!-- <el-menu-item-group>
@@ -45,9 +55,9 @@ function routerPush(path: string) {
             <span>{{ childItem.name }}</span>
           </el-menu-item>
         </el-menu-item-group> -->
-        <Menu :menu-list="item.children" />
+        <Menu :menu-list="item.children" :collapse="collapse" />
       </el-sub-menu>
-    </div>
+    </template>
   </el-menu>
   <!-- <el-sub-menu index="2">
       <template #title>
@@ -66,14 +76,23 @@ function routerPush(path: string) {
       </el-menu-item-group>
     </el-sub-menu>
     <el-menu-item index="3">
-      <el-icon><icon-menu /></el-icon>
+      <el-icon>
+                <location />
+              </el-icon>
       <span>用户权限</span>
     </el-menu-item> -->
 </template>
 
 <style scoped lang="scss">
-.el-menu {
-  border: none;
-  background: $menu-bg-color;
+</style>
+
+<style>
+.el-menu--collapse .el-submenu__title span {
+  display: none !important;
+}
+
+/*隐藏 > */
+.el-menu--collapse .el-submenu__title .el-submenu__icon-arrow {
+  display: none !important;
 }
 </style>
