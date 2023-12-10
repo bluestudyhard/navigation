@@ -42,7 +42,7 @@ function logout() {
             <el-dropdown class="el-dropdown-link">
               <span>
                 <el-avatar :size="40" :src="userAvatar" />
-                {{ userId }}    {{ username }}
+                {{ userId }} {{ username }}
               </span>
               <span>
                 <el-icon class="el-icon--right">
@@ -98,7 +98,7 @@ function logout() {
     background-color: #fcfcfc;
 
     height: 3rem;
-    border-bottom: 1px solid #767676ab;
+    // border-bottom: 1px solid #767676ab;
 
     &>h1 {
       background-image: linear-gradient(135deg, #396AF1 10%, #A665F6 90%);
@@ -116,6 +116,8 @@ function logout() {
 
     }
   }
+
+  overflow: hidden;
 }
 
 .el-dropdown-link {

@@ -4,17 +4,17 @@ import { onMounted, onUnmounted, ref } from 'vue'
 const joystickPosition = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
 
-function handleMouseDown(event) {
+function handleMouseDown() {
   isDragging.value = true
   document.addEventListener('mousemove', handleMouseMove)
   document.addEventListener('mouseup', handleMouseUp)
 }
 
-function handleMouseMove(event) {
+function handleMouseMove(event: MouseEvent) {
   if (isDragging.value) {
-    const joystick = document.querySelector('.joystick')
-    const base = document.querySelector('.base')
-    const stick = document.querySelector('.stick')
+    const joystick = document.querySelector('.joystick') as HTMLElement
+    const base = document.querySelector('.base') as HTMLElement
+    const stick = document.querySelector('.stick') as HTMLElement
     const rect = joystick.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
@@ -39,7 +39,7 @@ function handleMouseMove(event) {
 
 function handleMouseUp() {
   isDragging.value = false
-  const stick = document.querySelector('.stick')
+  const stick = document.querySelector('.stick') as HTMLElement
   stick.style.transform = 'translate(0, 0)'
   joystickPosition.value = { x: 0, y: 0 }
   document.removeEventListener('mousemove', handleMouseMove)
@@ -47,12 +47,12 @@ function handleMouseUp() {
 }
 
 onMounted(() => {
-  const base = document.querySelector('.base')
+  const base = document.querySelector('.base') as HTMLElement
   base.addEventListener('mousedown', handleMouseDown)
 })
 
 onUnmounted(() => {
-  const base = document.querySelector('.base')
+  const base = document.querySelector('.base') as HTMLElement
   base.removeEventListener('mousedown', handleMouseDown)
 })
 </script>

@@ -63,7 +63,7 @@ function onDrop(files: File[] | null) {
         const data = parseHtml(div)
         bookmarkList.value = data as websiteType[]
         bookmarkRaws.value = bookmarkList.value
-        useStore.saveWebSiteList(bookmarkList.value)
+        useStore.saveBookmarkList(bookmarkList.value)
       }
     }
   })
@@ -83,14 +83,15 @@ async function upLoadBookmarks() {
 <template>
   <div class="drop-zone">
     <p>
-      <el-button @click="() => { showDrop = !showDrop }">
-        点击上传
+      <el-button class="el-button_1" size="small" @click="() => { showDrop = !showDrop }">
+        <el-icon>
+          <UploadFilled />
+        </el-icon>
       </el-button>
     </p>
-    <el-dialog v-model="showDrop">
+    <el-dialog v-model="showDrop" :lock-scroll="false">
       <template #header>
         <p>将文件拖拽到此处</p>
-        <input type="file" accept=".html" @change="event => onDrop(event.target?.files)">
       </template>
 
       <div v-if="showDrop" ref="dropZoneRef" v-loading="vloading" class="bg-blueGray w-auto h-50">
@@ -108,15 +109,35 @@ async function upLoadBookmarks() {
 
 <style scoped>
 .total-tabs {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.el-button_1 {
+  place-items: center;
+  background-color: #F2F7FA;
+  padding: 1em;
+  border-radius: 10px;
+  margin-left: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0);
+  cursor: pointer;
+  transition: transform 0.5s;
+  color: #0e428fd1;
+  font-weight: 600;
+  letter-spacing: 0.5;
+}
+
+.el-button:hover {
+
+  transform: translateY(0.3em);
+
 }
 
 .tab-site-lists {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  flex-wrap: wrap;
 }
 </style>
-@/types/website

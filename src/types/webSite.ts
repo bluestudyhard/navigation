@@ -22,18 +22,26 @@ export interface websiteType {
 
 // 首页展示
 export interface websiteTitleListType {
-  title: string
-  tag?: string
-  website: websiteTempType[]
+  titleName: string
+  tags: {
+    tagName: string
+    website: websiteTempType[]
+  }[]
+}
+export interface websiteShowType extends websiteTempType {
+  titleName: string
+  tagName?: string
 }
 export interface bookmarkTempType {
   id?: number
+  bookmarkName: string
   bookmarkWebsiteTitle: string
   bookmarkWebsiteUrl: string
   bookmarkWebsiteIcon: string
   userId?: number
   checked?: boolean
 }
+// 首页一个网站数据
 export interface websiteTempType {
   id?: number
   websiteName: string
@@ -43,7 +51,7 @@ export interface websiteTempType {
   userId: number
   tagId: string
   websiteWeight?: number
-
+  deleted?: boolean
 }
 export interface bookmarkRequestType {
   bookmarks: bookmarkTempType[]
@@ -61,4 +69,14 @@ export interface websiteTagType {
   tagName: string
   userId?: number
   titleId: number
+}
+
+export interface test {
+  titleName: string
+  tagNames: [
+    {
+      tagName: string
+      websites: websiteTempType
+    },
+  ]
 }

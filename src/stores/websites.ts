@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 
 // import { useStorage } from '@vueuse/core'
 // import { ref } from 'vue'
-import type { bookmarkTempType, websiteTagType, websiteTitleListType, websiteTitleType, websiteType } from '@/types/website'
+import type { bookmarkTempType, websiteShowType, websiteTagType, websiteTempType, websiteTitleListType, websiteTitleType, websiteType } from '@/types/website'
 import { uploadBookMark } from '@/api/bookmark/bookmarkApi'
-import { addWebsiteTagAction, addWebsiteTitleAction, getWebsietTitleActions, getWebsiteTagsActions } from '@/service/websiteService'
+import { addWebsiteTagAction, addWebsiteTitleAction, getWebsietTitleActions, getWebsiteListActions, getWebsiteTagsActions, saveWebSiteListActions } from '@/service/websiteService'
+import { deleteBookMarkActions } from '@/service/bookmark'
 
 // const storage = ref<websiteType[]>([])
 // const storageTitleList = ref<websiteTitleListType[]>([{ title: 'AI工具集', website: [] }, { title: '大前端', website: [] }, { title: 'fishs', website: [] }])
@@ -14,27 +15,78 @@ const websitesStore = defineStore('websites', {
 
   state: () => {
     return {
-      websiteList: [] as websiteType[], // 网站列表
+      websiteList: [{ bookmarkName: 'reading', bookmarks: [{ bookmarkWebsiteIcon: '1' }] }] as websiteType[], // 后台网站列表即书签列表
       // 网站标题列表
-      websiteTitleList: [{ title: 'AI工具集', website: [] }, { title: '大前端', website: [] }, { title: 'fishs', website: [] }] as websiteTitleListType[],
+      websiteTitleList: [] as websiteTitleListType[],
+      websiteShowList: [] as websiteShowType[],
       websiteTags: [] as websiteTagType[], // 网站标签列表
       websiteTitles: [] as websiteTitleType[], // 网站大标题列表
-      test: 'old',
+
     }
   },
   actions: {
-    updateTest(newTest: string) {
-      this.test = newTest
-    },
-    // 保存网站列表
-    saveWebSiteList(websiteList: websiteType[]) {
+    // 获取书签列表
+    // async getBookmarkList(userId: number) {
+    //   const res = await getBookMarkListActions(userId)
+    //   // 将res里，所有有相同bookmarkName的数据，放到一个bookmarks数组里,形成的结构为：[{bookmarkName: 'xxx', bookmarks: [{}, {}]}]
+    //   console.log('所有bookmarks', res)
+    //   console.log('temp', temp)
+    //   // this.websiteList = res
+    // },
+    // 保存书签列表
+    saveBookmarkList(websiteList: websiteType[]) {
       this.websiteList = websiteList
     },
     // 更新网站列表
-    updateWebSiteList(newWebSiteList: websiteType[]) {
+    updateBookmarkList(newWebSiteList: websiteType[]) {
       this.websiteList = newWebSiteList
     },
-    // 更新指定类别标题的网站列表
+    // 上传首页网站列表
+    async uploadWebsiteList(websiteList: websiteTempType) {
+      const res = await saveWebSiteListActions(websiteList)
+      return res
+    },
+    // 获取首页网站列表
+    async getWebsiteList(userId: number) {
+      // if (this.websiteTitleList.length > 0)
+      //   return
+      const res = await getWebsiteListActions(userId)
+      // console.log('网站列表', res)
+
+      const temp = res.reduce((pre: websiteTitleListType[], cur: websiteShowType) => {
+        // 判断是否存在大标题
+        const titleIndex = pre.findIndex(item => item.titleName === cur.titleName)
+        if (titleIndex !== -1) {
+          // 判断是否存在标签以及是否被删除
+          const tagIndex = pre[titleIndex].tags.findIndex(item => item.tagName === cur.tagName)
+          if (tagIndex !== -1) {
+            // 存在标签
+            pre[titleIndex].tags[tagIndex].website.push(cur)
+          }
+          else {
+            // 不存在标签
+            pre[titleIndex].tags.push({
+              tagName: cur.tagName as string,
+              website: [cur],
+            })
+          }
+        }
+        else {
+          // 不存在大标题
+          pre.push({
+            titleName: cur.titleName,
+            tags: [{
+              tagName: cur.tagName as string,
+              website: [cur],
+            }],
+          })
+        }
+        return pre
+      }, [])
+      // console.log('temp', temp)
+      this.websiteTitleList = temp
+    },
+    // 更新首页网站列表
     updateWebSiteTitleList(newWebSiteTitleList: websiteTitleListType[]) {
       this.websiteTitleList = newWebSiteTitleList
     },
@@ -48,16 +100,26 @@ const websitesStore = defineStore('websites', {
       const res = await uploadBookMark(bookmarks, bookmarkName)
       return res.data
     },
+    // 删除书签
+    async deleteBookMark(bookmarks: bookmarkTempType[]) {
+      console.log('删除书签', bookmarks)
+      const res = await deleteBookMarkActions(bookmarks)
+      return res.data
+    },
     // 获取标签(二级标题)
     async getWebsiteTags() {
+      // if (this.websiteTags.length > 0)
+      //   return
       const res = await getWebsiteTagsActions(1)
-      console.log('tags 数据', res)
+      // console.log('tags 数据', res)
       this.websiteTags = res
     },
     // 获取大标题
     async getWebsiteTitles() {
+      // if (this.websiteTitles.length > 0)
+      //   return
       const res = await getWebsietTitleActions(1)
-      console.log('titles 数据', res)
+      // console.log('titles 数据', res)
       this.websiteTitles = res
     },
     // 添加标签

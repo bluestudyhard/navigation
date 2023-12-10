@@ -2,6 +2,7 @@
 
 <template>
   <!-- 路由组件出口的位置 -->
+  <el-backtop :bottom="100" :right="10" visibility-height="100" target="main" />
   <router-view v-slot="{ Component }">
     <transition name="fade">
       <!-- 渲染layout一级路由的子路由 -->

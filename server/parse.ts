@@ -19,8 +19,8 @@ async function testParse(url: string) {
   const dom = new jsdom.JSDOM(html)
   const document = dom.window.document
   const head = document.querySelector('head')
-  const title = head.querySelector('title').textContent
-  const icon = head.querySelector('link[rel="icon"]').href
+  const title = head?.querySelector('title')?.textContent
+  const icon = (head?.querySelector('link[rel="icon"]') as HTMLLinkElement)?.href
   const data = {
     title,
     icon,
@@ -32,10 +32,10 @@ async function testParse(url: string) {
 app.use(cors())
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true }))
-app.get('/', async (req, res) => {
+app.get('/', async (_req, res) => {
   res.send('请求成功')
 })
-app.get('/test', async (req, res) => {
+app.get('/test', async (_req, res) => {
   const url = 'https://www.blueltytblog.top/'
   const data = await testParse(url)
   res.status(200).send(data)
@@ -49,16 +49,16 @@ app.post('/onesite', async (req, res) => {
   const data = await testParse(url)
   res.status(200).send(data)
 })
-app.post('/website', upload.single('file'), (req, res) => {
+app.post('/website', upload.single('file'), (req, _res) => {
   // 获取req的数据
   const requestData = req.file
-  const fileData = requestData.buffer.toString('utf-8')
+  const fileData = requestData?.buffer.toString('utf-8')
   // 将filedata转换成dom
   const dom = new jsdom.JSDOM(fileData)
   const document = dom.window.document
 
   const dt = document.querySelectorAll('dt')
-  const body = document.querySelector('body')
+
   const h3 = document.querySelectorAll('h3')
   // console.log(dl?.innerHTML)
   dt.forEach((item) => {

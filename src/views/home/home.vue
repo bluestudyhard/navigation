@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
 import userStore from '@/stores/user'
+import websitesStore from '@/stores/websites'
 import HomeSide from '@/components/HomeSide.vue'
 import opensource from '@/layouts/opensource.vue'
+import Aside from '@/layouts/aside.vue'
 
 // import BookMark from '@/components/BookMark.vue'
 
@@ -13,11 +16,15 @@ function changeTheme() {
   else
     document.documentElement.setAttribute('data-theme', 'light')
 }
+
 const useStore = userStore()
-const { userAvatar, username } = useStore
+const websiteStore = websitesStore()
+// const { websiteTitleList } = storeToRefs(websiteStore)
+const { userAvatar } = useStore
 onMounted(() => {
   useStore.getAudit()
   useStore.getUser()
+  websiteStore.getWebsiteList(1)
 })
 const isCollapse = ref(false)
 </script>
@@ -29,54 +36,7 @@ const isCollapse = ref(false)
   <div class="el-container">
     <el-container>
       <el-aside class="aside" width="auto">
-        <div class="user-agent flex justify-center">
-          <span class=" flex flex-col justify-center">
-            <el-avatar :size="80" :src="userAvatar" />
-            {{ username }}
-          </span>
-        </div>
-        <el-menu :collapse-transition="true" :collapse="isCollapse" :hide-timeout="500" :show-timeout="500">
-          <el-menu-item index="1">
-            <el-icon>
-              <location />
-            </el-icon>
-            <span>首页</span>
-          </el-menu-item>
-          <el-sub-menu index="2">
-            <template #title>
-              <el-icon>
-                <location />
-              </el-icon>
-              <span>网站类别</span>
-            </template>
-            <el-menu-item-group title="编程学习">
-              <el-menu-item index="1-1">
-                item one
-              </el-menu-item>
-              <el-menu-item index="1-2">
-                item two
-              </el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="好用工具合集">
-              <el-menu-item index="1-3">
-                item 3
-              </el-menu-item>
-              <el-menu-item index="1-4">
-                item 4
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-sub-menu>
-          <el-menu-item v-if="useStore.isAdmin" index="3">
-            <el-icon>
-              <location />
-            </el-icon>
-            <span>
-              <router-link to="/management">
-                后台管理
-              </router-link>
-            </span>
-          </el-menu-item>
-        </el-menu>
+        <Aside />
       </el-aside>
       <el-container>
         <el-header class="header">
@@ -109,9 +69,9 @@ const isCollapse = ref(false)
         <el-main class="main">
           <HomeSide />
         </el-main>
-        <el-footer>
+        <!-- <el-footer>
           Footer
-        </el-footer>
+        </el-footer> -->
       </el-container>
     </el-container>
   </div>
@@ -122,8 +82,9 @@ const isCollapse = ref(false)
 <style scoped lang="scss">
 .aside {
 
-  height: 100%;
-  background: #f4f4f443;
+  height: 100vh;
+
+  background: #f4f4f408;
   backdrop-filter: blur(4px);
   box-shadow: -1px 0px 4px 0px rgb(65 65 65 / 10%);
 }
@@ -167,8 +128,9 @@ const isCollapse = ref(false)
   }
 
   .main {
-    overflow: initial;
-    height: 100%;
+    overflow: auto;
+    height: 90vh;
+    scroll-behavior: smooth;
   }
 
   // 解决侧边栏折叠卡顿的问题
@@ -180,10 +142,10 @@ const isCollapse = ref(false)
     transition: width 0.5s ease;
   }
 
-  // .main::-webkit-scrollbar {
-  //   width: 0px;
-  //   height: 0px;
-  // }
+  .main::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 }
 
 .el-dropdown-link {

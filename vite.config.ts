@@ -2,7 +2,6 @@ import { URL, fileURLToPath } from 'node:url'
 import type { ConfigEnv, UserConfigExport } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
-import presetUno from '@unocss/preset-uno'
 import Unocss from 'unocss/vite'
 import { viteMockServe } from 'vite-plugin-mock'
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ModeSideItem from './ModeSideItem.vue'
+
+// import ModeSideItem from './ModeSideItem.vue'
 import type { websiteTitleListType } from '@/types/website'
 
 import websitesStore from '@/stores/websites'
@@ -14,8 +15,8 @@ websiteList.value = [...websiteTitleList]
 <template>
   <div class="flex  home-site">
     <div v-for="(item, index) in websiteList" :key="index">
-      <h5>{{ item.title }}</h5>
-      <ModeSideItem :tab-site-list="item.website" />
+      <h5>{{ item.titleName }}</h5>
+      <!-- <ModeSideItem :tab-site-list="item" /> -->
     </div>
   </div>
 </template>

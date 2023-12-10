@@ -1,41 +1,45 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import requestIframe from '../utils/iframe'
+
+// import requestIframe from '../utils/iframe'
 import type { websiteTempType } from '@/types/website'
 
 defineProps<{
   tabSiteList: websiteTempType[]
+
 }>()
 
-const targetUrl = ref('')
+// const targetUrl = ref('')
 const isShow = ref(false)
-async function getIframe(url: string) {
-  isShow.value = true
-  targetUrl.value = await requestIframe(url)
-  console.log(targetUrl.value)
-}
+// async function getIframe(url: string) {
+//   isShow.value = true
+//   targetUrl.value = await requestIframe(url)
+//   console.log(targetUrl.value)
+// }
 </script>
 
 <template>
   <div v-if="isShow" class="website-preview">
-    <iframe :srcdoc="targetUrl" class="fixed right-50% top-0 w-150 h-150 z-100" />
+    <!-- <iframe :srcdoc="targetUrl" class="fixed right-50% top-0 w-150 h-150 z-100" /> -->
   </div>
-  <div v-for="(item, index) in tabSiteList" :key="index" class="tab-site-card">
-    <div class=" flex  flex-items-center  w-100%">
-      <img :src="item.websiteIcon" alt="" class="w-5.1 h-5.1 ">
-      <button class="outline-none border-none" @click="getIframe(item.websiteUrl)">
+  <span v-for="(item, index) in tabSiteList" :key="index">
+    <div class="tab-site-card">
+      <div class=" flex  flex-items-center  w-100%">
+        <img :src="item.websiteIcon" alt="" class="w-5.1 h-5.1 ">
+      <!-- <button class="outline-none border-none" @click="getIframe(item.websiteUrl)">
         <el-icon><ZoomIn /></el-icon>
-      </button>
+      </button> -->
+      </div>
+      <div class="flex w-full flex-items-center  p-0">
+        <a :href="item.websiteUrl" target="_blank" class=" text-left">
+          <p class="title font-size-3.2 m-b--1 font-size-2.75 font-650 "> {{
+            item.websiteName.slice(0, 6) }}</p>
+          <div class="border" />
+        <!-- <p class="title-content font-size-2.5">{{ item.websiteDescription }}</p> -->
+        </a>
+      </div>
     </div>
-    <div class="flex w-full flex-items-center  p-0">
-      <a :href="item.websiteUrl" target="_blank" class=" text-left">
-        <p class="title font-size-3.2 m-b--1 font-size-2.75 font-650 "> {{
-          item.websiteName.slice(0, 6) }}</p>
-        <div class="border" />
-        <p class="title-content font-size-2.5">{{ item.websiteDescription }}</p>
-      </a>
-    </div>
-  </div>
+  </span>
 </template>
 
 <style scoped lang="scss">
@@ -104,4 +108,3 @@ async function getIframe(url: string) {
   }
 }
 </style>
-@/types/website

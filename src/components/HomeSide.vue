@@ -1,24 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import HomeSideItem from './HomeSideItem.vue'
-import type { websiteTitleListType } from '@/types/website'
+
+// import type { websiteTitleListType } from '@/types/website'
 
 import websitesStore from '@/stores/websites'
 
 const useStore = websitesStore()
-const { websiteTitleList } = useStore
-const websiteList = ref<websiteTitleListType[]>([])
-websiteList.value = [...websiteTitleList]
+const { websiteTitleList } = storeToRefs(useStore)
+// const websiteList = ref<websiteTitleListType[]>([])
+
+onMounted(() => {
+  useStore.getWebsiteList(1)
+})
 </script>
 
 <template>
   <div class="flex w-full flex-col home-site">
-    <div v-for="(item, index) in websiteList" :key="index">
-      <h3>{{ item.title }}</h3>
-      <h3>{{ item.tag }}</h3>
-      <div class="tab-site-lists">
-        <HomeSideItem :tab-site-list="item.website" />
-      </div>
+    <div v-for="(item, index) in websiteTitleList " :key="index">
+      <h3>{{ item.titleName }}</h3>
+      <span v-for="tag in item.tags" :key="tag.tagName">
+        <h4><i :id="tag.tagName">{{ tag.tagName }}</i></h4>
+        <div class="tab-site-lists">
+          <HomeSideItem :tab-site-list="tag.website" />
+        </div>
+      </span>
     </div>
   </div>
 </template>

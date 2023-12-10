@@ -3,7 +3,7 @@
   "rules": {
     // 禁用console检查和template检查
     "no-console": "off",
-    "vue/no-template-shadow": "off"
-
+    "vue/no-template-shadow": "off",
+    "no-alert":"off"
   }
 }

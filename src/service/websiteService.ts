@@ -1,5 +1,5 @@
-import { addWebsiteTag, addWebsiteTitle, getWebsietTitle, getWebsiteTags } from '@/api/website'
-import type { websiteInfo, websiteTagType, websiteTitleType } from '@/types/website'
+import { addWebsite, addWebsiteTag, addWebsiteTitle, getWebsietTitle, getWebsiteList, getWebsiteTags } from '@/api/website'
+import type { websiteTagType, websiteTempType, websiteTitleType } from '@/types/website'
 
 export async function addWebsiteTagAction(data: websiteTagType) {
   const res = await addWebsiteTag(data)
@@ -18,5 +18,17 @@ export async function getWebsietTitleActions(userId: number) {
 
 export async function getWebsiteTagsActions(userId: number) {
   const res = await getWebsiteTags(userId)
+  return res.data
+}
+
+// 添加到首页展示网站
+export async function saveWebSiteListActions(data: websiteTempType) {
+  const res = await addWebsite(data)
+  return res.data as number
+}
+
+// 获得首页展示网站
+export async function getWebsiteListActions(userId: number) {
+  const res = await getWebsiteList(userId)
   return res.data
 }

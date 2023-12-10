@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import type menuType from '@/types/menutype'
 import constantRoute from '@/router/constRoutes'
 import { getUserInfo } from '@/api/user/index'
-import type { userInfo } from '@/types/user'
 import router from '@/router'
 
 const token = ref(localStorage.getItem('token') || '')

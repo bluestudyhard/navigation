@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="tab-sites">
-    <div v-for="(bookmark, index) in tabSiteList" :key="index" class="tab-site-card">
+    <!-- <div v-for="(bookmark, index) in tabSiteList" :key="index" class="tab-site-card">
       <div class="flex w-full flex-items-center p-0">
         <a target="_blank" class=" text-left">
           <p class="title font-size-3.2 m-b--1 font-size-2.75 font-650 " />
@@ -17,7 +17,7 @@ defineProps<{
           <p class="title-content font-size-2.5" />
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -27,4 +27,5 @@ module.exports = {
       },
     ],
   },
+  // eslint-disable-next-line xxx 单行注释
 };

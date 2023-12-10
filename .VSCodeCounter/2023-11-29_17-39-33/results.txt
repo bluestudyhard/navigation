@@ -1,0 +1,128 @@
+Date : 2023-11-29 17:39:33
+Directory : c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management
+Total : 67 files,  14617 codes, 401 comments, 1131 blanks, all 16149 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          3 |      7,210 |          0 |          3 |      7,213 |
+| YAML               |          1 |      4,112 |          0 |        628 |      4,740 |
+| Vue                |         24 |      2,210 |         84 |        303 |      2,597 |
+| TypeScript         |         27 |        755 |        260 |        130 |      1,145 |
+| SCSS               |          4 |        169 |         53 |         49 |        271 |
+| JavaScript         |          2 |         87 |          0 |          2 |         89 |
+| Markdown           |          2 |         35 |          0 |         12 |         47 |
+| JSON with Comments |          1 |         24 |          4 |          3 |         31 |
+| HTML               |          1 |         13 |          0 |          1 |         14 |
+| XML                |          2 |          2 |          0 |          0 |          2 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         67 |     14,617 |        401 |      1,131 |     16,149 |
+| . (Files)                                                                                         |         13 |     11,595 |          8 |        666 |     12,269 |
+| public                                                                                            |          1 |          1 |          0 |          0 |          1 |
+| server                                                                                            |          1 |         68 |          6 |          7 |         81 |
+| src                                                                                               |         52 |      2,953 |        387 |        458 |      3,798 |
+| src (Files)                                                                                       |          3 |         54 |          3 |          9 |         66 |
+| src\api                                                                                           |          3 |         36 |          3 |         13 |         52 |
+| src\api\bookmark                                                                                  |          1 |         12 |          0 |          5 |         17 |
+| src\api\user                                                                                      |          1 |          8 |          1 |          4 |         13 |
+| src\api\website                                                                                   |          1 |         16 |          2 |          4 |         22 |
+| src\assets                                                                                        |          5 |        170 |         53 |         49 |        272 |
+| src\assets (Files)                                                                                |          1 |          1 |          0 |          0 |          1 |
+| src\assets\styles                                                                                 |          4 |        169 |         53 |         49 |        271 |
+| src\components                                                                                    |         10 |        985 |          9 |        142 |      1,136 |
+| src\layouts                                                                                       |          3 |        107 |         33 |         16 |        156 |
+| src\mock                                                                                          |          2 |         67 |         38 |          4 |        109 |
+| src\router                                                                                        |          2 |        106 |         28 |         18 |        152 |
+| src\service                                                                                       |          4 |         68 |         29 |         16 |        113 |
+| src\stores                                                                                        |          3 |        145 |         37 |         18 |        200 |
+| src\types                                                                                         |          3 |         96 |          3 |         12 |        111 |
+| src\utils                                                                                         |          4 |         36 |        110 |         20 |        166 |
+| src\views                                                                                         |         10 |      1,083 |         41 |        141 |      1,265 |
+| src\views (Files)                                                                                 |          2 |        290 |          1 |         46 |        337 |
+| src\views\home                                                                                    |          1 |        182 |          2 |         23 |        207 |
+| src\views\management                                                                              |          5 |        454 |         29 |         49 |        532 |
+| src\views\management (Files)                                                                      |          3 |        131 |          1 |         23 |        155 |
+| src\views\management\manage                                                                       |          2 |        323 |         28 |         26 |        377 |
+| src\views\playground                                                                              |          1 |         11 |          7 |          3 |         21 |
+| src\views\themes                                                                                  |          1 |        146 |          2 |         20 |        168 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                          | language           | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\.stylelintrc.cjs                        | JavaScript         |         30 |          0 |          1 |         31 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\README.md                               | Markdown           |         11 |          0 |          8 |         19 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\index.html                              | HTML               |         13 |          0 |          1 |         14 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\package-lock.json                       | JSON               |      7,118 |          0 |          1 |      7,119 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\package.json                            | JSON               |         82 |          0 |          1 |         83 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\pnpm-lock.yaml                          | YAML               |      4,112 |          0 |        628 |      4,740 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\public\vite.svg                         | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\server\parse.ts                         | TypeScript         |         68 |          6 |          7 |         81 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\App.vue                             | Vue                |         35 |          1 |          4 |         40 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\api\bookmark\bookmarkApi.ts         | TypeScript         |         12 |          0 |          5 |         17 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\api\user\index.ts                   | TypeScript         |          8 |          1 |          4 |         13 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\api\website\index.ts                | TypeScript         |         16 |          2 |          4 |         22 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\assets\styles\handle.scss           | SCSS               |         28 |          4 |          9 |         41 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\assets\styles\style.scss            | SCSS               |         69 |         30 |         28 |        127 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\assets\styles\theme.scss            | SCSS               |         10 |          0 |          0 |         10 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\assets\styles\variable.scss         | SCSS               |         62 |         19 |         12 |         93 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\assets\vue.svg                      | XML                |          1 |          0 |          0 |          1 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\BookMark.vue             | Vue                |         77 |          0 |          9 |         86 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\BookmarkItem.vue         | Vue                |         63 |          0 |          9 |         72 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\HomeSide.vue             | Vue                |         42 |          0 |         10 |         52 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\HomeSideItem.vue         | Vue                |         94 |          5 |         13 |        112 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\Joystick.vue             | Vue                |         84 |          0 |         12 |         96 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\ModeOpenSource.vue       | Vue                |        352 |          4 |         48 |        404 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\ModeSide.vue             | Vue                |         42 |          0 |         10 |         52 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\ModeSideItem.vue         | Vue                |         83 |          0 |         10 |         93 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\TestThree.vue            | Vue                |         38 |          0 |          8 |         46 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\components\Upload.vue               | Vue                |        110 |          0 |         13 |        123 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\layouts\main.vue                    | Vue                |         19 |          2 |          5 |         26 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\layouts\menu.vue                    | Vue                |         63 |         30 |          6 |         99 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\layouts\opensource.vue              | Vue                |         25 |          1 |          5 |         31 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\main.ts                             | TypeScript         |         19 |          1 |          4 |         24 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\mock\user.ts                        | TypeScript         |         67 |          0 |          2 |         69 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\mock\websideInfo.ts                 | TypeScript         |          0 |         38 |          2 |         40 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\router\constRoutes.ts               | TypeScript         |         42 |          0 |          3 |         45 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\router\index.ts                     | TypeScript         |         64 |         28 |         15 |        107 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\service\bookmark.ts                 | TypeScript         |         18 |          4 |          4 |         26 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\service\getWebsite.ts               | TypeScript         |          6 |          0 |          2 |          8 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\service\login.ts                    | TypeScript         |         18 |         23 |          3 |         44 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\service\websiteService.ts           | TypeScript         |         26 |          2 |          7 |         35 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\stores\basicstate.ts                | TypeScript         |          8 |          0 |          2 |         10 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\stores\user.ts                      | TypeScript         |         54 |          5 |          6 |         65 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\stores\websites.ts                  | TypeScript         |         83 |         32 |         10 |        125 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\types\menutype.ts                   | TypeScript         |          4 |          0 |          2 |          6 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\types\user.ts                       | TypeScript         |         22 |          0 |          3 |         25 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\types\website.ts                    | TypeScript         |         70 |          3 |          7 |         80 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\utils\exportExcel.ts                | TypeScript         |          0 |         17 |          6 |         23 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\utils\iframe.ts                     | TypeScript         |          7 |          0 |          2 |          9 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\utils\joystick.ts                   | TypeScript         |          0 |         83 |          6 |         89 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\utils\request.ts                    | TypeScript         |         29 |         10 |          6 |         45 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\404.vue                       | Vue                |         16 |          0 |          3 |         19 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\home\home.vue                 | Vue                |        182 |          2 |         23 |        207 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\login.vue                     | Vue                |        274 |          1 |         43 |        318 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\management\manage\audit.vue   | Vue                |          4 |          0 |          1 |          5 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\management\manage\webside.vue | Vue                |        319 |         28 |         25 |        372 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\management\management.vue     | Vue                |        123 |          1 |         21 |        145 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\management\permission.vue     | Vue                |          4 |          0 |          1 |          5 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\management\showdata.vue       | Vue                |          4 |          0 |          1 |          5 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\playground\playground.vue     | Vue                |         11 |          7 |          3 |         21 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\views\themes\mode.vue               | Vue                |        146 |          2 |         20 |        168 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\src\vite-env.d.ts                       | TypeScript         |          0 |          1 |          1 |          2 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\test.js                                 | JavaScript         |         57 |          0 |          1 |         58 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\test.ts                                 | TypeScript         |         66 |          2 |         11 |         79 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\tsconfig.json                           | JSON with Comments |         24 |          4 |          3 |         31 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\tsconfig.node.json                      | JSON               |         10 |          0 |          1 |         11 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\unocss.config.ts                        | TypeScript         |         16 |          0 |          2 |         18 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\vite.config.ts                          | TypeScript         |         32 |          2 |          4 |         38 |
+| c:\Users\31647\Desktop\WEB\Vue\blue-navigation-management\日志.md                                   | Markdown           |         24 |          0 |          4 |         28 |
+| Total                                                                                             |                    |     14,617 |        401 |      1,131 |     16,149 |
++---------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
