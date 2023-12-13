@@ -32,7 +32,7 @@ const isCollapse = ref(false)
 <template>
   <opensource />
   <!-- <el-backtop></el-backtop>一定要写于最外层块级区域的第一行，不可写于代码末尾。 -->
-  <el-backtop :bottom="10" :right="10" visibility-height="100" />
+  <el-backtop :bottom="100" :right="20" visibility-height="1000" />
   <div class="el-container">
     <el-container>
       <el-aside class="aside" width="auto">
@@ -67,6 +67,11 @@ const isCollapse = ref(false)
           </div>
         </el-header>
         <el-main class="main">
+          <el-backtop :bottom="200" :right="20" visibility-height="100" target="main">
+            <div>
+              UP
+            </div>
+          </el-backtop>
           <HomeSide />
         </el-main>
         <!-- <el-footer>
@@ -95,14 +100,14 @@ const isCollapse = ref(false)
 }
 
 .el-container {
-  width: 99%;
+  width: 100%;
   margin: 0 auto;
   // height: 3000px;
   @include background-color("background_color");
   @include font_color("text_color");
   transition: background-color 1s, color .6s;
   // background: linear-gradient(90deg, #EAF2E7 0.65%, rgba(163, 199, 231, 0.847) 102.06%);
-
+  background: linear-gradient(113deg, #f7f5f5 1.08%, #b5d1e7 95.44%);
   backdrop-filter: blur(2px);
 
   .header {

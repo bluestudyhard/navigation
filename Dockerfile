@@ -4,17 +4,19 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
 
-ARG NODE_VERSION=18.15.0
+# ARG指的是构建参数，可以在构建时通过--build-arg <参数名>=<参数值>来指定
+ARG NODE_VERSION=18.15.0 
 ARG PNPM_VERSION=8.6.12
 
 ################################################################################
 # Use node image for base image for all stages.
+# FROM 表示需要的基础镜像，第一条指令必须是FROM
 FROM node:${NODE_VERSION}-alpine as base
 
-# Set working directory for all build stages.
+# Set working directory for all build stages. 工作目录，即容器启动后默认的目录
 WORKDIR /usr/src/app
 
-# Install pnpm.
+# Install pnpm.  RUN命令会在当前镜像的基础上执行命令并提交为新的镜像
 RUN --mount=type=cache,target=/root/.npm \
     npm install -g pnpm@${PNPM_VERSION}
 
@@ -45,7 +47,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 
-# Copy the rest of the source files into the image.
+# Copy the rest of the source files into the image. copy..表示
 COPY . .
 # Run the build script.
 RUN pnpm run build

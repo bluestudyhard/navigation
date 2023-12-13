@@ -24,7 +24,10 @@ const isCollapse = ref(false)
         {{ username }}
       </span>
     </div>
-    <el-menu :collapse-transition="true" :collapse="isCollapse" :hide-timeout="500" :show-timeout="500" default-active="2">
+    <el-menu
+      :collapse-transition="true" :collapse="isCollapse" :hide-timeout="500" :show-timeout="500"
+      default-openeds="['2']"
+    >
       <el-menu-item index="1">
         <el-icon>
           <location />
@@ -39,9 +42,9 @@ const isCollapse = ref(false)
           <span>网站类别</span>
         </template>
         <el-menu-item-group v-for="title in websiteTitleList" :key="title.titleName" :title="title.titleName">
-          <el-menu-item v-for="tag in title.tags" :key="tag.tagName" :index="tag.tagName">
-            <a :href="`#${tag.tagName}`">
-              <i>
+          <el-menu-item v-for="tag in title.tags" :key="tag.tagName" :index="tag.tagName" class="flex flex-wrap">
+            <a :href="`#${tag.tagName}`" class="font-size-2.22  ">
+              <i class="overflow-hidden ">
                 {{ tag.tagName }}
               </i>
             </a>
@@ -65,9 +68,9 @@ const isCollapse = ref(false)
 <style scoped>
 .aside {
 
-    height: 100%;
-    background: #f4f4f443;
-    backdrop-filter: blur(4px);
-    box-shadow: -1px 0px 4px 0px rgb(65 65 65 / 10%);
+  height: 100%;
+  background: #f4f4f443;
+  backdrop-filter: blur(4px);
+  box-shadow: -1px 0px 4px 0px rgb(65 65 65 / 10%);
 }
 </style>
