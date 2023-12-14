@@ -18,8 +18,8 @@ const isCollapse = ref(false)
 
 <template>
   <el-aside class="aside" width="auto">
-    <div class="user-agent flex justify-center">
-      <span class=" flex flex-col justify-center">
+    <div class="user-agent flex justify-center m-10">
+      <span class=" flex flex-col justify-center items-center">
         <el-avatar :size="80" :src="userAvatar" />
         {{ username }}
       </span>
@@ -27,13 +27,8 @@ const isCollapse = ref(false)
     <el-menu
       :collapse-transition="true" :collapse="isCollapse" :hide-timeout="500" :show-timeout="500"
       default-openeds="['2']"
+      class="font-500"
     >
-      <el-menu-item index="1">
-        <el-icon>
-          <location />
-        </el-icon>
-        <span>首页</span>
-      </el-menu-item>
       <el-sub-menu index="2">
         <template #title>
           <el-icon>
@@ -52,9 +47,7 @@ const isCollapse = ref(false)
         </el-menu-item-group>
       </el-sub-menu>
       <el-menu-item v-if="useStore.isAdmin" index="3">
-        <el-icon>
-          <location />
-        </el-icon>
+        <el-icon><Files /></el-icon>
         <span>
           <router-link to="/management">
             后台管理

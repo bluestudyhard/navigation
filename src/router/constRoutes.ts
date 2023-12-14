@@ -1,4 +1,5 @@
 const constantRoute = [
+
   {
     path: '/management/showdata',
     component: () => import('../views/management/showdata.vue'),

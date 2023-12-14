@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <nav class=" flex justify-between items-center w-100% h-12 m-t-5">
+  <!-- <nav class=" flex justify-between items-center w-100% h-12 m-t-5">
     <div class="m-10">
       <span class="title font-size-5">Meling Navigation</span>
     </div>
@@ -31,13 +31,8 @@
         测试区
       </router-link>
     </div>
-    <!-- <div class="open-overlay">
-      <span class="bar-top" />
-      <span class="bar-middle" />
-      <span class="bar-bottom" />
-    </div> -->
-  </nav>
-  <!-- <h1>Blue navigation</h1> -->
+  </nav> -->
+
   <router-view />
 </template>
 

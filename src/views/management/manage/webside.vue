@@ -50,7 +50,7 @@ function cancelAllCheck() {
   isCheck.value = false
 }
 // 处理添加title，tag那一块的
-const websiteTitleTags = ref<{ value: string; label: string; children: { value: string; label: string }[] }[]>([])
+const websiteTitleTags = ref<{ value: string; label: string; children: { value: number; label: string }[] }[]>([])
 const inputTag = ref('')
 const inputTitle = ref('')
 const inputTitleId = ref(0)
@@ -256,10 +256,10 @@ onMounted(() => {
           value: tag.id,
           label: tag.titleId === item.id ? tag.tagName : '',
         }
-      }),
+      }).filter(tag => tag.label !== ''),
     }
   }) as any
-  console.log(websiteTitleTags.value)
+  console.log('websiteTitleTags', websiteTitleTags.value)
 })
 </script>
 
@@ -331,7 +331,10 @@ onMounted(() => {
           <section>
             <div class="flex flex-col w-25 justify-center">
               <p>websiteTitle</p>
-              <el-tag v-for="title in websiteTitles" :key="title.id" class="flex m-1" closable effect="dark" type="danger">
+              <el-tag
+                v-for="title in websiteTitles" :key="title.id" class="flex m-1" closable effect="dark"
+                type="danger"
+              >
                 {{ title.titleName }}
               </el-tag>
             </div>
@@ -339,7 +342,10 @@ onMounted(() => {
           <section>
             <p>websiteTags·</p>
             <div class="flex flex-col w-25 justify-center ">
-              <el-tag v-for="websiteTag in websiteTags" :key="websiteTag.tagName" class=" flex m-1 " closable effect="dark">
+              <el-tag
+                v-for="websiteTag in websiteTags" :key="websiteTag.tagName" class=" flex m-1 " closable
+                effect="dark"
+              >
                 {{ websiteTag.tagName }}
               </el-tag>
             </div>

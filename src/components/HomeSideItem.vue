@@ -35,7 +35,7 @@ const isShow = ref(false)
           <p class="title font-size-3.2 m-b--1 font-size-2.75 font-650 "> {{
             item.websiteName.slice(0, 6) }}</p>
           <div class="border" />
-        <!-- <p class="title-content font-size-2.5">{{ item.websiteDescription }}</p> -->
+          <p class="title-content font-size-2.5">{{ item.websiteDescription?.slice(0,30) }}</p>
         </a>
       </div>
     </div>
@@ -47,7 +47,7 @@ const isShow = ref(false)
   display: flex;
   padding: .5rem;
   width: 11rem;
-  // height: 3.5rem;
+  height: 6rem;
   flex-direction: column;
   align-items: center;
   border-radius: .5rem;
@@ -58,8 +58,9 @@ const isShow = ref(false)
   position: relative;
   cursor: pointer;
   transition: all .3s;
-  border-radius: .3rem;
-  background: #f0efee58;
+  border-radius: .5rem;
+  background: #f0efee4d;
+
   // background-image: linear-gradient(to top, #acbeee 0%, #e7f0fd 100%);
   // background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4 100%);
   // background: linear-gradient(to right, rgb(137, 104, 255), rgb(175, 152, 255));
@@ -91,19 +92,19 @@ const isShow = ref(false)
 
   &:hover {
     // height: 7rem;
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 
   &::before {
     width: 100px;
     height: 80px;
     content: "";
-    background: linear-gradient(to right, rgb(129, 182, 247), rgb(234, 241, 242));
+    background: linear-gradient(to right, #bbc8f8dc, rgba(186, 224, 188, 0.999));
     position: absolute;
 
     border-radius: 50%;
-    right: -43%;
-    top: -85%;
+    right: -41%;
+    top: -54%;
     // backdrop-filter: blur(10px);
   }
 }

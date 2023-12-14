@@ -48,8 +48,8 @@ const websitesStore = defineStore('websites', {
     },
     // 获取首页网站列表
     async getWebsiteList(userId: number) {
-      // if (this.websiteTitleList.length > 0)
-      //   return
+      if (this.websiteTitleList.length > 0)
+        return
       const res = await getWebsiteListActions(userId)
       // console.log('网站列表', res)
 
@@ -108,16 +108,16 @@ const websitesStore = defineStore('websites', {
     },
     // 获取标签(二级标题)
     async getWebsiteTags() {
-      // if (this.websiteTags.length > 0)
-      //   return
+      if (this.websiteTags.length > 0)
+        return
       const res = await getWebsiteTagsActions(1)
       // console.log('tags 数据', res)
       this.websiteTags = res
     },
     // 获取大标题
     async getWebsiteTitles() {
-      // if (this.websiteTitles.length > 0)
-      //   return
+      if (this.websiteTitles.length > 0)
+        return
       const res = await getWebsietTitleActions(1)
       // console.log('titles 数据', res)
       this.websiteTitles = res

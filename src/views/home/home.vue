@@ -107,7 +107,7 @@ const isCollapse = ref(false)
   @include font_color("text_color");
   transition: background-color 1s, color .6s;
   // background: linear-gradient(90deg, #EAF2E7 0.65%, rgba(163, 199, 231, 0.847) 102.06%);
-  background: linear-gradient(113deg, #f7f5f5 1.08%, #b5d1e7 95.44%);
+  background: linear-gradient(113deg, #e9f8ff4e 1.08%, #dbecf754);
   backdrop-filter: blur(2px);
 
   .header {

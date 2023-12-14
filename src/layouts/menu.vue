@@ -25,6 +25,7 @@ function routerPush(path: string) {
   <el-menu class="el-menu" :collapse="collapse">
     <template v-for="(item, index) in menuList" :key="item.path">
       <!-- 单级 -->
+
       <el-menu-item v-if="!item.children" :index="item.path + index" @click="routerPush(item.path)">
         <el-icon>
           <location />

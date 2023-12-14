@@ -37,7 +37,9 @@ function logout() {
               <Expand />
             </el-icon>
           </el-button>
-
+          <router-link to="/">
+            <el-button>home</el-button>
+          </router-link>
           <div class="avatar">
             <el-dropdown class="el-dropdown-link">
               <span>
