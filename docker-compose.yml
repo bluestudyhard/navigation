@@ -1,0 +1,9 @@
+version: '1.1'
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production #production表示生产环境
+    ports:
+      - 4173:4173

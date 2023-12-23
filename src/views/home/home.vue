@@ -46,7 +46,7 @@ const isCollapse = ref(false)
               <Expand />
             </el-icon>
           </el-button>
-          <el-switch v-model="isdark" @change="changeTheme" />
+
           <div class="avatar">
             <el-dropdown class="el-dropdown-link">
               <span>
@@ -89,9 +89,9 @@ const isCollapse = ref(false)
 
   height: 100vh;
 
-  background: #f4f4f408;
+  background: #fdfdfd40;
   backdrop-filter: blur(4px);
-  box-shadow: -1px 0px 4px 0px rgb(65 65 65 / 10%);
+  box-shadow: 3px 0px 10px 1px rgba(65, 65, 65, 0.061);
 }
 
 .user-agent {
@@ -106,16 +106,18 @@ const isCollapse = ref(false)
   @include background-color("background_color");
   @include font_color("text_color");
   transition: background-color 1s, color .6s;
-  // background: linear-gradient(90deg, #EAF2E7 0.65%, rgba(163, 199, 231, 0.847) 102.06%);
-  background: linear-gradient(113deg, #e9f8ff4e 1.08%, #dbecf754);
+  background: #fafafa14;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: cover;
+  // background: linear-gradient(113deg, #e9f8ff4e 1.08%, #dbecf754);
+  background:#ffffff05;
   backdrop-filter: blur(2px);
 
   .header {
     position: relative;
     display: flex;
     // background-color: #fcfcfc;
-
-    border-bottom: 1px solid #ceccccab;
 
     &>h1 {
       background-image: linear-gradient(135deg, #396AF1 10%, #A665F6 90%);
@@ -136,6 +138,8 @@ const isCollapse = ref(false)
     overflow: auto;
     height: 90vh;
     scroll-behavior: smooth;
+    // background: linear-gradient(100deg, #ffffff 0.65%, #a3c7e7 102.06%);
+    // background: #d6e3eeb9;
   }
 
   // 解决侧边栏折叠卡顿的问题
