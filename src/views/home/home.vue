@@ -89,9 +89,10 @@ const isCollapse = ref(false)
 
   height: 100vh;
 
-  background: #fdfdfd40;
-  backdrop-filter: blur(4px);
-  box-shadow: 3px 0px 10px 1px rgba(65, 65, 65, 0.061);
+  background: #fbf9e110;
+  backdrop-filter: blur(12px);
+  border: none;
+  box-shadow: 3px 0px 10px 0px rgba(65, 65, 65, 0.061);
 }
 
 .user-agent {
@@ -108,11 +109,12 @@ const isCollapse = ref(false)
   transition: background-color 1s, color .6s;
   background: #fafafa14;
   background-size: 100% 100%;
-  background-repeat: no-repeat;
+
   background-image: cover;
   // background: linear-gradient(113deg, #e9f8ff4e 1.08%, #dbecf754);
-  background:#ffffff05;
-  backdrop-filter: blur(2px);
+  background: #a2d4ff18;
+  // background: #e9e9e913;
+  backdrop-filter: blur(12px);
 
   .header {
     position: relative;

@@ -19,7 +19,7 @@ onMounted(() => {
 <template>
   <div class="flex w-full flex-col home-site">
     <div v-for="(item, index) in websiteTitleList " :key="index">
-      <h3>{{ item.titleName }}</h3>
+      <h2>{{ item.titleName }}</h2>
       <span v-for="tag in item.tags" :key="tag.tagName">
         <h4><i :id="tag.tagName">{{ tag.tagName }}</i></h4>
         <div class="tab-site-lists">
@@ -48,4 +48,3 @@ onMounted(() => {
   height: 0px;
 }
 </style>
-@/types/website

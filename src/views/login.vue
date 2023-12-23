@@ -94,69 +94,84 @@ async function login() {
 </script>
 
 <template>
-  <div class="container">
+  <div class="header">
+    <div class="inner-header flex flex-col">
+      <h1>Login Here</h1>
+      <div class="user-login">
+        <form>
+          <div class="user-name">
+            <input v-model="username" type="text" placeholder="Please input your name">
+            <label class="label" for="input">
+              <span v-if="errorFields?.username?.length">
+                {{ errorFields?.username[0]?.message }}
+              </span>
+            </label>
+          </div>
+          <div class="user-password">
+            <input v-model="password" type="password" placeholder="Please input password" @input="passwordCheck">
+            <label class="label" for="input">
+              <span v-if="errorFields?.password?.length">
+                {{ errorFields?.password[0]?.message }}
+              </span>
+            </label>
+          </div>
+          <div class="password-check">
+            <span v-for="(check, index) in passwordCheckList" :key="index" :class="check.isCorrect ? 'correct' : ''">
+              {{ check.text }}
+            </span>
+          </div>
+          <input v-model="comfirmPassWord" type="password" placeholder="Comfirm Password" class="comfirm-password">
+          <div v-if="errorFields?.comfirmPassWord?.length">
+            {{ errorFields?.comfirmPassWord[1]?.message }}
+          </div>
+          <div flex-auto>
+            <button type="button" @click="signUp">
+              <span>
+                SignUp
+              </span>
+            </button>
+            <button type="button" @click="login">
+              <span>
+                Login
+              </span>
+            </button>
+            <span :class="pass ? 'correct' : ''">{{ pass }}</span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Waves Container -->
     <div>
-      <h1>Test Login</h1>
+      <svg
+        class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"
+      >
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+        </g>
+      </svg>
     </div>
-    <div class="user-login">
-      <form>
-        <div class="user-name">
-          <input v-model="username" type="text" placeholder="Please input your name">
-          <label class="label" for="input">
-            <span v-if="errorFields?.username?.length">
-              {{ errorFields?.username[0]?.message }}
-            </span>
-          </label>
-        </div>
-        <div class="user-password">
-          <input v-model="password" type="password" placeholder="Please input password" @input="passwordCheck">
-          <label class="label" for="input">
-            <span v-if="errorFields?.password?.length">
-              {{ errorFields?.password[0]?.message }}
-            </span>
-          </label>
-        </div>
-        <div class="password-check">
-          <span v-for="(check, index) in passwordCheckList" :key="index" :class="check.isCorrect ? 'correct' : ''">
-            {{ check.text }}
-          </span>
-        </div>
-        <input v-model="comfirmPassWord" type="password" placeholder="Comfirm Password" class="comfirm-password">
-        <div v-if="errorFields?.comfirmPassWord?.length">
-          {{ errorFields?.comfirmPassWord[1]?.message }}
-        </div>
-        <div flex-auto>
-          <button type="button" @click="signUp">
-            <span>
-              SignUp
-            </span>
-          </button>
-          <button type="button" @click="login">
-            <span>
-              Login
-            </span>
-          </button>
-          <span :class="pass ? 'correct' : ''">{{ pass }}</span>
-        </div>
-      </form>
-    </div>
+    <!-- Waves end -->
   </div>
+  <!-- Header ends -->
+
+  <!-- Content starts -->
+  <div class="content flex">
+    <p>melingblue </p>
+  </div>
+  <!-- Content ends -->
 </template>
 
 <style scoped lang="scss">
-.container {
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  margin: 0 auto;
-  width: 100%;
-  height: 100vh;
-}
-
 .user-login {
   width: 25rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -165,10 +180,10 @@ async function login() {
   padding: 2rem;
   border-radius: 1rem;
   // box-shadow: 3px 2px 1rem 0px #dfe7ff;
-  box-shadow: 10px 10px 20px #dfe7fc,
-    -15px -15px 30px #ededed8f, ;
+  box-shadow: 10px 10px 20px #dfe7fc75,
+    -15px -15px 30px #ededed1e, ;
 
-  background: #fafbff;
+  background: #f1f3f9;
   backdrop-filter: blur(10px);
   // background: linear-gradient(315deg, #fafbff, #fefeff) background-blend-mode: normal, normal, screen, overlay, normal;
 
@@ -186,13 +201,13 @@ async function login() {
 }
 
 input {
-  width: 14rem;
-  padding: .9rem;
+  width: 18rem;
+  padding: 1rem;
   border-radius: 10px;
   background: linear-gradient(315deg, #fafbff, #fefeff);
   border: none;
   outline: none;
-  margin: .4rem;
+  margin: .5rem;
   margin-bottom: 1rem;
   box-shadow: 0px 2px 8px 1px #dde4f7, inset 0px -1px 1px #e3eaff;
 }
@@ -313,5 +328,110 @@ button::before {
   border-radius: inherit;
   background-image: linear-gradient(135deg, #396AF1 10%, #A665F6 90%);
   transition: all 0.475s;
+}
+
+h1 {
+  font-family: 'Kalnia', serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 48px;
+}
+
+p {
+  font-family: 'Kalnia', serif;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: #333333;
+}
+
+.header {
+  position: relative;
+  text-align: center;
+  background: linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%);
+  color: white;
+}
+
+.inner-header {
+  height: 65vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex {
+  /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.waves {
+  position: relative;
+  width: 100%;
+  height: 15vh;
+  margin-bottom: -7px;
+  /*Fix for safari gap*/
+  min-height: 100px;
+  max-height: 150px;
+}
+
+.content {
+  position: relative;
+  height: 20vh;
+  text-align: center;
+  background-color: white;
+}
+
+/* Animation */
+
+.parallax>use {
+  animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+}
+
+.parallax>use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+
+.parallax>use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+
+.parallax>use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+
+.parallax>use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .content {
+    height: 30vh;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
 }
 </style>

@@ -37,7 +37,7 @@ onMounted(() => {
       trigger: '.open-overlay',
       start: '50%',
       end: 'bottom bottom',
-      markers: true,
+      // markers: true,
       scrub: 1,
     },
     opacity: 0,
@@ -50,7 +50,7 @@ onMounted(() => {
       trigger: '.overlay-second-mask',
       start: 'top 80%',
       end: 'top 50%',
-      markers: true,
+      // markers: true,
       scrub: 1,
 
     },
@@ -146,7 +146,7 @@ onMounted(() => {
 
         </span>
       </div>
-      <div class="open-overlay-second bg-#000  z-100 flex h-100vh w-full relative">
+      <!-- <div class="open-overlay-second bg-#000  z-100 flex h-100vh w-full relative">
         <div class="absolute overlay-second-mask w-full h-70%   z-90" />
         <div class="sections opacity-1 h-50% z-100 flex flex-col p-2">
           <span class="flex bg-orange">
@@ -210,10 +210,10 @@ onMounted(() => {
             </section>
           </span>
         </div>
-      </div>
-      <div class="open-overlay-third top-40 z-100 flex h-150vh w-full relative bg-#fff">
+      </div> -->
+      <!-- <div class="open-overlay-third top-40 z-100 flex h-150vh w-full relative bg-#fff">
         1
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -255,7 +255,7 @@ nav {
 }
 
 .open-source-container {
-  height: 3000px;
+  height: 1000px;
   // overflow: hidden;
   overflow-x: hidden;
   // height: 100vh;

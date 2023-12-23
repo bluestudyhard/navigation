@@ -32,10 +32,10 @@ const isShow = ref(false)
       </div>
       <div class="flex w-full flex-items-center  p-0">
         <a :href="item.websiteUrl" target="_blank" class=" text-left">
-          <p class="title font-size-3.7 m-b--1  font-750 "> {{
+          <p class="title font-size-3.5 m-b--1  font-750 "> {{
             item.websiteName.slice(0, 6) }}</p>
           <div class="border" />
-          <p class="title-content font-size-2.9 font-600">{{ item.websiteDescription?.slice(0, 30) }}</p>
+          <p class="title-content font-size-2.8 font-600">{{ item.websiteDescription?.slice(0, 30) }}</p>
         </a>
       </div>
     </div>
@@ -60,7 +60,7 @@ const isShow = ref(false)
   transition: all .3s;
   border-radius: .5rem;
   background: #fffaf76a;
-  backdrop-filter: blur(2px);
+  // backdrop-filter: blur(2px);
 
   // background-image: linear-gradient(to top, #acbeee 0%, #e7f0fd 100%);
   // background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4 100%);
