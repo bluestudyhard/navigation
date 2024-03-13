@@ -8,6 +8,7 @@ defineProps<{
   isCheck: boolean
 }>()
 const emits = defineEmits(['emitIsCheck'])
+
 // 实现长按功能，长按以后，item会抖动
 const check = ref(false)
 const isLongPress = ref(false)
@@ -20,7 +21,7 @@ function longPress(e: EventTarget | null | any) {
   // target.value = e as HTMLElement
   // const currentTarget = document.querySelector('.website-item')
   // console.log(currentTarget?.contains(e as Node))
-// 长按1.5s后出现shake动画
+  // 长按1.5s后出现shake动画
   // console.log(timer.value) timer其实是编号
   isLongPress.value = true
   if (isLongPress.value) {
@@ -50,7 +51,7 @@ watchEffect(() => {
   <div v-for="(item, index) in website.bookmarks" :key="index" class="w-12%">
     <div
       ref="itemZone" class="website-item" draggable="false" @mousedown="event => longPress(event.currentTarget)"
-      @mouseup="event => mouseUp(event.currentTarget) "
+      @mouseup="event => mouseUp(event.currentTarget)"
     >
       <div class="  flex  flex-items-center w-90%">
         <img :src="item.bookmarkWebsiteIcon" alt="" class="w-5.1 h-5.1 p-t-1 select-none">
@@ -123,7 +124,7 @@ watchEffect(() => {
 }
 
 .shake {
-  animation: shake 1.2s cubic-bezier(.36, .07, .19, .97) both ;
+  animation: shake 1.2s cubic-bezier(.36, .07, .19, .97) both;
   transform: translate3d(0, 0, 0);
   // animation-delay: 1.5s;
 }

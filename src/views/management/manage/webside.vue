@@ -264,7 +264,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-backtop :bottom="100" :right="10" visibility-height="100" />
+  <!-- <el-backtop :bottom="100" :right="10" visibility-height="100" /> -->
   <div class="container">
     <div class="header">
       <!-- <el-button @click="handleMove">

@@ -114,6 +114,9 @@ onMounted(() => {
       <router-link to="/playground">
         test
       </router-link>
+      <router-link to="/echart">
+        echart-test
+      </router-link>
     </div>
   </nav>
   <!-- <h1>Blue navigation</h1> -->

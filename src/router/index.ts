@@ -62,6 +62,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/playground/playground.vue'),
     name: '测试区',
   },
+  {
+    path: '/echart',
+    component: () => import('../views/visualization/visualization.vue'),
+    name: '大屏',
+  },
 ]
 // 添加路由守卫
 /**

@@ -1,7 +1,26 @@
 <script setup lang="ts">
-// import { onMounted } from 'vue'
-// import userStore from '@/stores/user'
+// import { onMounted, onUnmounted } from 'vue'
 
+// import userStore from '@/stores/user'
+// import autofit from 'autofit.js'
+
+// onMounted(() => {
+//   autofit.init({
+
+//     designHeight: 1080,
+//     designWidth: 1080,
+//     resize: true,
+//     renderDom: '#app',
+//     ignore: [{
+//       dom: '#chart',
+//       scale: 1.1,
+//       fontsize: 26,
+//     }],
+//   })
+// })
+// onUnmounted(() => {
+//   autofit.off('#app')
+// })
 // const useStore = userStore()
 // onMounted(() => {
 //   useStore.getAudit()
