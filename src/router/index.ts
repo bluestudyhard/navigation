@@ -83,6 +83,8 @@ const router = createRouter({
 
 // 添加路由守卫
 router.beforeEach((to, from, next) => {
+  console.log('to', to)
+  console.log('from', from)
   const useUserStore = userStore()
   const token = useUserStore.token
   console.log(token)
@@ -99,7 +101,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login')
     return next('/')
 
-  console.log({ to, from, userStore: useUserStore.isAdmin })
+  // console.log({ to, from, userStore: useUserStore.isAdmin })
 
   // 判断是否有权限
   // 如果不是管理员，所有和后台管理有关的都不开放

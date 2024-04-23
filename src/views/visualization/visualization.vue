@@ -88,7 +88,7 @@ function renderChart() {
       },
     ],
   }
-  chart.value?.setOption(options)
+  chart.value?.setOption(options as any)
 }
 function loadData() {
   visualizeStore.getVisualData()
@@ -110,7 +110,6 @@ setInterval(() => {
 watch(data, () => {
   renderChart()
 })
-
 </script>
 
 <template>

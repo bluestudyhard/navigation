@@ -1,9 +1,10 @@
 import { URL, fileURLToPath } from 'node:url'
 import type { ConfigEnv, UserConfigExport } from 'vite'
-
 import vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
 import { viteMockServe } from 'vite-plugin-mock'
+import VueDevTools from 'vite-plugin-vue-devtools'
+import { autoImportComponents } from './src/utils/autoImportComponents'
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
@@ -15,12 +16,14 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         localEnabled: command === 'serve',
       }),
       Unocss(),
+      autoImportComponents(),
+      VueDevTools(),
     ],
     // 别名@
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
-        '@conponents': fileURLToPath(new URL('./src/components', import.meta.url)),
+        '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       },
     },
     css: {
