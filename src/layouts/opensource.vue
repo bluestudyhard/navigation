@@ -114,6 +114,9 @@ onMounted(() => {
       <router-link to="/playground">
         test
       </router-link>
+      <router-link to="/folder">
+        测试书签
+      </router-link>
     </div>
   </nav>
   <!-- <h1>Blue navigation</h1> -->

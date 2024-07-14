@@ -82,4 +82,3 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 </template>
 
 <style scoped></style>
-@/types/website

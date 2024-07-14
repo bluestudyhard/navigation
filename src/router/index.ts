@@ -62,6 +62,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/playground/playground.vue'),
     name: '测试区',
   },
+  {
+    path: '/folder',
+    component: () => import('../views/playground/folder.vue'),
+    name: '测试书签',
+  },
 ]
 // 添加路由守卫
 /**
@@ -78,28 +83,28 @@ const router = createRouter({
 
 // 添加路由守卫
 router.beforeEach((to, from, next) => {
-  const useUserStore = userStore()
-  const token = useUserStore.token
-  console.log(token)
-  // 判断是否登录
-  if (!token) {
-    // 未登录
-    if (to.path !== '/login')
-      return next('/login') // 没登录的话怎么都是指向login
+  // const useUserStore = userStore()
+  // const token = useUserStore.token
+  // console.log(token)
+  // // 判断是否登录
+  // if (!token) {
+  //   // 未登录
+  //   if (to.path !== '/login')
+  //     return next('/login') // 没登录的话怎么都是指向login
 
-    next()
-  }
+  //   next()
+  // }
 
-  // 已经登录，不允许进入登录页面直到退出登录
-  if (to.path === '/login')
-    return next('/')
+  // // 已经登录，不允许进入登录页面直到退出登录
+  // if (to.path === '/login')
+  //   return next('/')
 
-  console.log({ to, from, userStore: useUserStore.isAdmin })
+  // console.log({ to, from, userStore: useUserStore.isAdmin })
 
-  // 判断是否有权限
-  // 如果不是管理员，所有和后台管理有关的都不开放
-  if (to.path.includes('/management') && !useUserStore.isAdmin)
-    return next('/')
+  // // 判断是否有权限
+  // // 如果不是管理员，所有和后台管理有关的都不开放
+  // if (to.path.includes('/management') && !useUserStore.isAdmin)
+  //   return next('/')
 
   next()
 })

@@ -6,14 +6,21 @@
 -->
 <script setup lang="ts">
 // import TestThree from '@/components/TestThree.vue'
-import ModeOpenSource from '@/components/ModeOpenSource.vue'
+
+import TestCom from '@/package/TestCom.vue'
 </script>
 
 <template>
-  <div class="container w-full h-100vh m-0 flex justify-center items-center">
+  <div
+    class="container w-80% h-auto m-10 flex
+     justify-center
+     items-center
+  "
+  >
     1
     <!-- <TestThree /> -->
-    <ModeOpenSource />
+    <!-- <ModeOpenSource /> -->
+    <TestCom />
   </div>
 </template>
 
