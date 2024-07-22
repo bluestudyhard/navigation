@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-export default interface menuType {
+export interface menuType {
   menuRouter: RouteRecordRaw[]
 }

@@ -5,10 +5,15 @@
  * showdata.vue
 -->
 <script setup lang="ts">
-import type { bookmarkTempType, websiteType } from '@/types/website'
+import BookmarkExpandTable from '@/components/manage/BookmarkExpandTable.vue'
+import BookmarkTable from '@/components/manage/BookmarkTable.vue'
+import type { TableOption, bookmarkTempType, websiteType } from '@/types/index'
 
 import websitesStore from '@/stores/websites'
 
+/**
+ * @description: 处理书签的数据
+ */
 const store = websitesStore()
 const websites = ref<websiteType[]>([])
 websites.value = store.websiteList
@@ -21,7 +26,10 @@ bookmarks.value = store.websiteList.flatMap(item =>
     bookmarkWebsiteIcon: bookmark.bookmarkWebsiteIcon,
   })),
 )
-const option = ref()
+/**
+ * @description: 表格配置
+ */
+const option = ref<TableOption>()
 option.value = {
   index: true,
   column: [
@@ -29,6 +37,7 @@ option.value = {
       label: '父级',
       prop: 'bookmarkName',
       width: 80,
+
     },
     {
       label: '书签名称',
@@ -56,59 +65,39 @@ option.value = {
     }],
 }
 const tableMode = ref('default')
-function handleClick(tab: any) {
-  console.log(tab)
-}
-console.log(bookmarks.value)
+/**
+ * @description: 分页
+ */
+const pagination = ref({
+  currentPage: 1,
+  pageSize: 50,
+  total: 0,
+})
+/**
+ * @description: 分页bookmarks
+ */
+const bookmarksPage = computed(() => {
+  const { currentPage, pageSize } = pagination.value
+  return bookmarks.value.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+})
 </script>
 
 <template>
   <div class="container">
-    <h1>书签管理temp</h1>
-    <el-tabs class="demo-tabs" @tab-click="handleClick">
+    <div>
+      <el-button>add</el-button>
+    </div>
+    <el-tabs v-model="tableMode" class="demo-tabs">
       <el-tab-pane label="默认" name="default">
-        <el-table :data="bookmarks" height="600">
-          <el-table-column type="selection" width="55" />
-          <el-table-column
-            v-for="item in option.column"
-            :key="item.prop"
-            :label="item.label"
-            :prop="item.prop"
-            :width="item.width"
-          >
-            <!-- 如果prop为icon  scope表示父组件传递给这个插槽的数据 -->
-            <template v-if="item.type === 'image'" #default="scope">
-              <img :src="scope.row[item.prop]" alt="" style="width: 20px; height: 20px">
-            </template>
-          </el-table-column>
-        </el-table>
+        <BookmarkTable
+          :bookmarks-page="bookmarksPage"
+          :option="option!"
+          :total="bookmarks.length"
+          @get-current-page="(val) => pagination = val"
+        />
       </el-tab-pane>
       <el-tab-pane label="折叠" name="expand">
-        <el-table :data="websites" height="500px">
-          <!-- default-expand-all -->
-          <el-table-column type="selection" width="55" />
-          <el-table-column prop="bookmarkName" label="父级" class="bg-amber" />
-          <!-- 多选 -->
-          <el-table-column type="expand">
-            <template #default="props">
-              <el-table :data="props.row.bookmarks">
-                <el-table-column type="selection" width="55" />
-                <el-table-column
-                  v-for="item in option.column"
-                  :key="item.prop"
-                  :label="item.label"
-                  :prop="item.prop"
-                  :width="item.width"
-                >
-                  <!-- 如果prop为icon  scope表示父组件传递给这个插槽的数据 -->
-                  <template v-if="item.type === 'image'" #default="scope">
-                    <img :src="scope.row[item.prop]" alt="" style="width: 20px; height: 20px">
-                  </template>
-                </el-table-column>
-              </el-table>
-            </template>
-          </el-table-column>
-        </el-table>
+        <BookmarkExpandTable :websites="websites" :option="option!" />
       </el-tab-pane>
     </el-tabs>
   </div>
