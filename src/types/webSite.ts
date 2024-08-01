@@ -40,6 +40,8 @@ export interface bookmarkTempType {
   bookmarkWebsiteIcon: string
   userId?: number
   checked?: boolean
+  createTime?: string
+  updateTime?: string
 }
 // 首页一个网站数据
 export interface websiteTempType {

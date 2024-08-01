@@ -10,7 +10,11 @@ import AutoImport from 'unplugin-auto-import/vite'
 export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
     plugins: [
-      vue(),
+      vue({
+        script: {
+          defineModel: true,
+        },
+      }),
       viteMockServe({
         mockPath: 'src/mock',
         localEnabled: command === 'serve',

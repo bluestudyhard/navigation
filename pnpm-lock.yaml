@@ -11,9 +11,6 @@ importers:
       '@element-plus/icons-vue':
         specifier: ^2.1.0
         version: 2.1.0(vue@3.3.4)
-      '@smallwei/avue':
-        specifier: ^3.4.7
-        version: 3.4.7(element-plus@2.3.12(vue@3.3.4))(vue@3.3.4)
       '@types/cors':
         specifier: ^2.8.14
         version: 2.8.14
@@ -472,12 +469,6 @@ packages:
     peerDependenciesMeta:
       rollup:
         optional: true
-
-  '@smallwei/avue@3.4.7':
-    resolution: {integrity: sha512-B/ZG9ngDJYosm7ERxclL3U1Z/6kme3A6dpEFtIzG8TyymzRrPm5jRNV1U2wwM8osiu6b2VBvLs+jnnTg2znzZw==}
-    peerDependencies:
-      element-plus: '>=2.2.0'
-      vue: '>=3.2.0'
 
   '@sxzz/popperjs-es@2.11.7':
     resolution: {integrity: sha512-Ccy0NlLkzr0Ex2FKvh2X+OyERHXJ88XJ1MXtsI9y9fGexlaXaVTPzBCRBwIxFkORuOb+uBqeu+RqnpgYTEZRUQ==}
@@ -1134,9 +1125,6 @@ packages:
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
     engines: {node: '>= 0.10'}
-
-  countup.js@1.9.3:
-    resolution: {integrity: sha512-UHf2P/mFKaESqdPq+UdBJm/1y8lYdlcDd0nTZHNC8cxWoJwZr1Eldm1PpWui446vDl5Pd8PtRYkr3q6K4+Qa5A==}
 
   crc-32@1.2.2:
     resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
@@ -1992,10 +1980,6 @@ packages:
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
-
-  minimatch@9.0.3:
-    resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
-    engines: {node: '>=16 || 14 >=14.17'}
 
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
@@ -3166,14 +3150,6 @@ snapshots:
     optionalDependencies:
       rollup: 3.29.0
 
-  '@smallwei/avue@3.4.7(element-plus@2.3.12(vue@3.3.4))(vue@3.3.4)':
-    dependencies:
-      '@element-plus/icons-vue': 2.1.0(vue@3.3.4)
-      countup.js: 1.9.3
-      dayjs: 1.11.9
-      element-plus: 2.3.12(vue@3.3.4)
-      vue: 3.3.4
-
   '@sxzz/popperjs-es@2.11.7': {}
 
   '@tootallnate/once@2.0.0': {}
@@ -3607,7 +3583,7 @@ snapshots:
       '@vue/compiler-dom': 3.3.4
       '@vue/reactivity': 3.3.4
       '@vue/shared': 3.3.4
-      minimatch: 9.0.3
+      minimatch: 9.0.5
       muggle-string: 0.3.1
       vue-template-compiler: 2.7.14
     optionalDependencies:
@@ -3966,8 +3942,6 @@ snapshots:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
-
-  countup.js@1.9.3: {}
 
   crc-32@1.2.2: {}
 
@@ -4935,10 +4909,6 @@ snapshots:
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
-
-  minimatch@9.0.3:
-    dependencies:
-      brace-expansion: 2.0.1
 
   minimatch@9.0.5:
     dependencies:

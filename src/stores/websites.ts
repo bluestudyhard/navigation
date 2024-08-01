@@ -21,7 +21,7 @@ const websitesStore = defineStore('websites', {
       websiteShowList: [] as websiteShowType[],
       websiteTags: [] as websiteTagType[], // 网站标签列表
       websiteTitles: [] as websiteTitleType[], // 网站大标题列表
-
+      bookmarkTitleList: [] as string[], // 书签大标题列表
     }
   },
   actions: {
@@ -139,6 +139,28 @@ const websitesStore = defineStore('websites', {
         return true
 
       return false
+    },
+
+    /**
+     * @description: 2024.08.01 重新开写store
+     */
+    /**
+     * @description: 获取所有书签的大标题即bookmarkName
+     */
+    getBookMarkTitleList() {
+      const temp = this.websiteList.map(item => item.bookmarkName)
+      this.bookmarkTitleList = temp
+    },
+    /**
+     * @description: 更新书签列表，传入部分的已经更新的书签列表
+     */
+    updateBookMarkList(newBookMarks: bookmarkTempType[]) {
+      this.websiteList.forEach((item, index) => {
+        const temp = newBookMarks.find(newItem => newItem.bookmarkName === item.bookmarkName)
+        if (temp)
+          this.websiteList[index].bookmarks = newBookMarks
+      })
+      console.log(this.websiteList)
     },
   },
   persist: true,
