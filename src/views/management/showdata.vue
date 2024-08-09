@@ -6,11 +6,13 @@
 -->
 <script setup lang="ts">
 import type { ElTable } from 'element-plus'
+
 import BookmarkExpandTable from '@/components/manage/BookmarkExpandTable.vue'
 import BookmarkTable from '@/components/manage/BookmarkTable.vue'
 import type { TableOption, bookmarkTempType, websiteType } from '@/types/index'
 import websitesStore from '@/stores/websites'
 import EditBookmark from '@/components/manage/EditBookmark.vue'
+import ATableTest from '@/components/manage/ATableTest.vue'
 
 const tableRef = ref<InstanceType<typeof ElTable>>()
 /**
@@ -125,13 +127,14 @@ const showEditDialog = ref(false)
 
     <el-tabs v-model="tableMode" class="demo-tabs">
       <el-tab-pane label="默认" name="default">
-        <BookmarkTable
+        <!-- <BookmarkTable
           :bookmarks-page="bookmarksPage"
           :option="option!"
           :total="bookmarks.length"
           @get-current-page="(val) => pagination = val"
           @emit-table-ref="($event) => tableRef = $event.tableRef"
-        />
+        /> -->
+        <ATableTest />
       </el-tab-pane>
       <el-tab-pane label="折叠" name="expand">
         <BookmarkExpandTable :websites="websites" :option="option!" />

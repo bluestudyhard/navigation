@@ -117,6 +117,7 @@ function handleBookmarkEdit() {
 watchEffect(() => {
   if (options.value.length === 0)
     getOptions(props.selectedItems)
+
   bookmarkName.value = editValue.value.bookmarkName
 })
 </script>
