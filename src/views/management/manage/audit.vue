@@ -1,60 +1,94 @@
 <script lang="ts" setup>
-import { computed, ref, unref } from 'vue'
-import { Table } from 'ant-design-vue'
+import { cloneDeep } from 'lodash-es'
+import { reactive, ref } from 'vue'
+import type { UnwrapRef } from 'vue'
 
-interface DataType {
-  key: string | number
+const columns = [
+  {
+    title: 'name',
+    dataIndex: 'name',
+    width: '25%',
+  },
+  {
+    title: 'age',
+    dataIndex: 'age',
+    width: '15%',
+  },
+  {
+    title: 'address',
+    dataIndex: 'address',
+    width: '40%',
+  },
+  {
+    title: 'operation',
+    dataIndex: 'operation',
+  },
+]
+interface DataItem {
+  key: string
   name: string
   age: number
   address: string
 }
-
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-]
-
-const data: DataType[] = []
-for (let i = 0; i < 46; i++) {
+const data: DataItem[] = []
+for (let i = 0; i < 100; i++) {
   data.push({
-    key: i,
-    name: `Edward King ${i}`,
+    key: i.toString(),
+    name: `Edrward ${i}`,
     age: 32,
-    address: `London, Park Lane no. ${i}`,
+    address: `London Park no. ${i}`,
   })
 }
 
-const selectedRowKeys = ref<DataType['key'][]>([]) // Check here to configure the default column
+const dataSource = ref(data)
+const editableData: UnwrapRef<Record<string, DataItem>> = reactive({})
 
-function onSelectChange(changableRowKeys: string[]) {
-  console.log('selectedRowKeys changed: ', changableRowKeys)
-  selectedRowKeys.value = changableRowKeys
+function edit(key: string) {
+  editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]) as DataItem
 }
-
-const rowSelection = computed(() => {
-  return {
-    selectedRowKeys: unref(selectedRowKeys),
-    onChange: onSelectChange,
-    hideDefaultSelections: true,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-    ],
-  }
-})
+function save(key: string) {
+  Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key])
+  delete editableData[key]
+}
+function cancel(key: string) {
+  delete editableData[key]
+}
 </script>
 
 <template>
-  <a-table :row-selection="rowSelection" :columns="columns" :data-source="data" />
+  <a-table :columns="columns" :data-source="dataSource" bordered>
+    <template #bodyCell="{ column, text, record }">
+      <template v-if="['name', 'age', 'address'].includes(column.dataIndex)">
+        <div>
+          <a-input
+            v-if="editableData[record.key]"
+            v-model:value="editableData[record.key][column.dataIndex]"
+            style="margin: -5px 0"
+          />
+          <template v-else>
+            {{ text }}
+          </template>
+        </div>
+      </template>
+      <template v-else-if="column.dataIndex === 'operation'">
+        <div class="editable-row-operations">
+          <span v-if="editableData[record.key]">
+            <a-typography-link @click="save(record.key)">Save</a-typography-link>
+            <a-popconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
+              <a>Cancel</a>
+            </a-popconfirm>
+          </span>
+          <span v-else>
+            <a @click="edit(record.key)">Edit</a>
+          </span>
+        </div>
+      </template>
+    </template>
+  </a-table>
 </template>
+
+<style scoped>
+.editable-row-operations a {
+  margin-right: 8px;
+}
+</style>

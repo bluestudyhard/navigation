@@ -33,6 +33,7 @@ export interface websiteShowType extends websiteTempType {
   tagName?: string
 }
 export interface bookmarkTempType {
+  key?: string
   id?: number
   bookmarkName: string
   bookmarkWebsiteTitle: string
@@ -81,4 +82,13 @@ export interface test {
       websites: websiteTempType
     },
   ]
+}
+
+/**
+ * @description: 书签网站预览图类型
+ */
+export interface websiteScreenshotType {
+  id?: number | string
+  bookmarkWebsiteUrl: string
+  screenshotUrl: string
 }

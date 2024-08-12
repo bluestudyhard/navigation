@@ -113,7 +113,7 @@ const showEditDialog = ref(false)
 
 <template>
   <div class="container">
-    <div class="control-btns flex w-full gap-10">
+    <!-- <div class="control-btns flex w-full gap-10">
       <div>
         <el-button>add</el-button>
       </div>
@@ -123,7 +123,7 @@ const showEditDialog = ref(false)
       <el-button @click="showEditDialog = true">
         批量修改
       </el-button>
-    </div>
+    </div> -->
 
     <el-tabs v-model="tableMode" class="demo-tabs">
       <el-tab-pane label="默认" name="default">

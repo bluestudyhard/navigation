@@ -272,7 +272,7 @@ onMounted(() => {
       移动到新
     </el-button> -->
       <div class="header-item">
-        <div class="flex justify-around items-center m-1 relative ">
+        <div class="flex justify-around items-center gap-1 m-1 relative ">
           <!-- <el-button icon="Search" class="fixed left-40" /> -->
           <el-button size="small" @click="isCheck = !isCheck">
             select
@@ -288,7 +288,7 @@ onMounted(() => {
               <Refresh />
             </el-icon>
           </el-button>
-          <Upload class="m-1" />
+          <Upload class="m-t-5" />
         </div>
       </div>
       <el-dialog v-model="drawer" :lock-scroll="false">

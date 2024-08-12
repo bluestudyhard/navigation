@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 // import { useStorage } from '@vueuse/core'
 // import { ref } from 'vue'
-import type { bookmarkTempType, websiteShowType, websiteTagType, websiteTempType, websiteTitleListType, websiteTitleType, websiteType } from '@/types/website'
+import type { bookmarkTempType, websiteScreenshotType, websiteShowType, websiteTagType, websiteTempType, websiteTitleListType, websiteTitleType, websiteType } from '@/types/website'
 import { uploadBookMark } from '@/api/bookmark/bookmarkApi'
 import { addWebsiteTagAction, addWebsiteTitleAction, getWebsietTitleActions, getWebsiteListActions, getWebsiteTagsActions, saveWebSiteListActions } from '@/service/websiteService'
 import { deleteBookMarkActions } from '@/service/bookmark'
@@ -22,6 +22,7 @@ const websitesStore = defineStore('websites', {
       websiteTags: [] as websiteTagType[], // 网站标签列表
       websiteTitles: [] as websiteTitleType[], // 网站大标题列表
       bookmarkTitleList: [] as string[], // 书签大标题列表
+      screenshotList: [] as websiteScreenshotType[], // 书签图片预览列表
     }
   },
   actions: {
@@ -154,13 +155,29 @@ const websitesStore = defineStore('websites', {
     /**
      * @description: 更新书签列表，传入部分的已经更新的书签列表
      */
-    updateBookMarkList(newBookMarks: bookmarkTempType[]) {
+    updateBookMarkList(newBookMarks: bookmarkTempType[] | bookmarkTempType) {
+      console.log('更新书签列表', newBookMarks)
+      if (!Array.isArray(newBookMarks))
+        newBookMarks = [newBookMarks]
+
       this.websiteList.forEach((item, index) => {
         const temp = newBookMarks.find(newItem => newItem.bookmarkName === item.bookmarkName)
         if (temp)
           this.websiteList[index].bookmarks = newBookMarks
       })
-      console.log(this.websiteList)
+      // console.log(this.websiteList)
+    },
+    /**
+     * @description: 保存书签图片预览列表
+     */
+    saveScreenShotUrlList(screenshotList: websiteScreenshotType[]) {
+      this.screenshotList = screenshotList
+    },
+    /**
+     * @description: 获取书签图片预览列表
+     */
+    getScreenShotUrlList() {
+      return this.screenshotList
     },
   },
   persist: true,

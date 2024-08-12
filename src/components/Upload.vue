@@ -40,17 +40,59 @@ function parseHtml(html: HTMLElement) {
   }).filter(item => item !== undefined)
 }
 function onDrop(files: File[] | null) {
-  vloading.value = true
+  if (!files)
+    return
+
+  console.log(files)
+  if (files[0].type === 'text/html')
+    onHtmlDrop(files)
+  else if (files[0].type === 'application/json')
+    onJsonDrop(files)
   setTimeout(() => {
     vloading.value = false
     showDrop.value = false
     // 刷新页面
     location.reload()
   }, 2000)
+}
+
+async function upLoadBookmarks() {
+  console.log(bookmarkRaws.value)
+  bookmarkRaws.value.forEach(async (item) => {
+    item.bookmarks.forEach(async (bookmark) => {
+      const res = await useStore.uploadBookMarks(bookmark, item.bookmarkName)
+      console.log(res)
+    })
+  })
+}
+/**
+ * @description: 上传json文件转换为书签
+ */
+function onJsonDrop(files: File[] | null) {
   if (!files)
     return
-  console.log(files)
-  // 如果文件是html就解析
+  files.forEach((file) => {
+    if (file.type === 'application/json') {
+      const reader = new FileReader()
+      reader.readAsText(file)
+      reader.onload = function (e) {
+        const data = JSON.parse(e.target?.result as string)
+        console.log(data)
+        bookmarkList.value = data as websiteType[]
+        bookmarkRaws.value = bookmarkList.value
+        useStore.saveBookmarkList(bookmarkList.value)
+        vloading.value = true
+      }
+    }
+  })
+}
+/**
+ * @description：上传浏览器书签xml文件解析
+ *
+ */
+function onHtmlDrop(files: File[] | null) {
+  if (!files)
+    return
   files.forEach((file) => {
     if (file.type === 'text/html') {
       const reader = new FileReader()
@@ -66,16 +108,6 @@ function onDrop(files: File[] | null) {
         useStore.saveBookmarkList(bookmarkList.value)
       }
     }
-  })
-}
-
-async function upLoadBookmarks() {
-  console.log(bookmarkRaws.value)
-  bookmarkRaws.value.forEach(async (item) => {
-    item.bookmarks.forEach(async (bookmark) => {
-      const res = await useStore.uploadBookMarks(bookmark, item.bookmarkName)
-      console.log(res)
-    })
   })
 }
 </script>
