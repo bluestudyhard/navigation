@@ -21,7 +21,7 @@ const bookmarks = ref<bookmarkTempType[]>([])
 bookmarks.value = store.websiteList.flatMap(item =>
   item.bookmarks.map(bookmark => ({
     key: bookmark.bookmarkWebsiteUrl,
-    bookmarkName: item.bookmarkName,
+    bookmarkName: item.bookmarkName.toLocaleLowerCase(),
     bookmarkWebsiteTitle: bookmark.bookmarkWebsiteTitle,
     bookmarkWebsiteUrl: bookmark.bookmarkWebsiteUrl,
     bookmarkWebsiteIcon: bookmark.bookmarkWebsiteIcon,
@@ -58,7 +58,10 @@ const columns: TableColumnType<TableDataType>[] = [
     filters: filters.value,
     // filterMode: 'tree',
     filterSearch: (input, filter) => (filter.value as string).includes(input),
-    onFilter: (value, record) => record.bookmarkName.includes(value as string),
+    onFilter: (value, record) => {
+      // console.log(value)
+      return record.bookmarkName.includes(value as string)
+    },
   },
   {
     title: '书签url',
@@ -151,6 +154,8 @@ function edit(key: string) {
 }
 function save(key: string) {
   // console.log('save', key)
+  // 如果保存时，发现原数据里面没有这个key，说明是新增的数据，直接添加这个数据字段到书签里
+  
   Object.assign(bookmarks.value.filter(item => key === item.key)[0], editableData[key])
   // 更新仓库数据
   store.updateBookMarkList(editableData[key])
@@ -177,7 +182,7 @@ async function testScreenShot() {
 const screenShotList = ref<websiteScreenshotType[]>([])
 onMounted(async () => {
   screenShotList.value = store.getScreenShotUrlList()
-  console.log(screenShotList.value)
+  // console.log(screenShotList.value)
 })
 </script>
 
@@ -199,7 +204,7 @@ onMounted(async () => {
       :columns="columns"
       :data-source="bookmarks"
       :scroll="{ y: 450 }"
-      :pagination="true"
+      :pagination="{ defaultPageSize: 100 }"
       :row-selection="rowSelection"
       @row-dblclick="onRowDblClick"
     >
@@ -209,6 +214,7 @@ onMounted(async () => {
         </span>
         <span v-else-if="column.key === 'operation'">
           <div class="editable-row-operations">
+
             <span v-if="editableData[record.key]" class="flex gap-2">
               <a-typography-link @click="save(record.key)">Save</a-typography-link>
               <a-typography-link @click="cancel(record.key)">Cancel</a-typography-link>
@@ -220,10 +226,30 @@ onMounted(async () => {
         </span>
         <span v-else>
           <span v-if="column.dataIndex === 'bookmarkWebsiteUrl' ">
-            <a-tooltip placement="top" :title="record[column.dataIndex]" color="#108ee9">
-              <!-- <span class="multi-ellipsis">{{ record[column.dataIndex] }}</span> -->
+
+            <!-- <a-tooltip placement="top" :title="record[column.dataIndex]" color="#108ee9">
+
               <a-image :src="screenShotList.find(item => item.bookmarkWebsiteUrl === record[column.dataIndex])?.screenshotUrl" rounded-1 w="0.2rem" h="0.2rem" />
-            </a-tooltip>
+            </a-tooltip> -->
+            <a-popover placement="topRight" trigger="hover">
+              <template #content>
+                <a-image
+                  :src="screenShotList.find(item => item.bookmarkWebsiteUrl === record[column.dataIndex])?.screenshotUrl"
+                  rounded-1
+                  width="15rem"
+                  height="15rem"
+                />
+              </template>
+              <a :href="record[column.dataIndex]" target="_blank"> <span class="multi-ellipsis">{{ record[column.dataIndex] }}</span></a>
+            </a-popover>
+          </span>
+          <span v-else-if="column.dataIndex === 'bookmarkWebsiteTitle'">
+            <a-input
+              v-if="editableData[record.key]"
+              v-model:value="editableData[record.key][column.dataIndex]"
+              style="margin: -5px 0"
+            />
+            <span v-else class="multi-ellipsis">{{ record[column.dataIndex] }}</span>
           </span>
           <span v-else-if="editableData[record.key]">
             <!-- 这里再加一个:value是因为要绑定数据到input的value里，不然默认是空的 -->
