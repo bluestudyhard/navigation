@@ -34,7 +34,7 @@ export async function saveBookmarksScreenshot(bookmarks: bookmarkTempType[]) {
     bookmarks.map(async (item) => {
       const url = item.bookmarkWebsiteUrl
       const screenshotUrl = await screenShot(url)
-      console.log('screenshotUrl', screenshotUrl)
+      // console.log('screenshotUrl', screenshotUrl)
       if (!screenshotUrl) {
         return {
           bookmarkWebsiteUrl: url,
