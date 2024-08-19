@@ -6,6 +6,7 @@ import type { bookmarkTempType, websiteScreenshotType, websiteShowType, websiteT
 import { uploadBookMark } from '@/api/bookmark/bookmarkApi'
 import { addWebsiteTagAction, addWebsiteTitleAction, getWebsietTitleActions, getWebsiteListActions, getWebsiteTagsActions, saveWebSiteListActions } from '@/service/websiteService'
 import { deleteBookMarkActions } from '@/service/bookmark'
+import { exportBookmark } from '@/utils/exportBookmark'
 
 // const storage = ref<websiteType[]>([])
 // const storageTitleList = ref<websiteTitleListType[]>([{ title: 'AI工具集', website: [] }, { title: '大前端', website: [] }, { title: 'fishs', website: [] }])
@@ -178,6 +179,12 @@ const websitesStore = defineStore('websites', {
      */
     getScreenShotUrlList() {
       return this.screenshotList
+    },
+    /**
+     * @description: 导出书签
+     */
+    exportBookMark() {
+      exportBookmark(this.websiteList)
     },
   },
   persist: true,

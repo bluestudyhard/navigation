@@ -44,6 +44,7 @@ export interface bookmarkTempType {
   checked?: boolean
   createTime?: string
   updateTime?: string
+  weight?: number
 }
 // 首页一个网站数据
 export interface websiteTempType {
