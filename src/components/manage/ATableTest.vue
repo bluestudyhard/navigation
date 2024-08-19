@@ -4,18 +4,12 @@ import { Table } from 'ant-design-vue'
 import { cloneDeep } from 'lodash-es'
 import type { UnwrapRef } from 'vue'
 import type { TableColumnType } from 'ant-design-vue'
-import type { bookmarkTempType, websiteScreenshotType, websiteType } from '@/types/index'
+import type { bookmarkTempType, websiteType } from '@/types/index'
 import { fetchMeta } from '@/utils/fetchMeta'
 import { screenShot } from '@/utils/screenShot'
 import websitesStore from '@/stores/websites'
-import {  screenShot } from '@/utils/screenShot'
+import { renderColumnAll } from '@/composable/atableColumn'
 
-interface recordType extends bookmarkTempType {
-  [key: string]: string | number | boolean | undefined
-}
-interface columnType extends bookmarkTempType {
-  dataIndex: string | number
-}
 /**
  * @description: 处理书签的数据
  */
@@ -161,16 +155,14 @@ function save(key: string) {
   // console.log('save', key)
   // 如果保存时，检查仓库数据中是否存在该数据，如果不存在则添加，存在则更新
   const keys = Object.keys(editableLine[key])
-  console.log('keys', keys)
-  if (!Object.keys(store.websiteList[1].bookmarks).every(item => keys.includes(item))) {
+
+  if (!Object.keys(store.websiteList[1].bookmarks[0]).every(item => keys.includes(item))) {
     // 找到仓库中不存在的key
-    const key = Object.keys(store.websiteList[0].bookmarks)
-    console.log('key1', store.websiteList[0].bookmarks)
+    const key = keys.filter(item => !Object.keys(store.websiteList[1].bookmarks[0]).includes(item)).filter(item => item !== 'key')
     console.log('key', key)
-    // store.addDefaultKey(editableLine[key])
+    store.addDefaultKey(key)
     // bookmarks.value.push(editableLine[key])
     // delete editableLine[key]
-    return
   }
   // if (!Object.keys(store.websiteList[0].bookmarks).includes(key))
 

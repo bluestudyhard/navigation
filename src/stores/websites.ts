@@ -191,14 +191,18 @@ const websitesStore = defineStore('websites', {
      * @param: newKey
      * - 比如说我的书签中原本没有weight这个键值，那么就需要给所有书签添加weight这个键值
      */
-    addDefaultKey(newKey: bookmarkTempType) {
+    addDefaultKey(newKey: string[]) {
       // 为所有书签添加这个键和默认值
+      console.log('添加默认键值', newKey)
       this.websiteList.forEach((item) => {
         item.bookmarks.forEach((bookmark) => {
-          bookmark[newKey] = newKey[newKey]
-          return bookmark
+          newKey.forEach((_key) => {
+            if (!bookmark[_key])
+              bookmark[_key] = null
+          })
         })
       })
+      console.log('添加默认键值后的书签列表', this.websiteList[1].bookmarks)
     },
 
   },
