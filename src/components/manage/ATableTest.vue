@@ -4,10 +4,18 @@ import { Table } from 'ant-design-vue'
 import { cloneDeep } from 'lodash-es'
 import type { UnwrapRef } from 'vue'
 import type { TableColumnType } from 'ant-design-vue'
-import type { bookmarkTempType, websiteType } from '@/types/index'
+import type { bookmarkTempType, websiteScreenshotType, websiteType } from '@/types/index'
+import { fetchMeta } from '@/utils/fetchMeta'
+import { screenShot } from '@/utils/screenShot'
 import websitesStore from '@/stores/websites'
-import { renderColumnAll } from '@/composable/atableColumn'
+import {  screenShot } from '@/utils/screenShot'
 
+interface recordType extends bookmarkTempType {
+  [key: string]: string | number | boolean | undefined
+}
+interface columnType extends bookmarkTempType {
+  dataIndex: string | number
+}
 /**
  * @description: 处理书签的数据
  */
@@ -86,7 +94,7 @@ const columns: TableColumnType<bookmarkTempType>[] = [
     key: 'updateTime',
     dataIndex: 'updateTime',
     width: 100,
-    // defaultSortOrder: 'descend',
+    defaultSortOrder: 'ascend',
     sorter: (a: bookmarkTempType, b: bookmarkTempType) => {
       const dateA = a.updateTime ? new Date(a.updateTime).getTime() : 0
       const dateB = b.updateTime ? new Date(b.updateTime).getTime() : 0
@@ -206,6 +214,55 @@ const bookmarkResult = computed(() => {
 function handleResizeColumn(w: number, col: TableColumnType<bookmarkTempType>) {
   col.width = w
 }
+/**
+ * @description:导出书签
+ */
+function exportBookmarks() {
+  store.exportBookMark()
+}
+/**
+ * @description: 替换浏览器的收藏行为，将书签保存到本地
+ */
+
+/**
+ * @description: 收藏弹窗
+ */
+const bookmarkModal = ref(false)
+function openBookmarkModal() {
+  bookmarkModal.value = true
+}
+/**
+ * @description: ctrl+b快捷键打开收藏弹窗
+ */
+onMounted(() => {
+  window.addEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.ctrlKey && event.key === 'b')
+      openBookmarkModal()
+  })
+})
+/**
+ * @description: 获取网站的meta信息-head头
+ */
+const spinning = ref(false)
+const bookmarkForm: bookmarkTempType = reactive({
+  bookmarkName: '',
+  bookmarkWebsiteUrl: '',
+  bookmarkWebsiteIcon: '',
+  bookmarkWebsiteTitle: '',
+})
+const previewScreenShot = ref('')
+async function fetchMetaInfo(url: string) {
+  try {
+    spinning.value = true
+    const metaInfo = await fetchMeta(url)
+    bookmarkForm.bookmarkWebsiteTitle = metaInfo?.bookmarkWebsiteTitle || '暂时无法获取'
+    bookmarkForm.bookmarkWebsiteIcon = metaInfo?.bookmarkWebsiteIcon || '/default.png'
+    previewScreenShot.value = await screenShot(bookmarkForm.bookmarkWebsiteUrl) || '/default.png'
+  }
+  finally {
+    spinning.value = false
+  }
+}
 </script>
 
 <template>
@@ -218,9 +275,34 @@ function handleResizeColumn(w: number, col: TableColumnType<bookmarkTempType>) {
   <!--
 使用多选的前提是数据里面有key字段，这个字段是必须的
 -->
-  <!-- <a-button @click="testScreenShot">
-    test 截图
-  </a-button> -->
+  <a-modal v-model:open="bookmarkModal" title="编辑收藏夹" width="30%">
+    <a-spin :spinning="spinning">
+      <a-form :model="bookmarkForm">
+        <a-form-item label="名称">
+          <a-input v-model:value="bookmarkForm.bookmarkWebsiteTitle" />
+        </a-form-item>
+        <a-form-item label="链接">
+          <a-input v-model:value="bookmarkForm.bookmarkWebsiteUrl" @blur="fetchMetaInfo(bookmarkForm.bookmarkWebsiteUrl)" />
+        </a-form-item>
+        <a-form-item label="图标">
+          <img :src="bookmarkForm.bookmarkWebsiteIcon" alt="" w="1rem" h="1rem">
+        </a-form-item>
+        <a-form-item label="页面预览">
+          <a-image :src="previewScreenShot" :width="100" :height="100" class="items-center" />
+        </a-form-item>
+        <a-form-item label="父级">
+          <a-select>
+            <a-select-option v-for="item in filters" :key="item.text" :value="item.value">
+              {{ item.text }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+      </a-form>
+    </a-spin>
+  </a-modal>
+  <a-button @click="exportBookmarks">
+    导出书签
+  </a-button>
   <div class="container flex-col">
     <div class="w-20% m-l-auto">
       <a-input-search
