@@ -1,20 +1,13 @@
 <!-- eslint-disable vue/one-component-per-file -->
 <script lang="ts" setup>
-import { Image, Input, Popover, Table, Typography } from 'ant-design-vue'
+import { Table } from 'ant-design-vue'
 import { cloneDeep } from 'lodash-es'
 import type { UnwrapRef } from 'vue'
 import type { TableColumnType } from 'ant-design-vue'
-import type { bookmarkTempType, websiteScreenshotType, websiteType } from '@/types/index'
-
+import type { bookmarkTempType, websiteType } from '@/types/index'
 import websitesStore from '@/stores/websites'
-import { saveBookmarksScreenshot, screenShot } from '@/utils/screenShot'
+import { renderColumnAll } from '@/composable/atableColumn'
 
-interface recordType extends bookmarkTempType {
-  [key: string]: string | number | boolean | undefined
-}
-interface columnType extends bookmarkTempType {
-  dataIndex: string | number
-}
 /**
  * @description: 处理书签的数据
  */
@@ -31,6 +24,7 @@ bookmarks.value = store.websiteList.flatMap(item =>
     bookmarkWebsiteIcon: bookmark.bookmarkWebsiteIcon,
     createTime: bookmark.createTime || '',
     updateTime: bookmark.updateTime || '',
+    weight: bookmark.weight || 0,
   })),
 )
 /**
@@ -58,6 +52,7 @@ const columns: TableColumnType<bookmarkTempType>[] = [
     title: '书签名称',
     key: 'bookmarkWebsiteTitle',
     dataIndex: 'bookmarkWebsiteTitle',
+    resizable: true,
     width: 150,
     filters: filters.value,
     // filterMode: 'tree',
@@ -77,7 +72,6 @@ const columns: TableColumnType<bookmarkTempType>[] = [
     title: '图标',
     key: 'bookmarkWebsiteIcon',
     dataIndex: 'bookmarkWebsiteIcon',
-    type: 'image',
     align: 'center',
     width: 80,
   },
@@ -143,20 +137,50 @@ const selectedBookmarks = computed(() =>
  * @description: 编辑行
  * - editableLine: 用于存储编辑行的数据
  * - UNwrapRef: 用于解包ref 将数据类型转换为普通对象，也就是不需要使用.value来获取数据
+ *
  */
 const editableLine: UnwrapRef<Record<string, bookmarkTempType>> = reactive({})
 function edit(key: string) {
   editableLine[key] = cloneDeep(bookmarks.value.filter(item => key === item.key)[0])
 }
+/**
+ * @description: 保存编辑行
+ * - save: 保存编辑行的数据
+ * - 使用asign方法，浅拷贝一层以不直接修改原数据
+ */
+
 function save(key: string) {
   // console.log('save', key)
-  // 如果保存时，发现原数据里面没有这个key，说明是新增的数据，直接添加这个数据字段到书签里
+  // 如果保存时，检查仓库数据中是否存在该数据，如果不存在则添加，存在则更新
+  const keys = Object.keys(editableLine[key])
+  console.log('keys', keys)
+  if (!Object.keys(store.websiteList[1].bookmarks).every(item => keys.includes(item))) {
+    // 找到仓库中不存在的key
+    const key = Object.keys(store.websiteList[0].bookmarks)
+    console.log('key1', store.websiteList[0].bookmarks)
+    console.log('key', key)
+    // store.addDefaultKey(editableLine[key])
+    // bookmarks.value.push(editableLine[key])
+    // delete editableLine[key]
+    return
+  }
+  // if (!Object.keys(store.websiteList[0].bookmarks).includes(key))
+
+  // bookmarks.value.push(editableLine[key])
+  // store.addDefaultKey(editableLine[key])
+  // delete editableLine[key]
+  // return
+
+  // bookmarks.value.push(editableLine[key])
 
   Object.assign(bookmarks.value.filter(item => key === item.key)[0], editableLine[key])
   // 更新仓库数据
   store.updateBookMarkList(editableLine[key])
   delete editableLine[key]
 }
+/**
+ * @description: 取消编辑行
+ */
 function cancel(key: string) {
   // console.log('cancel', key)
   delete editableLine[key]
@@ -164,139 +188,24 @@ function cancel(key: string) {
 function onRowDblClick(record: bookmarkTempType) {
   edit(record.key!)
 }
+const websiteSearch = ref('')
 /**
- * @description: 获取所有网站的预览图
+ * @description: 表格搜索，根据书签名称进行检索
  */
-const screenShotList = ref<websiteScreenshotType[]>([])
-onMounted(async () => {
-  screenShotList.value = store.getScreenShotUrlList()
-  // console.log(screenShotList.value)
+const bookmarkResult = computed(() => {
+  if (!websiteSearch.value)
+    return bookmarks.value
+
+  return bookmarks.value.filter(bookmark =>
+    bookmark.bookmarkWebsiteTitle.includes(websiteSearch.value),
+  )
 })
 /**
- * @description: 动态更新网站url和previewUrl的映射
+ * @description: 可伸缩列
  */
-const previewUrl = computed(() => (url: string) => {
-  return screenShotList.value.find(item => item.bookmarkWebsiteUrl === url)?.screenshotUrl
-})
-
-/**
- * @description: 这些函数用于渲染表格中的不同单元格内容
- * - renderIcon: 渲染图标
- * - renderEditableInput: 渲染可编辑的输入框
- * - renderBookmarkWebsiteUrl: 渲染书签网站URL
- * - renderOperation: 渲染操作列
- * @param: column, text, record, editableLine
- */
-function renderBodyCell(column: TableColumnType<bookmarkTempType>, text: string, record: recordType, editableLine: Record<string, bookmarkTempType>) {
-  /**
-   * @description:  图表渲染函数
-   */
-  function renderIcon(iconUrl: string) {
-    return h('span', [
-      h('img', {
-        src: iconUrl,
-        class: 'rounded-1',
-        style: { width: '1rem', height: '1rem' },
-      }),
-    ])
-  }
-
-  /**
-   * @description: 可编辑的input渲染函数
-   */
-  function renderEditableInput(modelValue: string, updateModelValue: (value: string) => void) {
-    return h('span', [
-      h(Input, {
-        value: modelValue,
-        onInput: (event: Event) => updateModelValue((event.target as HTMLInputElement).value),
-      }),
-    ])
-  }
-  /**
-   * @description: 渲染书签网站url
-   * @param: websiteUrl
-   */
-  function renderBookmarkWebsiteUrl(websiteUrl: string) {
-    return h('span', [
-      h(
-        Popover,
-        { placement: 'topRight', trigger: 'hover' },
-        {
-          content: () =>
-            h(Image, {
-              src: previewUrl.value(websiteUrl),
-              class: 'rounded-1',
-              style: { width: '15rem', height: '15rem' },
-            }),
-          default: () =>
-            h(
-              'a',
-              { href: websiteUrl, target: '_blank' },
-              h('span', { class: 'multi-ellipsis' }, websiteUrl),
-            ),
-        },
-      ),
-    ])
-  }
-  /**
-   * @description: 操作列渲染函数
-   * @param: editableLine,record,edit,save,cancel
-   */
-  function renderOperation(editableLine: Record<string, bookmarkTempType>, record: recordType, edit: (key: string) => void, save: (key: string) => void, cancel: (key: string) => void) {
-    return h('span', [
-      h('div', { class: 'editable-row-operation' }, [
-        editableLine[record.key!]
-          ? h('span', { class: 'flex gap-2' }, [
-            h(Typography.Link, { onClick: () => save(record.key!) }, 'Save'),
-            h(Typography.Link, { onClick: () => cancel(record.key!) }, 'Cancel'),
-          ])
-          : h('span', [h('a', { onClick: () => edit(record.key!) }, 'Edit')]),
-      ]),
-    ])
-  }
-
-  return h('span', [
-    column.dataIndex === 'bookmarkWebsiteIcon'
-      ? h(renderIcon(record[column.dataIndex]))
-      : column.key === 'operation'
-        ? h(renderOperation(editableLine, record, edit, save, cancel))
-        : h('span', [
-          column.dataIndex === 'bookmarkWebsiteUrl'
-            ? h(renderBookmarkWebsiteUrl(record[column.dataIndex]))
-            : editableLine[record.key!]
-              ? h(renderEditableInput(
-                editableLine[record.key as string][column.dataIndex],
-                (value: string) => {
-                  editableLine[record.key as string][column.dataIndex] = value
-                },
-              ))
-              : h('span', { class: 'multi-ellipsis' }, text),
-        ]),
-  ])
+function handleResizeColumn(w: number, col: TableColumnType<bookmarkTempType>) {
+  col.width = w
 }
-const renderAll = defineComponent({
-  props: {
-    column: {
-      type: Object as PropType<TableColumnType<bookmarkTempType>>,
-      required: true,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
-    record: {
-      type: Object as PropType<recordType>,
-      required: true,
-    },
-    editableLine: {
-      type: Object as PropType<Record<string, bookmarkTempType>>,
-      required: true,
-    },
-  },
-  setup(props) {
-    return () => renderBodyCell(props.column, props.text, props.record, props.editableLine)
-  },
-})
 </script>
 
 <template>
@@ -312,19 +221,35 @@ const renderAll = defineComponent({
   <!-- <a-button @click="testScreenShot">
     test 截图
   </a-button> -->
-  <div class="table-container flex flex-col">
-    <a-table
-      :columns="columns"
-      :data-source="bookmarks"
-      :scroll="{ y: 450 }"
-      :pagination="{ defaultPageSize: 100 }"
-      :row-selection="rowSelection"
-      @row-dblclick="onRowDblClick"
-    >
-      <template #bodyCell="{ column, text, record }">
-        <render-all :column="column" :text="text" :record="record" :editable-line="editableLine" />
-      </template>
-    </a-table>
+  <div class="container flex-col">
+    <div class="w-20% m-l-auto">
+      <a-input-search
+        v-model:value="websiteSearch"
+        placeholder="输入文字即可搜索"
+        enter-button
+      />
+    </div>
+    <div class="table-container">
+      <a-table
+        :columns="columns"
+        :data-source="bookmarkResult"
+        :scroll="{ y: 450 }"
+        :pagination="{ defaultPageSize: 50 }"
+        :row-selection="rowSelection"
+        @row-dblclick="onRowDblClick"
+        @resize-column="handleResizeColumn"
+      >
+        <template #bodyCell="{ column, text, record }">
+          <render-column-all
+            :column="column" :text="text" :record="record"
+            :editable-line="editableLine"
+            :save="save"
+            :cancel="cancel"
+            :edit="edit"
+          />
+        </template>
+      </a-table>
+    </div>
   </div>
 </template>
 

@@ -179,6 +179,21 @@ const websitesStore = defineStore('websites', {
     getScreenShotUrlList() {
       return this.screenshotList
     },
+    /**
+     * @description: 处理书签中没有对应的键值时，添加默认值
+     * @param: newKey
+     * - 比如说我的书签中原本没有weight这个键值，那么就需要给所有书签添加weight这个键值
+     */
+    addDefaultKey(newKey: bookmarkTempType) {
+      // 为所有书签添加这个键和默认值
+      this.websiteList.forEach((item) => {
+        item.bookmarks.forEach((bookmark) => {
+          bookmark[newKey] = newKey[newKey]
+          return bookmark
+        })
+      })
+    },
+
   },
   persist: true,
 })
