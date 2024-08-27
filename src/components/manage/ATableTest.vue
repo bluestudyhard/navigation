@@ -267,6 +267,7 @@ async function fetchMetaInfo(url: string) {
   <!--
 使用多选的前提是数据里面有key字段，这个字段是必须的
 -->
+  {{ editableLine }}
   <a-modal v-model:open="bookmarkModal" title="编辑收藏夹" width="30%">
     <a-spin :spinning="spinning">
       <a-form :model="bookmarkForm">
