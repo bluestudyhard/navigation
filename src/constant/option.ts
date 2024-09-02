@@ -347,3 +347,34 @@ export function generalBmPonoSalesColorTableOption(data, option, key) {
   return option
   // console.log("resultChirdren", resultChirdren)
 }
+
+export const testOption1 = {
+  columnWidth: 100,
+  column: [
+    {
+      label: '工厂',
+      prop: 'cmp_name',
+
+    },
+    {
+      label: 'qty1',
+      prop: 'qty1',
+    },
+    {
+      label: 'qty2',
+      prop: 'qty2',
+    },
+    {
+      label: '百分比',
+      prop: 'percentage',
+    },
+    {
+      label: '货总数',
+      prop: 'poc_total',
+    },
+    {
+      label: '合计',
+      prop: 'total',
+    },
+  ],
+}

@@ -754,3 +754,22 @@ export const BM_REMARK1 = [
     po_loc: 'A4-001;B5-001;B8-001;C4-001;C5-001;F1-002;P8-001',
   },
 ]
+
+export const testData = [
+  {
+    index: 0,
+    cmp_name: 'A-JW-42-173540-51',
+    cmp_id: 'JW-42-173540',
+    qty1: 20,
+    qty2: 20,
+    poc_total: 100,
+  },
+  {
+    index: 1,
+    cmp_name: 'A-JW-42-173540-52',
+    cmp_id: 'JW-42-173540',
+    qty1: 30,
+    qty2: 22,
+    poc_total: 120,
+  },
+]
