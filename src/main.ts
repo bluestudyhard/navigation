@@ -22,6 +22,21 @@ app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
 app.use(Antd)
+app.directive('click-outside', {
+  mounted(el, binding) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!el.contains(event.target as Node) && el !== event.target)
+        binding.value(event)
+    }
+    el.__handleClickOutside__ = handleClickOutside
+    document.addEventListener('click', handleClickOutside)
+  },
+  unmounted(el) {
+    document.removeEventListener('click', el.__handleClickOutside__)
+    delete el.__handleClickOutside__
+  },
+})
+
 // 持久化插件
 pinia.use(piniaPluginPersistedstate)
 for (const [key, component] of Object.entries(ElementPlusIconsVue))

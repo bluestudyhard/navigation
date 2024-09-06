@@ -198,7 +198,7 @@ interface TableData {
   percentage: string
   poc_total: number | string
   total: number
-}
+}T
 
 export function initData(tableData: TableData[]) {
   console.log('tableData', tableData)
