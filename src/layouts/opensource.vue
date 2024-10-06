@@ -117,6 +117,9 @@ onMounted(() => {
       <router-link to="/folder">
         测试书签
       </router-link>
+      <router-link to="/lowcode">
+        低代码
+      </router-link>
     </div>
   </nav>
   <!-- <h1>Blue navigation</h1> -->

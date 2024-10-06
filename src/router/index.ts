@@ -67,6 +67,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/playground/folder.vue'),
     name: '测试书签',
   },
+  {
+    path: '/lowcode',
+    component: () => import('../views/playground/lowcode.vue'),
+    name: '测试低代码',
+  },
 ]
 // 添加路由守卫
 /**
