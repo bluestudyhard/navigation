@@ -1,66 +1,55 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { ElButton, ElInput } from 'element-plus'
 
-const components = ref([])
+const components = ref([
+  { type: 'button', label: 'Button', component: ElButton },
+  { type: 'input', label: 'Input', component: ElInput },
+])
+
+const designArea = ref([])
 const selectedComponent = ref(null)
 
-function addComponent(type: string) {
-  const newComponent = {
-    type,
-    props: {
-      label: type === 'text' ? '文本框' : '按钮',
-    },
-  }
-  components.value.push(newComponent)
-  selectedComponent.value = newComponent
-}
-
-function handleDragStart(event: { dataTransfer: { setData: (arg0: string, arg1: any) => void } }, type: any) {
-  event.dataTransfer.setData('componentType', type)
-}
-
-function handleDrop(event: { preventDefault: () => void; dataTransfer: { getData: (arg0: string) => any } }) {
+function onDrop(event) {
   event.preventDefault()
-  const type = event.dataTransfer.getData('componentType')
-  addComponent(type)
+  const component = event.dataTransfer.getData('component')
+  designArea.value.push(JSON.parse(component))
 }
 
-function handleDragOver(event: { preventDefault: () => void }) {
-  event.preventDefault()
+function selectComponent(component) {
+  selectedComponent.value = component
 }
 </script>
 
 <template>
   <div class="form-designer">
-    <div class="component-library">
-      <button
+    <div class="component-library bg-blueGray w-15rem h-full">
+      <div
+        v-for="component in components" :key="component.type"
         draggable="true"
-        @dragstart="event => handleDragStart(event, 'text')"
+        @dragstart="event => event.dataTransfer.setData('component', JSON.stringify(component))"
       >
-        文本框
-      </button>
-      <button
-        draggable="true"
-        @dragstart="event => handleDragStart(event, 'button')"
-      >
-        按钮
-      </button>
+        {{ component.label }}
+      </div>
     </div>
     <div
-      class="design-area bg-blueGray w-full h-30vh"
-      @dragover="handleDragOver"
-      @drop="handleDrop"
+      class="design-area bg-coolGray border w-full h-50vh"
+      @drop="onDrop"
+      @dragover="event => event.preventDefault()"
     >
       <component
-        :is="component.type"
-        v-for="(component, index) in components"
+        :is="component.component"
+        v-for="(component, index) in designArea"
         :key="index"
-        v-bind="component.props"
+        @click="selectComponent(component)"
       />
     </div>
-    <div class="property-panel">
+    <div class="property-panel w-8rem bg-emerald">
       <div v-if="selectedComponent">
-        <label>标签: <input v-model="selectedComponent.props.label"></label>
+        <h3>Component Properties</h3>
+        <p>Type: {{ selectedComponent.type }}</p>
+        <p>Label: {{ selectedComponent.label }}</p>
+        <!-- Add more properties as needed -->
       </div>
     </div>
   </div>
@@ -69,6 +58,8 @@ function handleDragOver(event: { preventDefault: () => void }) {
 <style scoped>
 .form-designer {
   display: flex;
+  width: 100%;
+  height: 100vh;
 }
 .component-library, .design-area, .property-panel {
   margin: 10px;

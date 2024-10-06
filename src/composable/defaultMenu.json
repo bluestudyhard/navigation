@@ -1,0 +1,320 @@
+[
+  {
+    "name": "main",
+    "title": "基础组件",
+    "list": [
+      {
+        "menu": "main",
+        "icon": "icon-input",
+        "label": "输入框",
+        "name": "input",
+        "event": ["blur", "focus", "change", "input", "clear"
+        ],
+        "validate": ["string", "url", "email"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-textarea",
+        "label": "多行输入框",
+        "name": "textarea",
+        "event": ["blur", "focus", "change", "input"
+        ],
+        "validate": ["string"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-password",
+        "label": "密码输入框",
+        "name": "password",
+        "event": ["blur", "focus", "change", "input", "clear"
+        ],
+        "validate": ["string"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-number",
+        "label": "计数器",
+        "name": "inputNumber",
+        "event": ["blur", "focus", "change"
+        ],
+        "validate": ["number", "integer", "float"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-radio",
+        "label": "单选框",
+        "name": "radio",
+        "event": ["change"
+        ],
+        "validate": ["string", "number"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-checkbox",
+        "label": "多选框",
+        "name": "checkbox",
+        "event": ["change"
+        ],
+        "validate": ["array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-select",
+        "label": "选择器",
+        "name": "select",
+        "event": ["change", "visibleChange", "removeTag", "clear", "blur", "focus"
+        ],
+        "validate": ["string", "number", "array"
+        ],
+        "watch": {}
+      },
+      {
+        "menu": "main",
+        "icon": "icon-switch",
+        "label": "开关",
+        "name": "switch",
+        "event": ["change"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-rate",
+        "label": "评分",
+        "name": "rate",
+        "event": ["change"
+        ],
+        "validate": ["number"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-time",
+        "label": "时间",
+        "name": "timePicker",
+        "event": ["change", "blur", "focus", "visibleChange"
+        ],
+        "watch": {}
+      },
+      {
+        "menu": "main",
+        "icon": "icon-time",
+        "label": "时间区间",
+        "name": "timeRange",
+        "event": ["change", "blur", "focus", "visibleChange"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-slider",
+        "label": "滑块",
+        "name": "slider",
+        "event": ["change", "input"
+        ],
+        "validate": ["number", "array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-date",
+        "label": "日期",
+        "name": "datePicker",
+        "event": ["change", "blur", "focus", "calendarChange", "panelChange", "visibleChange"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-date",
+        "label": "日期区间",
+        "name": "dateRange",
+        "event": ["change", "blur", "focus", "calendarChange", "panelChange", "visibleChange"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-color",
+        "label": "颜色选择器",
+        "name": "colorPicker",
+        "event": ["change", "activeChange", "focus", "blur"
+        ],
+        "validate": ["string"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-cascader",
+        "label": "级联选择器",
+        "name": "cascader",
+        "event": ["change", "expandChange", "blur", "focus", "visibleChange", "removeTag"
+        ],
+        "validate": ["string", "number", "array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-upload",
+        "label": "上传",
+        "name": "upload",
+        "event": ["change", "remove"
+        ],
+        "validate": ["array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-transfer",
+        "label": "穿梭框",
+        "name": "elTransfer",
+        "event": ["change", "leftCheckChange", "rightCheckChange"
+        ],
+        "validate": ["string", "number", "array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-tree",
+        "label": "树形控件",
+        "name": "tree",
+        "event": ["nodeClick", "nodeContextmenu", "checkChange", "check", "currentChange", "nodeExpand", "nodeCollapse", "nodeDragStart", "nodeDragEnter", "nodeDragLeave", "nodeDragOver", "nodeDragEnd", "nodeDrop"
+        ],
+        "validate": ["string", "number", "array"
+        ]
+      },
+      {
+        "menu": "main",
+        "icon": "icon-tree-select",
+        "label": "树形选择",
+        "name": "elTreeSelect",
+        "event": ["change", "visibleChange", "removeTag", "clear", "blur", "focus"
+        ],
+        "validate": ["string", "number", "array"
+        ],
+        "watch": {}
+      },
+      {
+        "menu": "main",
+        "icon": "icon-editor",
+        "label": "富文本框",
+        "name": "fcEditor",
+        "event": ["change"
+        ],
+        "validate": ["string"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "subform",
+    "title": "子表单组件",
+    "list": [
+      {
+        "menu": "subform",
+        "icon": "icon-subform",
+        "label": "子表单",
+        "name": "group",
+        "inside": false,
+        "drag": true,
+        "dragBtn": true,
+        "mask": false,
+        "event": ["change"
+        ],
+        "subForm": "array"
+      },
+      {
+        "menu": "subform",
+        "icon": "icon-group",
+        "label": "分组",
+        "name": "subForm",
+        "inside": false,
+        "drag": true,
+        "dragBtn": true,
+        "mask": false,
+        "subForm": "object",
+        "event": ["change"
+        ]
+      },
+      {
+        "menu": "subform",
+        "icon": "icon-table-form",
+        "label": "表格表单",
+        "name": "tableForm",
+        "mask": false,
+        "subForm": "array",
+        "event": ["change", "add", "delete"
+        ],
+        "children": "tableFormColumn"
+      }
+    ]
+  },
+  {
+    "name": "aide",
+    "title": "辅助组件",
+    "list": [
+      {
+        "menu": "aide",
+        "icon": "icon-alert",
+        "label": "提示",
+        "name": "elAlert",
+        "event": ["close"
+        ]
+      },
+      {
+        "menu": "aide",
+        "icon": "icon-button",
+        "label": "按钮",
+        "name": "elButton",
+        "mask": true,
+        "event": ["click"
+        ]
+      },
+      { "menu": "aide", "icon": "icon-span", "label": "文字", "name": "text", "watch": {} },
+      { "menu": "aide", "icon": "icon-html", "label": "HTML", "name": "html", "watch": {} },
+      { "menu": "aide", "icon": "icon-divider", "label": "分割线", "name": "elDivider" },
+      {
+        "menu": "aide",
+        "icon": "icon-tag",
+        "label": "标签",
+        "name": "elTag",
+        "mask": true,
+        "event": ["click", "close"
+        ],
+        "watch": {}
+      }
+    ]
+  },
+  {
+    "name": "layout",
+    "title": "布局组件",
+    "list": [
+      { "menu": "layout", "icon": "icon-row", "label": "栅格布局", "name": "fcRow", "mask": false, "children": "col", "childrenLen": 2 },
+      { "menu": "layout", "icon": "icon-table", "label": "表格布局", "name": "fcTable", "inside": false, "mask": false },
+      {
+        "menu": "layout",
+        "icon": "icon-tab",
+        "label": "标签页",
+        "name": "elTabs",
+        "mask": false,
+        "event": ["tabClick", "tabChange", "tabRemove", "tabAdd", "edit"
+        ],
+        "children": "elTabPane"
+      },
+      { "menu": "layout", "icon": "icon-space", "label": "间距", "name": "space" },
+      { "menu": "layout", "icon": "icon-card", "label": "卡片", "name": "elCard", "drag": true, "inside": false, "mask": false },
+      {
+        "menu": "layout",
+        "icon": "icon-collapse",
+        "label": "折叠面板",
+        "name": "elCollapse",
+        "mask": false,
+        "children": "elCollapseItem",
+        "event": ["change"
+        ]
+      }
+    ]
+  }
+]
