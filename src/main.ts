@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import '../src/assets/styles/style.scss'
-
+import '../src/lowcode/style/icon.css'
+import '../src/lowcode/style/index.css'
 import ElementPlus from 'element-plus'
 
 import 'element-plus/dist/index.css'
