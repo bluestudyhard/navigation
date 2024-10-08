@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
+import { cloneDeep } from 'lodash-es'
 import defaultMenu from '@/constant/defaultMenu.json'
 import CategoryItem from '@/lowcode/components/CategoryItem.vue'
 
@@ -9,24 +10,19 @@ interface MenuListType {
   menu: string
   icon: string
   label: string
+  name: string
+  event: string[]
+  vailidate: string[]
 }
 
-function clone(element: Record<'name' | 'id', string>) {
+function clone(element: MenuListType) {
   console.log('clone', element)
-  const len = menuList.value.length
-  return {
-    name: `${element.name}-clone-${len}`,
-    id: `${element.id}-clone-${len}`,
-  }
+  const obj = Object.assign(cloneDeep(element), {
+    id: `${element.name}-${Date.now()}`,
+  })
+  return obj
 }
-const list2 = ref([
-  {
-    name: '',
-    id: '1',
-    label: '',
-    props: {},
-  },
-])
+const list2 = ref<MenuListType[]>([])
 </script>
 
 <template>
@@ -72,7 +68,7 @@ const list2 = ref([
           :key="item.id"
           class="cursor-move h-50px bg-gray-500/5 rounded p-3"
         >
-          {{ item.name }}
+          {{ item }}
         </div>
       </VueDraggable>
     </div>
