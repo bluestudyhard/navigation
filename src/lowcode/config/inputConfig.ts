@@ -21,7 +21,10 @@ const textInputConfig = {
     autofocus: false,
     autocomplete: 'off',
     inputStyle: {
-      
+
     },
   },
+}
+export const inputConfig = {
+  textInputConfig,
 }
