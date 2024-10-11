@@ -29,3 +29,6 @@ const textInputConfig = {
 export const InputConfig = {
   text: textInputConfig,
 }
+export const inputConfig = {
+  textInputConfig,
+}
