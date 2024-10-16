@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import defaultMenu from '@/constant/defaultMenu.json'
 import CategoryItem from '@/lowcode/components/CategoryItem.vue'
 import BaseInput from '@/lowcode/components/BaseInput.vue'
+import ConfigRegion from '@/lowcode/components/configRegion/ConfigRegion.vue'
 
 const menuList = ref(defaultMenu)
 
@@ -62,8 +63,8 @@ const activeComponent = ref<string | null>(null)
  */
 const activeClass = computed(() => {
   return {
-    border: '1px solid #409EFF',
-    boxShadow: '0 0 10px #409EFF',
+
+    boxShadow: 'rgb(1 108 255) 0px 0px 8px',
   }
 })
 /**
@@ -71,14 +72,12 @@ const activeClass = computed(() => {
  */
 function handleCompClick(params: MenuListType, event: MouseEvent) {
   event.stopPropagation()
-  console.log('handleCompClick', params)
+  // console.log('handleCompClick', params)
   activeComponent.value = params.id
 }
 function handleDocumentClick() {
-  if (activeComponent.value !== null) {
-    // console.log('handleDocumentClick')
+  if (activeComponent.value)
     activeComponent.value = null
-  }
 }
 
 onMounted(() => {
@@ -97,7 +96,7 @@ onUnmounted(() => {
     class="cursor-move h-50px bg-gray-500/5 rounded p-3"
     :custom-config="testConfig"
   />
-  <div class="form-designer">
+  <div class="form-designer w-full">
     <!-- <span class="border w-10%">
       {{ list2 }}
 
@@ -147,8 +146,9 @@ onUnmounted(() => {
         />
       </VueDraggable>
     </div>
-    <div class="property-panel w-15rem bg-emerald">
+    <div class="property-panel w-30% h-full bg-#F5F5F5 ">
       <!-- 属性面板内容 -->
+      <ConfigRegion />
     </div>
   </div>
 </template>
