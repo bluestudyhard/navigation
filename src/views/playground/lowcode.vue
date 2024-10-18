@@ -30,12 +30,12 @@ function clone(element: MenuListType) {
   })
   return obj
 }
-const testConfig = {
+const testConfig = ref({
   icon: {
     type: 'suffix-icon',
     iconName: 'Search',
   },
-}
+})
 const list2 = ref<MenuListType[]>([])
 const renderList = ref([
   {
@@ -44,7 +44,7 @@ const renderList = ref([
   },
 
 ])
-const textComp = ref('BaseInput')
+
 /**
  * @description: 定义渲染区的渲染列表
  * - 选项式中才能使用组件名称去渲染组件，在组合式中需要使用组件的引用去渲染
@@ -58,6 +58,8 @@ function renderComponent(item: MenuListType) {
   return null
 }
 const activeComponent = ref<string | null>(null)
+const currentComponent = ref<MenuListType | null>(null)
+const currentComponentConfig = ref<any>(null) // 当前组件的配置
 /**
  * @description: 选中组件的样式
  */
@@ -74,6 +76,8 @@ function handleCompClick(params: MenuListType, event: MouseEvent) {
   event.stopPropagation()
   // console.log('handleCompClick', params)
   activeComponent.value = params.id
+  currentComponent.value = params
+  currentComponentConfig.value = testConfig.value
 }
 function handleDocumentClick() {
   if (activeComponent.value)
@@ -90,18 +94,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <BaseInput :custom-config="testConfig" />
-  <component
-    :is="textComp"
-    class="cursor-move h-50px bg-gray-500/5 rounded p-3"
-    :custom-config="testConfig"
-  />
   <div class="form-designer w-full">
     <!-- <span class="border w-10%">
       {{ list2 }}
-
+ }}
     </span> -->
-    <div class="component-library bg-#F6F9FF w-20rem h-full">
+
+    <div class="component-library bg-#F6F9FF w-20rem h-full overflow-auto">
       <div v-for="category in menuList" :key="category.name">
         <h3>{{ category.title }}</h3>
         <div class="flex w-full flex-wrap">
@@ -142,13 +141,15 @@ onUnmounted(() => {
           :style="activeComponent === item.id ? activeClass : {}"
           class="cursor-move h-50px bg-gray-500/8 rounded p-3"
           :custom-config="testConfig"
+          @deliver-config="currentComponentConfig = $event"
           @click="handleCompClick(item, $event)"
         />
       </VueDraggable>
     </div>
-    <div class="property-panel w-30% h-full bg-#F5F5F5 ">
+    <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
-      <ConfigRegion />
+      {{ currentComponentConfig }}
+      <ConfigRegion :render-region-config=" currentComponentConfig " />
     </div>
   </div>
 </template>
@@ -162,5 +163,8 @@ onUnmounted(() => {
 }
 .component-library {
   padding: .6rem;
+}
+:global(#app) {
+  overflow: hidden;
 }
 </style>

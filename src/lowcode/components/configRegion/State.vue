@@ -7,9 +7,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="container flex w-full h-10rem">
-    <p>状态</p>
-    <div class="state-btns flex flex-wrap">
+  <div class="container  w-full ">
+    <div class="state-btns w-full flex flex-wrap gap-0">
       <el-button>error</el-button>
       <el-button>warning</el-button>
       <el-button>success</el-button>
@@ -19,4 +18,10 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+::v-deep{
+ &.el-button{
+    margin: 0;
+  }
+}
+</style>

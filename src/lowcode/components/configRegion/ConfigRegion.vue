@@ -5,74 +5,81 @@
  * ConfigRegion.vue
 -->
 <script setup lang="ts">
-import { configRegion } from '@/lowcode/config'
+import Size from './Size.vue'
+import State from './State.vue'
+import { configDisplayNames, configRegion } from '@/lowcode/config'
 
-const testConfig = ref({
-  id: '',
-  name: 'base-text-input',
-  props: {
-    type: 'text',
-    label: '文本输入框',
-    placeholder: '请输入',
-    defaultValue: '',
-    disabled: false,
-    size: ['small', 'default', 'large'],
-    state: ['normal', 'success', 'warning', 'error'],
-    icon: {
-      type: ['prefix-icon', 'suffix-icon'],
-      iconName: '',
-    },
-    maxLength: 100,
-    showWordLimit: false,
-    clearable: false,
-    showPassword: false,
-    readonly: false,
-    autofocus: false,
-    autocomplete: 'off',
-    inputStyle: {
-      width: '12rem',
-    },
-    // 定义渲染配置项的配置
+const props = defineProps<{
+  renderRegionConfig: any
+}>()
 
-  },
-  children: [],
-  events: ['blur', 'focus', 'change', 'input', 'clear'],
-})
-const { baseRegion } = configRegion
-// 处理配置项的配置
+const baseRegion = { ...configRegion }
+const configFormList = ref([])
+/**
+ * @description: 处理配置项的配置
+ */
 function handleConfig(config: any) {
   const props = config.props
-  const renderedConfig: any = {}
-
   for (const key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      // 检查 baseRegion 中是否存在该配置项
+    if (Object.hasOwnProperty.call(props, key)) {
       for (const regionKey in baseRegion) {
-        if (baseRegion[regionKey].includes(key))
-          renderedConfig[key] = props[key]
+        if (baseRegion[regionKey].includes(key)) {
+          const label = configDisplayNames[key]
+          const renderName = key
+          const renderType = regionKey
+          const renderValue = props[key]
+          const configItem = {
+            label,
+            renderName,
+            renderType,
+            renderValue,
+          }
+          configFormList.value.push(configItem)
+        }
       }
     }
   }
-  console.log('renderedConfig', renderedConfig)
-  return renderedConfig
+  // 对configFormList进行排序，让其按照renderType的顺序进行排序
+  configFormList.value.sort((a, b) => {
+    return a.renderType === b.renderType
+  })
+  console.log('renderedConfig', configFormList.value)
 }
-onMounted(() => {
-  handleConfig(testConfig.value)
-})
+// 处理如何在模板中渲染配置项
+// [
+//   {
+//     label:'文本输入框',
+//     renderName:'disabled',
+//     renderType:'switch',
+//     renderValue:false,
+//   }
+// ]
+watch(() => props.renderRegionConfig, (newConfig) => {
+  configFormList.value = []
+  if (newConfig)
+    handleConfig(newConfig)
+}, { immediate: true })
+
 </script>
 
 <template>
   <div class="container p-2">
     <p>配置区域</p>
     <el-form>
-      <el-form-item label="标签文本">
-        <el-input />
-      </el-form-item>
-      <el-form-item label="输入提示">
-        <el-input placeholder="请输入" />
+      <el-form-item
+        v-for="item in configFormList"
+        :key="item.renderName"
+        :label="item.label"
+      >
+        <el-switch v-if="item.renderType === 'switch'" v-model="item.renderValue" />
+        <State v-else-if="item.renderType === 'state'" v-model="item.renderValue" />
+        <Size v-else-if="item.renderType === 'size'" v-model="item.renderValue" />
+        <el-input v-else v-model="item.renderValue" />
       </el-form-item>
     </el-form>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+</style>

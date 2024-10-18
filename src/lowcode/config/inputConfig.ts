@@ -82,8 +82,8 @@ const layoutConfig = {
 
 // 基础配置
 const baseRegion = {
-  switch: ['disabled', 'clearable', 'showPassword', 'readonly', 'autofocus', 'showWordLimit'],
-  input: ['name', 'placeholder', 'defaultValue', 'maxLength', 'autocomplete'],
+  switch: ['disabled', 'clearable', 'showPassword', 'readonly', 'autofocus', 'showWordLimit', 'autocomplete'],
+  input: ['name', 'placeholder', 'defaultValue', 'maxLength'],
   state: ['state'],
   size: ['size'],
   icon: ['iconName'],
@@ -127,8 +127,8 @@ export const configDisplayNames = {
   radius: '圆角',
 }
 export const configRegion = {
-  baseRegion,
-  layoutRegion,
+  ...baseRegion,
+  ...layoutRegion,
 }
 export const InputConfig = {
   text: textInputConfig,

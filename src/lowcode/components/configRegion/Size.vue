@@ -7,24 +7,29 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="container flex">
-    <p>尺寸</p>
-    <div class="size-btns w-10rem flex flex-wrap">
-      <el-button size="mini">
+  <div class="container ">
+    <div class="size-btns w-full flex flex-wrap">
+      <el-button>
         mini
       </el-button>
-      <el-button size="small">
+      <el-button>
         small
       </el-button>
       <el-button>default</el-button>
-      <el-button size="medium">
+      <el-button>
         medium
       </el-button>
-      <el-button size="large">
+      <el-button>
         large
       </el-button>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+::v-deep{
+ &.el-button{
+    margin: 0;
+  }
+}
+</style>

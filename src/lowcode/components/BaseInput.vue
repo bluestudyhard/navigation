@@ -13,6 +13,7 @@ import { InputConfig } from '@/lowcode/config/inputConfig'
 const props = defineProps<{
   customConfig: any
 }>()
+const emits = defineEmits(['deliverConfig'])
 const { text } = InputConfig
 // 处理组件的配置
 const InputConfigOption = ref({})
@@ -33,13 +34,17 @@ function handleConfig() {
     }
   }
 }
+function hanldeDeliverConfig() {
+  console.log('deliverConfig', InputConfigOption)
+  emits('deliverConfig', InputConfigOption)
+}
 onMounted(() => {
   handleConfig()
 })
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" @click="hanldeDeliverConfig">
     <el-input v-bind="InputConfigOption.props" />
   </div>
 </template>
