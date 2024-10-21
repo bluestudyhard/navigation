@@ -1,5 +1,4 @@
 const textInputConfig = {
-  id: '',
   name: 'base-text-input',
   props: {
     type: 'text',
@@ -79,9 +78,29 @@ const layoutConfig = {
 //   //
 //   buttonType?: ['buttonType']
 // }
+type ConfigOptions = string[]
 
+interface BaseRegion {
+  switch: ConfigOptions
+  input: ConfigOptions
+  state: ConfigOptions
+  size: ConfigOptions
+  icon: ConfigOptions
+  buttonType: ConfigOptions
+  [key: string]: ConfigOptions
+}
+
+interface LayoutRegion {
+  horizontalAlign: ConfigOptions
+  verticalAlign: ConfigOptions
+  spacing: ConfigOptions
+  width: ConfigOptions
+  height: ConfigOptions
+  style: ConfigOptions
+}
 // 基础配置
 const baseRegion = {
+
   switch: ['disabled', 'clearable', 'showPassword', 'readonly', 'autofocus', 'showWordLimit', 'autocomplete'],
   input: ['name', 'placeholder', 'defaultValue', 'maxLength'],
   state: ['state'],

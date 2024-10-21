@@ -18,6 +18,7 @@ const { text } = InputConfig
 // 处理组件的配置
 const InputConfigOption = ref({})
 function handleConfig() {
+  console.log('props', props.customConfig)
   const config = Object.assign({}, props.customConfig, text)
   console.log('config', config)
   InputConfigOption.value = config
@@ -35,7 +36,7 @@ function handleConfig() {
   }
 }
 function hanldeDeliverConfig() {
-  console.log('deliverConfig', InputConfigOption)
+  // console.log('deliverConfig', InputConfigOption)
   emits('deliverConfig', InputConfigOption)
 }
 onMounted(() => {

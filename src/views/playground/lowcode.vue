@@ -24,7 +24,7 @@ interface MenuListType {
 }
 
 function clone(element: MenuListType) {
-  console.log('clone', element)
+  // console.log('clone', element)
   const obj = Object.assign(cloneDeep(element), {
     id: `${element.name}-${Date.now()}`,
   })
@@ -36,6 +36,18 @@ const testConfig = ref({
     iconName: 'Search',
   },
 })
+/**
+ * @description:  为配置项传入id
+ *
+ */
+function getInitConfig(id: string) {
+  // console.log('getInitConfig', id)
+  return {
+    ...testConfig.value,
+    id,
+  }
+}
+
 const list2 = ref<MenuListType[]>([])
 const renderList = ref([
   {
@@ -59,7 +71,8 @@ function renderComponent(item: MenuListType) {
 }
 const activeComponent = ref<string | null>(null)
 const currentComponent = ref<MenuListType | null>(null)
-const currentComponentConfig = ref<any>(null) // 当前组件的配置
+const currentComponentConfig = ref<any>({}) // 当前组件的配置
+const currentComponentConfig2 = ref<any>({}) // 当前组件的配置
 /**
  * @description: 选中组件的样式
  */
@@ -77,20 +90,32 @@ function handleCompClick(params: MenuListType, event: MouseEvent) {
   // console.log('handleCompClick', params)
   activeComponent.value = params.id
   currentComponent.value = params
-  currentComponentConfig.value = testConfig.value
+  // 需要在点击组件的时候，将当前组件的配置传递给属性面板
+  currentComponentConfig.value = getInitConfig(params.id)
 }
 function handleDocumentClick() {
   if (activeComponent.value)
     activeComponent.value = null
 }
+/**
+ * @description: 动态更新选择
+ */
 
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick)
 })
-
 onUnmounted(() => {
   document.removeEventListener('click', handleDocumentClick)
 })
+// watchEffect(() => {
+//   console.log('currentConfig', currentComponentConfig.value)
+//   currentComponentConfig2.value = currentComponentConfig.value
+// })
+watch(currentComponentConfig, (newVal) => {
+  console.log('currentConfig', newVal)
+  currentComponentConfig2.value = newVal
+  console.log('currentComponentConfig2', currentComponentConfig2.value)
+}, { deep: true })
 </script>
 
 <template>
@@ -140,7 +165,7 @@ onUnmounted(() => {
           :key="item.id"
           :style="activeComponent === item.id ? activeClass : {}"
           class="cursor-move h-50px bg-gray-500/8 rounded p-3"
-          :custom-config="testConfig"
+          :custom-config="getInitConfig(item.id)"
           @deliver-config="currentComponentConfig = $event"
           @click="handleCompClick(item, $event)"
         />
@@ -148,8 +173,10 @@ onUnmounted(() => {
     </div>
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
-      {{ currentComponentConfig }}
-      <ConfigRegion :render-region-config=" currentComponentConfig " />
+
+      <!-- {{ currentComponentConfig }} -->
+
+      <ConfigRegion :render-region-config="currentComponentConfig" />
     </div>
   </div>
 </template>
