@@ -10,16 +10,17 @@ import { InputConfig } from '@/lowcode/config/inputConfig'
 // import { LowCodeConfig } from '@/types/lowcode'
 
 // 定义一个低代码的基础Input组件
-const props = defineProps<{
-  customConfig: any
-}>()
-const emits = defineEmits(['deliverConfig'])
+// const props = defineProps<{
+//   customConfig: any
+// }>()
+
+const emitConfig = defineModel({})
 const { text } = InputConfig
 // 处理组件的配置
 const InputConfigOption = ref({})
 function handleConfig() {
-  console.log('props', props.customConfig)
-  const config = Object.assign({}, props.customConfig, text)
+  // console.log('props', props.customConfig)
+  const config = Object.assign({}, emitConfig.value, text)
   console.log('config', config)
   InputConfigOption.value = config
   // 如果有icon配置，需要处理icon
@@ -34,19 +35,23 @@ function handleConfig() {
       },
     }
   }
+  emitConfig.value = InputConfigOption.value
 }
-function hanldeDeliverConfig() {
-  // console.log('deliverConfig', InputConfigOption)
-  emits('deliverConfig', InputConfigOption)
-}
+
+// function hanldeDeliverConfig() {
+//   // console.log('deliverConfig', InputConfigOption)
+//   emits('deliverConfig', InputConfigOption)
+// }
+
 onMounted(() => {
   handleConfig()
 })
 </script>
 
 <template>
-  <div class="container" @click="hanldeDeliverConfig">
-    <el-input v-bind="InputConfigOption.props" />
+  <div class="container">
+    <el-input v-bind="emitConfig.props" />
+    {{ emitConfig }}
   </div>
 </template>
 

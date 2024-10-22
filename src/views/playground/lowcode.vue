@@ -72,7 +72,6 @@ function renderComponent(item: MenuListType) {
 const activeComponent = ref<string | null>(null)
 const currentComponent = ref<MenuListType | null>(null)
 const currentComponentConfig = ref<any>({}) // 当前组件的配置
-const currentComponentConfig2 = ref<any>({}) // 当前组件的配置
 /**
  * @description: 选中组件的样式
  */
@@ -91,7 +90,8 @@ function handleCompClick(params: MenuListType, event: MouseEvent) {
   activeComponent.value = params.id
   currentComponent.value = params
   // 需要在点击组件的时候，将当前组件的配置传递给属性面板
-  currentComponentConfig.value = getInitConfig(params.id)
+  // currentComponentConfig.value = getInitConfig(params.id)
+  currentComponentConfig.value = { ...currentComponentConfig.value, id: params.id }
 }
 function handleDocumentClick() {
   if (activeComponent.value)
@@ -103,6 +103,7 @@ function handleDocumentClick() {
 
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick)
+  // currentComponentConfig.value = getInitConfig('init')
 })
 onUnmounted(() => {
   document.removeEventListener('click', handleDocumentClick)
@@ -111,11 +112,6 @@ onUnmounted(() => {
 //   console.log('currentConfig', currentComponentConfig.value)
 //   currentComponentConfig2.value = currentComponentConfig.value
 // })
-watch(currentComponentConfig, (newVal) => {
-  console.log('currentConfig', newVal)
-  currentComponentConfig2.value = newVal
-  console.log('currentComponentConfig2', currentComponentConfig2.value)
-}, { deep: true })
 </script>
 
 <template>
@@ -163,12 +159,12 @@ watch(currentComponentConfig, (newVal) => {
           v-for="item in list2"
           v-bind="item"
           :key="item.id"
+          v-model="currentComponentConfig"
           :style="activeComponent === item.id ? activeClass : {}"
           class="cursor-move h-50px bg-gray-500/8 rounded p-3"
-          :custom-config="getInitConfig(item.id)"
-          @deliver-config="currentComponentConfig = $event"
           @click="handleCompClick(item, $event)"
         />
+        <!-- @deliver-config="currentComponentConfig = $event" -->
       </VueDraggable>
     </div>
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
@@ -176,7 +172,7 @@ watch(currentComponentConfig, (newVal) => {
 
       <!-- {{ currentComponentConfig }} -->
 
-      <ConfigRegion :render-region-config="currentComponentConfig" />
+      <ConfigRegion v-model:render-region-config="currentComponentConfig" />
     </div>
   </div>
 </template>

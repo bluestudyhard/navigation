@@ -9,12 +9,21 @@ import Size from './Size.vue'
 import State from './State.vue'
 import { configDisplayNames, configRegion } from '@/lowcode/config'
 
-const props = defineProps<{
-  renderRegionConfig: any
-}>()
+// const props = defineProps<{
+//   renderRegionConfig: any
+// }>()
 
+const renderRegionConfig = defineModel('renderRegionConfig', {
+  type: Object,
+  default: {},
+})
+const renderComponentConfig = defineModel('renderComponentConfig', {
+  type: Object,
+  default: {},
+})
 const baseRegion: { [key: string]: string[] } = { ...configRegion }
 interface ConfigItem {
+  id: string
   label: string
   renderName: string
   renderType: string
@@ -27,8 +36,9 @@ const configFormList = ref<ConfigItem[]>([])
  */
 function handleConfig(config: any) {
   const props = config.props
-  console.log('props', props)
+  // console.log('props', props)
   const id = config.id
+  console.log('id', id)
   for (const key in props) {
     if (Object.hasOwnProperty.call(props, key)) {
       for (const regionKey in baseRegion) {
@@ -53,7 +63,7 @@ function handleConfig(config: any) {
   configFormList.value.sort((a, b) => {
     return a.renderType.localeCompare(b.renderType)
   })
-  console.log('renderedConfig', configFormList.value)
+  // console.log('renderedConfig', configFormList.value)
 }
 // 处理如何在模板中渲染配置项
 // [
@@ -65,12 +75,15 @@ function handleConfig(config: any) {
 //   }
 // ]
 // 表单绑定的值
+const lastConfig = ref({})
 const configFormValues = ref({})
-watch(() => props.renderRegionConfig, (newConfig) => {
+watch(() => renderRegionConfig.value, (newConfig) => {
   configFormList.value = []
-  if (newConfig) {
-    console.log('newConfig', newConfig)
+  if (newConfig !== lastConfig.value) {
+    lastConfig.value = newConfig
     handleConfig(newConfig)
+    console.log('newConfig', newConfig)
+    lastConfig.value = newConfig
   }
 }, { immediate: true })
 </script>
@@ -79,17 +92,18 @@ watch(() => props.renderRegionConfig, (newConfig) => {
   <div class="container p-2">
     <p>配置区域</p>
     {{ configFormValues }}
-    {{ configFormList }}
+    {{ renderRegionConfig }}
     <el-form v-model="configFormValues">
       <el-form-item
         v-for="item in configFormList"
         :key="item.renderName"
         :label="item.label"
       >
-        <el-switch v-if="item.renderType === 'switch'" v-model="item.renderValue" />
-        <State v-else-if="item.renderType === 'state'" v-model="item.renderValue" />
-        <Size v-else-if="item.renderType === 'size'" v-model="item.renderValue" />
-        <el-input v-else v-model="item.renderValue" />
+        <el-switch v-if="item.renderType === 'switch'" v-model="renderRegionConfig.props[item.renderName]" />
+        <State v-else-if="item.renderType === 'state'" v-model="renderRegionConfig.props[item.renderName]" />
+        <Size v-else-if="item.renderType === 'size'" v-model="renderRegionConfig.props[item.renderName]" />
+        <el-input v-else v-model="renderRegionConfig.props[item.renderName]" />
+        
       </el-form-item>
     </el-form>
   </div>
