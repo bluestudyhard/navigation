@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, get } from 'lodash-es'
 import defaultMenu from '@/constant/defaultMenu.json'
 import CategoryItem from '@/lowcode/components/CategoryItem.vue'
 import BaseInput from '@/lowcode/components/BaseInput.vue'
@@ -50,6 +50,7 @@ function getInitConfig(id: string) {
 
 const list2 = ref<MenuListType[]>([])
 const renderList = ref([
+
   {
     name: 'input',
     render: 'BaseInput',
@@ -72,6 +73,8 @@ function renderComponent(item: MenuListType) {
 const activeComponent = ref<string | null>(null)
 const currentComponent = ref<MenuListType | null>(null)
 const currentComponentConfig = ref<any>({}) // 当前组件的配置
+// 根据id为建值存多个组件的配置
+const componentConfigs = ref<any>({})
 /**
  * @description: 选中组件的样式
  */
@@ -85,16 +88,26 @@ const activeClass = computed(() => {
  * @description: 选中组件
  */
 function handleCompClick(params: MenuListType, event: MouseEvent) {
+  console.log('handleCompClick', params)
   event.stopPropagation()
   // console.log('handleCompClick', params)
   activeComponent.value = params.id
   currentComponent.value = params
   // 需要在点击组件的时候，将当前组件的配置传递给属性面板
   // currentComponentConfig.value = getInitConfig(params.id)
-  currentComponentConfig.value = { ...currentComponentConfig.value, id: params.id }
+  currentComponentConfig.value = cloneDeep({ ...currentComponentConfig.value, id: params.id })
+  console.log('currentComponentConfig', currentComponentConfig.value)
+  if (!componentConfigs.value[params.id]) {
+    componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
+    console.log('componentConfigs', componentConfigs.value)
+  }
+
+  // componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
 }
-function handleDocumentClick() {
-  if (activeComponent.value)
+function handleDocumentClick(event: MouseEvent) {
+  // 点击编辑器的其他区域，取消选中，别的什么侧边栏不取消选中
+  const designArea = document.querySelector('.design-area')
+  if (designArea && designArea.contains(event.target as Node))
     activeComponent.value = null
 }
 /**
@@ -108,10 +121,17 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('click', handleDocumentClick)
 })
-// watchEffect(() => {
-//   console.log('currentConfig', currentComponentConfig.value)
-//   currentComponentConfig2.value = currentComponentConfig.value
-// })
+
+function handleDragChange(event: any) {
+  const newItem = event.clonedData
+  // console.log('event', event)
+  // console.log('newItem', newItem)
+  // 需要currentComponentConfig有值的时候才执行add
+  console.log('currentComponentConfig before', currentComponentConfig.value)
+
+  if (currentComponentConfig.value.props)
+    handleCompClick(newItem, event)
+}
 </script>
 
 <template>
@@ -120,7 +140,7 @@ onUnmounted(() => {
       {{ list2 }}
  }}
     </span> -->
-
+    }}
     <div class="component-library bg-#F6F9FF w-20rem h-full overflow-auto">
       <div v-for="category in menuList" :key="category.name">
         <h3>{{ category.title }}</h3>
@@ -153,13 +173,16 @@ onUnmounted(() => {
         group="category"
         ghost-class="ghost"
         class="flex flex-col gap-2 p-4 w-full h-50% m-auto bg-gray-500/5 rounded overflow-auto"
+        @change="handleDragChange"
       >
         <component
           :is="renderComponent(item)"
           v-for="item in list2"
           v-bind="item"
           :key="item.id"
-          v-model="currentComponentConfig"
+          v-model:currentConfig="currentComponentConfig"
+          v-model:emitCoinfig="componentConfigs[item.id]"
+          :custom-config="getInitConfig(item.id)"
           :style="activeComponent === item.id ? activeClass : {}"
           class="cursor-move h-50px bg-gray-500/8 rounded p-3"
           @click="handleCompClick(item, $event)"
@@ -167,12 +190,24 @@ onUnmounted(() => {
         <!-- @deliver-config="currentComponentConfig = $event" -->
       </VueDraggable>
     </div>
+
+    <span class="absolute top-50% left-20% w-50%">
+      <el-tabs>
+        <el-tab-pane label="属性" name="first" class="overflow-auto">
+          {{ componentConfigs }}
+        </el-tab-pane>
+        <el-tab-pane label="事件" name="second">
+          {{ componentConfigs[activeComponent] }}
+        </el-tab-pane>
+
+      </el-tabs>
+    </span>
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
 
       <!-- {{ currentComponentConfig }} -->
 
-      <ConfigRegion v-model:render-region-config="currentComponentConfig" />
+      <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" />
     </div>
   </div>
 </template>
