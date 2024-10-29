@@ -8,9 +8,17 @@
         "icon": "icon-input",
         "label": "输入框",
         "name": "input",
-        "event": ["blur", "focus", "change", "input", "clear"
+        "event": [
+          "blur",
+          "focus",
+          "change",
+          "input",
+          "clear"
         ],
-        "validate": ["string", "url", "email"
+        "validate": [
+          "string",
+          "url",
+          "email"
         ]
       },
       {
@@ -18,9 +26,14 @@
         "icon": "icon-textarea",
         "label": "多行输入框",
         "name": "textarea",
-        "event": ["blur", "focus", "change", "input"
+        "event": [
+          "blur",
+          "focus",
+          "change",
+          "input"
         ],
-        "validate": ["string"
+        "validate": [
+          "string"
         ]
       },
       {
@@ -28,9 +41,15 @@
         "icon": "icon-password",
         "label": "密码输入框",
         "name": "password",
-        "event": ["blur", "focus", "change", "input", "clear"
+        "event": [
+          "blur",
+          "focus",
+          "change",
+          "input",
+          "clear"
         ],
-        "validate": ["string"
+        "validate": [
+          "string"
         ]
       },
       {
@@ -38,9 +57,15 @@
         "icon": "icon-number",
         "label": "计数器",
         "name": "inputNumber",
-        "event": ["blur", "focus", "change"
+        "event": [
+          "blur",
+          "focus",
+          "change"
         ],
-        "validate": ["number", "integer", "float"
+        "validate": [
+          "number",
+          "integer",
+          "float"
         ]
       },
       {
@@ -48,9 +73,12 @@
         "icon": "icon-radio",
         "label": "单选框",
         "name": "radio",
-        "event": ["change"
+        "event": [
+          "change"
         ],
-        "validate": ["string", "number"
+        "validate": [
+          "string",
+          "number"
         ]
       },
       {
@@ -58,9 +86,11 @@
         "icon": "icon-checkbox",
         "label": "多选框",
         "name": "checkbox",
-        "event": ["change"
+        "event": [
+          "change"
         ],
-        "validate": ["array"
+        "validate": [
+          "array"
         ]
       },
       {
@@ -68,9 +98,18 @@
         "icon": "icon-select",
         "label": "选择器",
         "name": "select",
-        "event": ["change", "visibleChange", "removeTag", "clear", "blur", "focus"
+        "event": [
+          "change",
+          "visibleChange",
+          "removeTag",
+          "clear",
+          "blur",
+          "focus"
         ],
-        "validate": ["string", "number", "array"
+        "validate": [
+          "string",
+          "number",
+          "array"
         ],
         "watch": {}
       },
@@ -79,7 +118,8 @@
         "icon": "icon-switch",
         "label": "开关",
         "name": "switch",
-        "event": ["change"
+        "event": [
+          "change"
         ]
       },
       {
@@ -87,9 +127,11 @@
         "icon": "icon-rate",
         "label": "评分",
         "name": "rate",
-        "event": ["change"
+        "event": [
+          "change"
         ],
-        "validate": ["number"
+        "validate": [
+          "number"
         ]
       },
       {
@@ -97,7 +139,11 @@
         "icon": "icon-time",
         "label": "时间",
         "name": "timePicker",
-        "event": ["change", "blur", "focus", "visibleChange"
+        "event": [
+          "change",
+          "blur",
+          "focus",
+          "visibleChange"
         ],
         "watch": {}
       },
@@ -106,7 +152,11 @@
         "icon": "icon-time",
         "label": "时间区间",
         "name": "timeRange",
-        "event": ["change", "blur", "focus", "visibleChange"
+        "event": [
+          "change",
+          "blur",
+          "focus",
+          "visibleChange"
         ]
       },
       {
@@ -114,9 +164,13 @@
         "icon": "icon-slider",
         "label": "滑块",
         "name": "slider",
-        "event": ["change", "input"
+        "event": [
+          "change",
+          "input"
         ],
-        "validate": ["number", "array"
+        "validate": [
+          "number",
+          "array"
         ]
       },
       {
@@ -124,7 +178,13 @@
         "icon": "icon-date",
         "label": "日期",
         "name": "datePicker",
-        "event": ["change", "blur", "focus", "calendarChange", "panelChange", "visibleChange"
+        "event": [
+          "change",
+          "blur",
+          "focus",
+          "calendarChange",
+          "panelChange",
+          "visibleChange"
         ]
       },
       {
@@ -132,7 +192,13 @@
         "icon": "icon-date",
         "label": "日期区间",
         "name": "dateRange",
-        "event": ["change", "blur", "focus", "calendarChange", "panelChange", "visibleChange"
+        "event": [
+          "change",
+          "blur",
+          "focus",
+          "calendarChange",
+          "panelChange",
+          "visibleChange"
         ]
       },
       {
@@ -140,9 +206,14 @@
         "icon": "icon-color",
         "label": "颜色选择器",
         "name": "colorPicker",
-        "event": ["change", "activeChange", "focus", "blur"
+        "event": [
+          "change",
+          "activeChange",
+          "focus",
+          "blur"
         ],
-        "validate": ["string"
+        "validate": [
+          "string"
         ]
       },
       {
@@ -150,9 +221,18 @@
         "icon": "icon-cascader",
         "label": "级联选择器",
         "name": "cascader",
-        "event": ["change", "expandChange", "blur", "focus", "visibleChange", "removeTag"
+        "event": [
+          "change",
+          "expandChange",
+          "blur",
+          "focus",
+          "visibleChange",
+          "removeTag"
         ],
-        "validate": ["string", "number", "array"
+        "validate": [
+          "string",
+          "number",
+          "array"
         ]
       },
       {
@@ -160,9 +240,12 @@
         "icon": "icon-upload",
         "label": "上传",
         "name": "upload",
-        "event": ["change", "remove"
+        "event": [
+          "change",
+          "remove"
         ],
-        "validate": ["array"
+        "validate": [
+          "array"
         ]
       },
       {
@@ -170,9 +253,15 @@
         "icon": "icon-transfer",
         "label": "穿梭框",
         "name": "elTransfer",
-        "event": ["change", "leftCheckChange", "rightCheckChange"
+        "event": [
+          "change",
+          "leftCheckChange",
+          "rightCheckChange"
         ],
-        "validate": ["string", "number", "array"
+        "validate": [
+          "string",
+          "number",
+          "array"
         ]
       },
       {
@@ -180,9 +269,25 @@
         "icon": "icon-tree",
         "label": "树形控件",
         "name": "tree",
-        "event": ["nodeClick", "nodeContextmenu", "checkChange", "check", "currentChange", "nodeExpand", "nodeCollapse", "nodeDragStart", "nodeDragEnter", "nodeDragLeave", "nodeDragOver", "nodeDragEnd", "nodeDrop"
+        "event": [
+          "nodeClick",
+          "nodeContextmenu",
+          "checkChange",
+          "check",
+          "currentChange",
+          "nodeExpand",
+          "nodeCollapse",
+          "nodeDragStart",
+          "nodeDragEnter",
+          "nodeDragLeave",
+          "nodeDragOver",
+          "nodeDragEnd",
+          "nodeDrop"
         ],
-        "validate": ["string", "number", "array"
+        "validate": [
+          "string",
+          "number",
+          "array"
         ]
       },
       {
@@ -190,9 +295,18 @@
         "icon": "icon-tree-select",
         "label": "树形选择",
         "name": "elTreeSelect",
-        "event": ["change", "visibleChange", "removeTag", "clear", "blur", "focus"
+        "event": [
+          "change",
+          "visibleChange",
+          "removeTag",
+          "clear",
+          "blur",
+          "focus"
         ],
-        "validate": ["string", "number", "array"
+        "validate": [
+          "string",
+          "number",
+          "array"
         ],
         "watch": {}
       },
@@ -201,9 +315,11 @@
         "icon": "icon-editor",
         "label": "富文本框",
         "name": "fcEditor",
-        "event": ["change"
+        "event": [
+          "change"
         ],
-        "validate": ["string"
+        "validate": [
+          "string"
         ]
       }
     ]
@@ -221,7 +337,8 @@
         "drag": true,
         "dragBtn": true,
         "mask": false,
-        "event": ["change"
+        "event": [
+          "change"
         ],
         "subForm": "array"
       },
@@ -235,7 +352,8 @@
         "dragBtn": true,
         "mask": false,
         "subForm": "object",
-        "event": ["change"
+        "event": [
+          "change"
         ]
       },
       {
@@ -245,7 +363,10 @@
         "name": "tableForm",
         "mask": false,
         "subForm": "array",
-        "event": ["change", "add", "delete"
+        "event": [
+          "change",
+          "add",
+          "delete"
         ],
         "children": "tableFormColumn"
       }
@@ -260,7 +381,8 @@
         "icon": "icon-alert",
         "label": "提示",
         "name": "elAlert",
-        "event": ["close"
+        "event": [
+          "close"
         ]
       },
       {
@@ -269,19 +391,39 @@
         "label": "按钮",
         "name": "elButton",
         "mask": true,
-        "event": ["click"
+        "event": [
+          "click"
         ]
       },
-      { "menu": "aide", "icon": "icon-span", "label": "文字", "name": "text", "watch": {} },
-      { "menu": "aide", "icon": "icon-html", "label": "HTML", "name": "html", "watch": {} },
-      { "menu": "aide", "icon": "icon-divider", "label": "分割线", "name": "elDivider" },
+      {
+        "menu": "aide",
+        "icon": "icon-span",
+        "label": "文字",
+        "name": "text",
+        "watch": {}
+      },
+      {
+        "menu": "aide",
+        "icon": "icon-html",
+        "label": "HTML",
+        "name": "html",
+        "watch": {}
+      },
+      {
+        "menu": "aide",
+        "icon": "icon-divider",
+        "label": "分割线",
+        "name": "elDivider"
+      },
       {
         "menu": "aide",
         "icon": "icon-tag",
         "label": "标签",
         "name": "elTag",
         "mask": true,
-        "event": ["click", "close"
+        "event": [
+          "click",
+          "close"
         ],
         "watch": {}
       }
@@ -291,20 +433,60 @@
     "name": "layout",
     "title": "布局组件",
     "list": [
-      { "menu": "layout", "icon": "icon-row", "label": "栅格布局", "name": "fcRow", "mask": false, "children": "col", "childrenLen": 2 },
-      { "menu": "layout", "icon": "icon-table", "label": "表格布局", "name": "fcTable", "inside": false, "mask": false },
+      {
+        "menu": "layout",
+        "icon": "icon-row",
+        "label": "基础容器",
+        "name": "container",
+        "mask": false
+      },
+      {
+        "menu": "layout",
+        "icon": "icon-row",
+        "label": "栅格布局",
+        "name": "fcRow",
+        "mask": false,
+        "children": "col",
+        "childrenLen": 2
+      },
+      {
+        "menu": "layout",
+        "icon": "icon-table",
+        "label": "表格布局",
+        "name": "fcTable",
+        "inside": false,
+        "mask": false
+      },
       {
         "menu": "layout",
         "icon": "icon-tab",
         "label": "标签页",
         "name": "elTabs",
         "mask": false,
-        "event": ["tabClick", "tabChange", "tabRemove", "tabAdd", "edit"
+        "event": [
+          "tabClick",
+          "tabChange",
+          "tabRemove",
+          "tabAdd",
+          "edit"
         ],
         "children": "elTabPane"
       },
-      { "menu": "layout", "icon": "icon-space", "label": "间距", "name": "space" },
-      { "menu": "layout", "icon": "icon-card", "label": "卡片", "name": "elCard", "drag": true, "inside": false, "mask": false },
+      {
+        "menu": "layout",
+        "icon": "icon-space",
+        "label": "间距",
+        "name": "space"
+      },
+      {
+        "menu": "layout",
+        "icon": "icon-card",
+        "label": "卡片",
+        "name": "elCard",
+        "drag": true,
+        "inside": false,
+        "mask": false
+      },
       {
         "menu": "layout",
         "icon": "icon-collapse",
@@ -312,7 +494,8 @@
         "name": "elCollapse",
         "mask": false,
         "children": "elCollapseItem",
-        "event": ["change"
+        "event": [
+          "change"
         ]
       }
     ]

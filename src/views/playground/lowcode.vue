@@ -3,15 +3,13 @@ import { VueDraggable } from 'vue-draggable-plus'
 import { cloneDeep, get } from 'lodash-es'
 import defaultMenu from '@/constant/defaultMenu.json'
 import CategoryItem from '@/lowcode/components/CategoryItem.vue'
-import BaseInput from '@/lowcode/components/BaseInput.vue'
 import ConfigRegion from '@/lowcode/components/configRegion/ConfigRegion.vue'
+import { renderComponents, renderList } from '@/lowcode/config/renderComponents'
+import BaseContainer from '@/lowcode/components/BaseContainer.vue'
 
 const menuList = ref(defaultMenu)
 
-const components = ref({
-  BaseInput,
-  // 其他组件...
-})
+const components = renderComponents
 
 interface MenuListType {
   id: string
@@ -21,6 +19,7 @@ interface MenuListType {
   name: string
   event: string[]
   vailidate: string[]
+  children?: MenuListType[]
 }
 
 function clone(element: MenuListType) {
@@ -30,12 +29,7 @@ function clone(element: MenuListType) {
   })
   return obj
 }
-const testConfig = ref({
-  icon: {
-    type: 'suffix-icon',
-    iconName: 'Search',
-  },
-})
+
 /**
  * @description:  为配置项传入id
  *
@@ -43,20 +37,11 @@ const testConfig = ref({
 function getInitConfig(id: string) {
   // console.log('getInitConfig', id)
   return {
-    ...testConfig.value,
     id,
   }
 }
 
 const list2 = ref<MenuListType[]>([])
-const renderList = ref([
-
-  {
-    name: 'input',
-    render: 'BaseInput',
-  },
-
-])
 
 /**
  * @description: 定义渲染区的渲染列表
@@ -88,7 +73,6 @@ const activeClass = computed(() => {
  * @description: 选中组件
  */
 function handleCompClick(params: MenuListType, event: MouseEvent) {
-  console.log('handleCompClick', params)
   event.stopPropagation()
   // console.log('handleCompClick', params)
   activeComponent.value = params.id
@@ -96,11 +80,10 @@ function handleCompClick(params: MenuListType, event: MouseEvent) {
   // 需要在点击组件的时候，将当前组件的配置传递给属性面板
   // currentComponentConfig.value = getInitConfig(params.id)
   currentComponentConfig.value = cloneDeep({ ...currentComponentConfig.value, id: params.id })
-  console.log('currentComponentConfig', currentComponentConfig.value)
-  if (!componentConfigs.value[params.id]) {
+  // console.log('currentComponentConfig', currentComponentConfig.value)
+  if (!componentConfigs.value[params.id])
     componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
-    console.log('componentConfigs', componentConfigs.value)
-  }
+    // console.log('componentConfigs', componentConfigs.value)
 
   // componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
 }
@@ -113,7 +96,6 @@ function handleDocumentClick(event: MouseEvent) {
 /**
  * @description: 动态更新选择
  */
-
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick)
   // currentComponentConfig.value = getInitConfig('init')
@@ -127,11 +109,33 @@ function handleDragChange(event: any) {
   // console.log('event', event)
   // console.log('newItem', newItem)
   // 需要currentComponentConfig有值的时候才执行add
-  console.log('currentComponentConfig before', currentComponentConfig.value)
+  // console.log('currentComponentConfig before', currentComponentConfig.value)
 
   if (currentComponentConfig.value.props)
     handleCompClick(newItem, event)
 }
+const list3 = ref([
+  {
+    name: 'item 1',
+    children: [],
+  },
+  {
+    name: 'item 2',
+    children: [],
+  },
+  {
+    name: 'item 3',
+    children: [],
+  },
+  {
+    name: 'item 4',
+    children: [],
+  },
+  {
+    name: 'item 5',
+    children: [],
+  },
+])
 </script>
 
 <template>
@@ -172,7 +176,7 @@ function handleDragChange(event: any) {
         :animation="150"
         group="category"
         ghost-class="ghost"
-        class="flex flex-col gap-2 p-4 w-full h-50% m-auto bg-gray-500/5 rounded overflow-auto"
+        class="flex flex-col gap-2 p-4 w-auto min-h-50% m-auto bg-gray-500/5 rounded overflow-auto"
         @change="handleDragChange"
       >
         <component
@@ -184,14 +188,16 @@ function handleDragChange(event: any) {
           v-model:emitCoinfig="componentConfigs[item.id]"
           :custom-config="getInitConfig(item.id)"
           :style="activeComponent === item.id ? activeClass : {}"
-          class="cursor-move h-50px bg-gray-500/8 rounded p-3"
+          class="cursor-move  bg-gray-500/8 rounded p-3"
+          :module-value="[]"
           @click="handleCompClick(item, $event)"
         />
+
         <!-- @deliver-config="currentComponentConfig = $event" -->
       </VueDraggable>
+      <!-- <NestedComponent v-model="list3" /> -->
     </div>
-
-    <span class="absolute top-50% left-20% w-50%">
+    <!-- <span class="absolute top-50% left-20% w-50%">
       <el-tabs>
         <el-tab-pane label="属性" name="first" class="overflow-auto">
           {{ componentConfigs }}
@@ -201,13 +207,13 @@ function handleDragChange(event: any) {
         </el-tab-pane>
 
       </el-tabs>
-    </span>
+    </span> -->
+
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
-
+      <BaseContainer v-model="list3" border bg-black />
       <!-- {{ currentComponentConfig }} -->
-
-      <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" />
+      <!-- <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" /> -->
     </div>
   </div>
 </template>

@@ -74,7 +74,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <el-input v-if="emitCoinfig && emitCoinfig.props" v-bind="emitCoinfig.props" />
     <el-input
       v-else placeholder="请输入" :input-style="defaultStyle"
