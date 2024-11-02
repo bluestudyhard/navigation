@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
-
-import { renderComponent } from '@/lowcode/config/renderComponents' // 假设 renderComponent 是一个全局函数
+import { ElCol, ElRow } from 'element-plus'
+import { renderComponent } from '@/lowcode/config/renderComponents'
 
 interface ComponentItem {
   id: string
@@ -25,59 +25,80 @@ function getInitConfig(id: string) {
   }
 }
 
-const list = ref<ComponentItem[]>(props.modelValue)
+const rowList = ref<ComponentItem[]>([
+  {
+    id: 'row-1',
+    name: 'el-row',
+    children: [], // 用于存储该行的列
+  },
+])
 
-function handleDragChange(event: any) {
-  emits('update:modelValue', list.value)
+function handleDragChange(event: any, rowIndex: number) {
+  emits('update:modelValue', rowList.value)
 }
-watch(() => props.modelValue, (value) => {
-  console.log('value', value)
-}, { immediate: true })
+
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    const newRow: ComponentItem = {
+      id: `row-${Date.now()}`,
+      name: 'el-row',
+      children: [], // 创建新的空列数组
+    }
+    rowList.value.push(newRow)
+    emits('update:modelValue', rowList.value)
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
+watch(() => rowList.value, (newVal) => {
+  console.log('rowList', newVal)
+}, { deep: true })
 </script>
 
 <template>
-  <!-- <VueDraggable
-    v-model="list"
-    group="category"
-    class="  p-4 w-full min-h-10rem m-auto bg-gray-500/5 rounded overflow-auto"
-    :style="{ display: 'inline-block' }"
-    @change="handleDragChange"
-  >
-    <component
-      :is="renderComponent(item)"
-      v-for="item in list"
-      :key="item.id"
-      v-bind="item"
-      :custom-config="getInitConfig(item.id)"
-      :style="{ display: 'inline-block' }"
+  <div class="p-4 w-full min-h-10rem  bg-gray-500/5 rounded overflow-auto">
+    <VueDraggable
+      v-for="(row, rowIndex) in rowList"
+      :key="row.id"
+      v-model="row.children"
+      group="category"
+      :options="{ direction: 'horizontal', ghostClass: 'drag-ghost' }"
+      class="bg-blue-500/5 rounded-2 min-h-2rem"
+      @change="handleDragChange($event, rowIndex)"
     >
-      <BaseContainer v-if="item.children" v-model="item.children" />
-    </component>
-  </VueDraggable> -->
-  <el-row>
-    <el-col :span="24">
-      <VueDraggable
-        v-model="list"
-        group="category"
-        class="p-4 w-full min-h-10rem m-auto bg-gray-500/5 rounded overflow-auto"
-        :style="{ display: 'inline-block' }"
-        @change="handleDragChange"
-      >
-        <component
-          :is="renderComponent(item)"
-          v-for="item in list"
+      <ElRow :gutter="10">
+        <ElCol
+          v-for="item in row.children"
           :key="item.id"
-          v-bind="item"
-          :custom-config="getInitConfig(item.id)"
-          :style="{ display: 'inline-block' }"
+          :span="6"
+          class="bg-#fff w-full rounded-2 min-h-2rem m-1 p-2"
         >
-          <BaseContainer v-if="item.children" v-model="item.children" />
-        </component>
-      </VueDraggable>
-    </el-col>
-  </el-row>
+          <VueDraggable
+            v-model="row.children"
+            group="category"
+          >
+            <component
+              :is="renderComponent(item)"
+              v-bind="item"
+              :custom-config="getInitConfig(item.id)"
+            >
+              <!-- <BaseContainer v-if="item.children" v-model="item.children" /> -->
+            </component>
+          </VueDraggable>
+        </ElCol>
+      </ElRow>
+    </VueDraggable>
+  </div>
 </template>
 
 <style scoped>
-
+.drag-ghost {
+  border: 2px dashed #409EFF;
+}
 </style>

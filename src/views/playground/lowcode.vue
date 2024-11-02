@@ -6,6 +6,7 @@ import CategoryItem from '@/lowcode/components/CategoryItem.vue'
 import ConfigRegion from '@/lowcode/components/configRegion/ConfigRegion.vue'
 import { renderComponents, renderList } from '@/lowcode/config/renderComponents'
 import BaseContainer from '@/lowcode/components/BaseContainer.vue'
+import BaseLayout from '@/lowcode/components/BaseLayout.vue'
 
 const menuList = ref(defaultMenu)
 
@@ -211,9 +212,9 @@ const list3 = ref([
 
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
-      <BaseContainer v-model="list3" border bg-black />
+      <BaseLayout />
       <!-- {{ currentComponentConfig }} -->
-      <!-- <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" /> -->
+      <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" />
     </div>
   </div>
 </template>

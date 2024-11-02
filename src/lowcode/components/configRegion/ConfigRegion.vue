@@ -92,7 +92,7 @@ watch(() => renderRegionConfig.value, (newConfig) => {
   <div class="container p-2">
     <p>配置区域</p>
 
-    {{ renderRegionConfig }}
+    <!-- {{ renderRegionConfig }} -->
     <el-form v-model="configFormValues">
       <el-form-item
         v-for="item in configFormList"
