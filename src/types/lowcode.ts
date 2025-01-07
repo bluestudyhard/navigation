@@ -33,3 +33,13 @@ export interface LowCodeConfig {
     text: InputConfig
   }
 }
+export interface MenuListType {
+  id: string
+  menu: string
+  icon: string
+  label: string
+  name: string
+  event: string[]
+  vailidate: string[]
+  children?: MenuListType[]
+}

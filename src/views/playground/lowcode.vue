@@ -7,6 +7,7 @@ import ConfigRegion from '@/lowcode/components/configRegion/ConfigRegion.vue'
 import { renderComponents, renderList } from '@/lowcode/config/renderComponents'
 import BaseContainer from '@/lowcode/components/BaseContainer.vue'
 import BaseLayout from '@/lowcode/components/BaseLayout.vue'
+import EditorRenderArea from '@/lowcode/components/EditorRenderArea.vue'
 
 const menuList = ref(defaultMenu)
 
@@ -21,12 +22,13 @@ interface MenuListType {
   event: string[]
   vailidate: string[]
   children?: MenuListType[]
+  isContainer?: boolean
 }
 
 function clone(element: MenuListType) {
-  // console.log('clone', element)
   const obj = Object.assign(cloneDeep(element), {
     id: `${element.name}-${Date.now()}`,
+    children: element.isContainer ? [] : undefined,
   })
   return obj
 }
@@ -73,20 +75,14 @@ const activeClass = computed(() => {
 /**
  * @description: 选中组件
  */
-function handleCompClick(params: MenuListType, event: MouseEvent) {
-  event.stopPropagation()
-  // console.log('handleCompClick', params)
-  activeComponent.value = params.id
-  currentComponent.value = params
-  // 需要在点击组件的时候，将当前组件的配置传递给属性面板
-  // currentComponentConfig.value = getInitConfig(params.id)
-  currentComponentConfig.value = cloneDeep({ ...currentComponentConfig.value, id: params.id })
-  // console.log('currentComponentConfig', currentComponentConfig.value)
-  if (!componentConfigs.value[params.id])
-    componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
-    // console.log('componentConfigs', componentConfigs.value)
-
-  // componentConfigs.value[params.id] = cloneDeep({ ...currentComponentConfig.value, id: params.id })
+function handleCompClick(component: MenuListType) {
+  activeComponent.value = component.id
+  currentComponent.value = component
+  currentComponentConfig.value = cloneDeep({ ...currentComponentConfig.value, id: component.id })
+  console.log('currentComponentConfig', currentComponentConfig.value)
+  console.log('component', component)
+  if (!componentConfigs.value[component.id])
+    componentConfigs.value[component.id] = cloneDeep({ ...currentComponentConfig.value, id: component.id })
 }
 function handleDocumentClick(event: MouseEvent) {
   // 点击编辑器的其他区域，取消选中，别的什么侧边栏不取消选中
@@ -115,37 +111,10 @@ function handleDragChange(event: any) {
   if (currentComponentConfig.value.props)
     handleCompClick(newItem, event)
 }
-const list3 = ref([
-  {
-    name: 'item 1',
-    children: [],
-  },
-  {
-    name: 'item 2',
-    children: [],
-  },
-  {
-    name: 'item 3',
-    children: [],
-  },
-  {
-    name: 'item 4',
-    children: [],
-  },
-  {
-    name: 'item 5',
-    children: [],
-  },
-])
 </script>
 
 <template>
   <div class="form-designer w-full">
-    <!-- <span class="border w-10%">
-      {{ list2 }}
- }}
-    </span> -->
-    }}
     <div class="component-library bg-#F6F9FF w-20rem h-full overflow-auto">
       <div v-for="category in menuList" :key="category.name">
         <h3>{{ category.title }}</h3>
@@ -170,49 +139,19 @@ const list3 = ref([
     </div>
 
     <div
-      class="design-area bg-#F5F5F5 border w-full "
+      class="design-area bg-#F5F5F5 border w-full min-h-70vh"
     >
-      <VueDraggable
-        v-model="list2"
-        :animation="150"
-        group="category"
-        ghost-class="ghost"
-        class="flex flex-col gap-2 p-4 w-auto min-h-50% m-auto bg-gray-500/5 rounded overflow-auto"
-        @change="handleDragChange"
-      >
-        <component
-          :is="renderComponent(item)"
-          v-for="item in list2"
-          v-bind="item"
-          :key="item.id"
-          v-model:currentConfig="currentComponentConfig"
-          v-model:emitCoinfig="componentConfigs[item.id]"
-          :custom-config="getInitConfig(item.id)"
-          :style="activeComponent === item.id ? activeClass : {}"
-          class="cursor-move  bg-gray-500/8 rounded p-3"
-          :module-value="[]"
-          @click="handleCompClick(item, $event)"
-        />
-
-        <!-- @deliver-config="currentComponentConfig = $event" -->
-      </VueDraggable>
-      <!-- <NestedComponent v-model="list3" /> -->
+      <EditorRenderArea
+        v-model:list="list2"
+        v-model:current-config="currentComponentConfig"
+        v-model:component-configs="componentConfigs"
+        :active-component="activeComponent"
+        @component-click="handleCompClick"
+      />
     </div>
-    <!-- <span class="absolute top-50% left-20% w-50%">
-      <el-tabs>
-        <el-tab-pane label="属性" name="first" class="overflow-auto">
-          {{ componentConfigs }}
-        </el-tab-pane>
-        <el-tab-pane label="事件" name="second">
-          {{ componentConfigs[activeComponent] }}
-        </el-tab-pane>
-
-      </el-tabs>
-    </span> -->
-
     <div class="property-panel w-30% h-full bg-#F5F5F5 overflow-auto">
       <!-- 属性面板内容 -->
-      <BaseLayout />
+
       <!-- {{ currentComponentConfig }} -->
       <ConfigRegion v-model:render-region-config="componentConfigs[activeComponent]" />
     </div>

@@ -37,6 +37,7 @@ app.directive('click-outside', {
     delete el.__handleClickOutside__
   },
 })
+// 全局注册组件
 
 // 持久化插件
 pinia.use(piniaPluginPersistedstate)

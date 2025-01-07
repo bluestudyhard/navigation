@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import AutoImport from 'unplugin-auto-import/vite'
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
@@ -24,6 +25,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       AutoImport({
         imports: ['vue', 'vue-router'],
       }),
+      vueDevTools(),
     ],
     // 别名@
     resolve: {

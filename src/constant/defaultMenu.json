@@ -324,111 +324,7 @@
       }
     ]
   },
-  {
-    "name": "subform",
-    "title": "子表单组件",
-    "list": [
-      {
-        "menu": "subform",
-        "icon": "icon-subform",
-        "label": "子表单",
-        "name": "group",
-        "inside": false,
-        "drag": true,
-        "dragBtn": true,
-        "mask": false,
-        "event": [
-          "change"
-        ],
-        "subForm": "array"
-      },
-      {
-        "menu": "subform",
-        "icon": "icon-group",
-        "label": "分组",
-        "name": "subForm",
-        "inside": false,
-        "drag": true,
-        "dragBtn": true,
-        "mask": false,
-        "subForm": "object",
-        "event": [
-          "change"
-        ]
-      },
-      {
-        "menu": "subform",
-        "icon": "icon-table-form",
-        "label": "表格表单",
-        "name": "tableForm",
-        "mask": false,
-        "subForm": "array",
-        "event": [
-          "change",
-          "add",
-          "delete"
-        ],
-        "children": "tableFormColumn"
-      }
-    ]
-  },
-  {
-    "name": "aide",
-    "title": "辅助组件",
-    "list": [
-      {
-        "menu": "aide",
-        "icon": "icon-alert",
-        "label": "提示",
-        "name": "elAlert",
-        "event": [
-          "close"
-        ]
-      },
-      {
-        "menu": "aide",
-        "icon": "icon-button",
-        "label": "按钮",
-        "name": "elButton",
-        "mask": true,
-        "event": [
-          "click"
-        ]
-      },
-      {
-        "menu": "aide",
-        "icon": "icon-span",
-        "label": "文字",
-        "name": "text",
-        "watch": {}
-      },
-      {
-        "menu": "aide",
-        "icon": "icon-html",
-        "label": "HTML",
-        "name": "html",
-        "watch": {}
-      },
-      {
-        "menu": "aide",
-        "icon": "icon-divider",
-        "label": "分割线",
-        "name": "elDivider"
-      },
-      {
-        "menu": "aide",
-        "icon": "icon-tag",
-        "label": "标签",
-        "name": "elTag",
-        "mask": true,
-        "event": [
-          "click",
-          "close"
-        ],
-        "watch": {}
-      }
-    ]
-  },
+
   {
     "name": "layout",
     "title": "布局组件",
@@ -438,7 +334,9 @@
         "icon": "icon-row",
         "label": "基础容器",
         "name": "container",
-        "mask": false
+        "children": [],
+        "mask": false,
+        "isContainer": true
       },
       {
         "menu": "layout",

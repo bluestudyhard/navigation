@@ -20,10 +20,12 @@ export const renderList = ref([
   },
 ])
 export function renderComponent(item: any) {
+  console.log('组件', item)
   const componentName = renderList.value.find(i => i.name === item.name)
   if (componentName) {
     const component = renderComponents.value[componentName.render as keyof typeof renderComponents.value] || null
     return component
   }
+
   return null
 }

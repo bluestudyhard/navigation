@@ -6,8 +6,6 @@
 -->
 <script setup lang="ts">
 // import TestThree from '@/components/TestThree.vue'
-
-import TestCom from '@/package/TestCom.vue'
 </script>
 
 <template>
@@ -17,7 +15,7 @@ import TestCom from '@/package/TestCom.vue'
      items-center
   "
   >
-    1
+    
     <!-- <TestThree /> -->
     <!-- <ModeOpenSource /> -->
     <TestCom />

@@ -1,12 +1,5 @@
 <script setup lang="ts">
-// import { onMounted } from 'vue'
-// import userStore from '@/stores/user'
 
-// const useStore = userStore()
-// onMounted(() => {
-//   useStore.getAudit()
-//   useStore.getUser()
-// })
 </script>
 
 <template>
